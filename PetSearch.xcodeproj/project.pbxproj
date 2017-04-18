@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		01806B72008AC6C7DE78772D /* Pods_PetSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5954E9C9D65D89742C0EDC40 /* Pods_PetSearch.framework */; };
 		0F96406D25F890086DEB3685 /* Pods_PetSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CFCB4EE43BF2C4E0F8664C /* Pods_PetSearchUITests.framework */; };
-		381418411EA009F200B51DAC /* InputTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381418401EA009F200B51DAC /* InputTableView.swift */; };
+		381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381418421EA1564700B51DAC /* InputPetTableViewController.swift */; };
 		3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7C71E9D2A420048275C /* AppDelegate.swift */; };
 		3815A7CA1E9D2A420048275C /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7C91E9D2A420048275C /* LaunchScreenViewController.swift */; };
 		3815A7D01E9D2A420048275C /* PetSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7CE1E9D2A420048275C /* PetSearch.xcdatamodeld */; };
@@ -46,7 +46,7 @@
 
 /* Begin PBXFileReference section */
 		37CFCB4EE43BF2C4E0F8664C /* Pods_PetSearchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetSearchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		381418401EA009F200B51DAC /* InputTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTableView.swift; sourceTree = "<group>"; };
+		381418421EA1564700B51DAC /* InputPetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPetTableViewController.swift; sourceTree = "<group>"; };
 		3815A7C41E9D2A420048275C /* PetSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3815A7C71E9D2A420048275C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3815A7C91E9D2A420048275C /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 				38F90DB61E9ECEBC0097E6C7 /* DetailViewController.swift */,
 				38F90DB81E9FC7980097E6C7 /* PetStruct.swift */,
 				38F90DAD1E9EC4BF0097E6C7 /* Support Files */,
-				381418401EA009F200B51DAC /* InputTableView.swift */,
+				381418421EA1564700B51DAC /* InputPetTableViewController.swift */,
 			);
 			path = PetSearch;
 			sourceTree = "<group>";
@@ -484,8 +484,8 @@
 				38F90DB31E9EC6700097E6C7 /* FoundViewController.swift in Sources */,
 				38F90DB51E9EC67F0097E6C7 /* AdoptViewController.swift in Sources */,
 				38F90DB11E9EC65E0097E6C7 /* LostViewController.swift in Sources */,
-				381418411EA009F200B51DAC /* InputTableView.swift in Sources */,
 				3815A7CA1E9D2A420048275C /* LaunchScreenViewController.swift in Sources */,
+				381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */,
 				3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */,
 				3815A7D01E9D2A420048275C /* PetSearch.xcdatamodeld in Sources */,
 				38F90DB71E9ECEBC0097E6C7 /* DetailViewController.swift in Sources */,

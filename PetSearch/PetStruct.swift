@@ -21,3 +21,9 @@ struct Pet {
     let date: String
     
 }
+
+struct User {
+    let name: String!
+    let email: String
+    let phoneNumber: Double
+}
