@@ -10,6 +10,7 @@
 		01806B72008AC6C7DE78772D /* Pods_PetSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5954E9C9D65D89742C0EDC40 /* Pods_PetSearch.framework */; };
 		0F96406D25F890086DEB3685 /* Pods_PetSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37CFCB4EE43BF2C4E0F8664C /* Pods_PetSearchUITests.framework */; };
 		381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381418421EA1564700B51DAC /* InputPetTableViewController.swift */; };
+		381418451EA7F83500B51DAC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381418441EA7F83500B51DAC /* CoreLocation.framework */; };
 		3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7C71E9D2A420048275C /* AppDelegate.swift */; };
 		3815A7CA1E9D2A420048275C /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7C91E9D2A420048275C /* LaunchScreenViewController.swift */; };
 		3815A7D01E9D2A420048275C /* PetSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7CE1E9D2A420048275C /* PetSearch.xcdatamodeld */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		37CFCB4EE43BF2C4E0F8664C /* Pods_PetSearchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetSearchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		381418421EA1564700B51DAC /* InputPetTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPetTableViewController.swift; sourceTree = "<group>"; };
+		381418441EA7F83500B51DAC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3815A7C41E9D2A420048275C /* PetSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3815A7C71E9D2A420048275C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3815A7C91E9D2A420048275C /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				381418451EA7F83500B51DAC /* CoreLocation.framework in Frameworks */,
 				01806B72008AC6C7DE78772D /* Pods_PetSearch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,6 +193,7 @@
 		971001180EA93B88D213434D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				381418441EA7F83500B51DAC /* CoreLocation.framework */,
 				5954E9C9D65D89742C0EDC40 /* Pods_PetSearch.framework */,
 				B344E95FC22E0D4DCBFF78B5 /* Pods_PetSearchTests.framework */,
 				37CFCB4EE43BF2C4E0F8664C /* Pods_PetSearchUITests.framework */,
