@@ -281,7 +281,7 @@
         <scene sceneID="kHD-v8-vTa">
             <objects>
                 <tableViewController storyboardIdentifier="Input Table View" id="Z84-vr-L5e" customClass="InputPetTableViewController" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="pIq-KR-pl0">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="pIq-KR-pl0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -449,13 +449,13 @@
                                             <frame key="frameInset" width="375" height="131"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ta5-Im-Xdc">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ta5-Im-Xdc">
                                                     <frame key="frameInset" width="375" height="131"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <string key="text">Additional details regarding the listing that may be necessary such as the pet's personality, distinctive physical markings, or the best time to contact you.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="Z84-vr-L5e" id="44p-AQ-pmJ"/>
                                                     </connections>
@@ -542,6 +542,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="Z84-vr-L5e" id="d5v-vK-fRH"/>
+                                                    </connections>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAT-z6-OYr">
                                                     <constraints>
@@ -660,14 +663,11 @@
                     <navigationItem key="navigationItem" title="Add Pet" id="3b3-ON-iX4">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wSh-VC-USB">
                             <connections>
-                                <segue destination="s87-dT-4gO" kind="unwind" unwindAction="cancelToPetViewControllerWithSegue:" id="9o9-en-9b1"/>
+                                <action selector="unwindToPetVC:" destination="Z84-vr-L5e" id="lOE-3l-vWV"/>
+                                <segue destination="s87-dT-4gO" kind="unwind" identifier="unwindSegue" unwindAction="unwindSegue:" id="Iex-ev-wnh"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="g6R-f7-oO2">
-                            <connections>
-                                <segue destination="s87-dT-4gO" kind="unwind" unwindAction="savePetWithSegue:" id="Ltx-il-PTe"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="g6R-f7-oO2"/>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="1500"/>

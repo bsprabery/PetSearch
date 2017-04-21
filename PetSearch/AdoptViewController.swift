@@ -36,4 +36,8 @@ class AdoptViewController: UITableViewController {
         
     }
     
+    @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
+        print("Performing unwind segue to Adopt VC.")
+    }
+    
 }

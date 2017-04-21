@@ -25,7 +25,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow &quot;PetSearch&quot; to access your location to make your posting appear in your area.</string>
+	<string>Allowing access to your location will enable &quot;PetSearch&quot; to display your post in your area.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
