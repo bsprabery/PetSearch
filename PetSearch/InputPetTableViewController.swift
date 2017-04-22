@@ -32,7 +32,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     var petPickerHidden = true
     var speciesPickerHidden = true
     var datePickerHidden = true
-    var mapViewHidden = true
     var genderValues = ["Select", "Male", "Female"]
     var speciesValues = ["Select", "Bird", "Cat", "Dog", "Reptile", "Other"]
 
@@ -42,11 +41,19 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         datePickerChanged()
         hideDatePicker()
         
-        
         mapLocationManager.delegate = self
+        
+    //TODO: If the distance below is exceeded, the map will likely try to drop a new pin. The old pin will have to be deleted before this can occur.
+        mapLocationManager.distanceFilter = 300.0
+        mapAuthorization()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        mapPins.removeAll()
     }
 
     
@@ -54,12 +61,11 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (true, indexPath.section, indexPath.row) {
-        case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 3, 1), (mapViewHidden, 3, 3) :
+        case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 3, 1) :
             return 0
         default:
             return super.tableView(tableView, heightForRowAt: indexPath)
         }
-    
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -75,16 +81,12 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         case (3, 0):
             tableView.deselectRow(at: indexPath, animated: true)
             toggleDatePickerOn()
-        case (3, 2):
-            tableView.deselectRow(at: indexPath, animated: true)
-            toggleMapViewOn()
         default:
             tableView.deselectRow(at: indexPath, animated: true)
             print("hit default case for didSelectRowAt")
         }
     }
     
-
     
     //MARK: Map View
     
@@ -96,14 +98,19 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         let region = MKCoordinateRegionMake(myLocation, span)
         mapView.setRegion(region, animated: true)
         
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = myLocation
-//        mapView.addAnnotation(annotation)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = myLocation
         
-        self.mapView.showsUserLocation = true
+        if mapPins.count < 1 {
+            self.mapView.addAnnotation(annotation)
+            mapPins.append(annotation)
+        } else {
+            print("There is already a pin on the map.")
+        }
+        
     }
     
-    @IBAction func showMap(_ sender: AnyObject) {
+    func mapAuthorization() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             mapLocationManager.startUpdatingLocation()
         } else {
@@ -112,11 +119,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         }
         
         mapLocationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
-        mapView.isHidden = false
-        mapViewHidden = false
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -143,7 +145,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
             
             mapPins.append(annotation)
             
-            if mapPins.count <= 1 {
+            if mapPins.count < 2 {
                 self.mapView.addAnnotation(annotation)
             } else {
                 print("There is already a pin on the map.")
@@ -168,12 +170,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         mapView.addGestureRecognizer(longPress)
     }
     
-    func toggleMapViewOn() {
-        self.mapView.isHidden = false
-        self.mapViewHidden = false
-        tableView.beginUpdates()
-        tableView.endUpdates()
-    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error: \(error)")
@@ -221,7 +217,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     func hidePickers() {
         petPicker.isHidden = true
         speciesPicker.isHidden = true
-        mapView.isHidden = true
     }
     
     func toggleOn(picker: UIPickerView) {

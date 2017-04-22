@@ -568,7 +568,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Date and Location" id="dJm-cv-N4S">
+                            <tableViewSection headerTitle="Date" id="dJm-cv-N4S">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Input Cell" textLabel="fdD-yW-pKd" detailTextLabel="fYt-B0-sPZ" rowHeight="44" style="IBUITableViewCellStyleValue1" id="RDz-h2-JdS">
                                         <rect key="frame" x="0.0" y="926" width="375" height="44"/>
@@ -614,39 +614,22 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Input Cell" rowHeight="44" id="yL0-yH-DJz">
-                                        <rect key="frame" x="0.0" y="1180" width="375" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Pet's Location" id="MO8-XZ-b6A">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Input Cell" rowHeight="297" id="Cec-Ji-d2E">
+                                        <rect key="frame" x="0.0" y="1237" width="375" height="297"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yL0-yH-DJz" id="Vdm-9U-kaK">
-                                            <frame key="frameInset" width="375" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rK6-PY-MRf">
-                                                    <state key="normal" title="Select Location"/>
-                                                    <connections>
-                                                        <action selector="showMap:" destination="Z84-vr-L5e" eventType="touchUpInside" id="fDB-r0-OlL"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="rK6-PY-MRf" firstAttribute="centerY" secondItem="Vdm-9U-kaK" secondAttribute="centerY" id="1R8-wD-6v1"/>
-                                                <constraint firstItem="rK6-PY-MRf" firstAttribute="leading" secondItem="Vdm-9U-kaK" secondAttribute="leadingMargin" constant="6" id="Rtc-6j-yqD"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="rK6-PY-MRf" secondAttribute="trailing" constant="10" id="nF4-CG-mQR"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Input Cell" rowHeight="297" id="JZP-91-i9e">
-                                        <rect key="frame" x="0.0" y="1224" width="375" height="297"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JZP-91-i9e" id="04o-NP-OCK">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Cec-Ji-d2E" id="okl-5E-cgu">
                                             <frame key="frameInset" width="375" height="296"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wDB-2b-AOY">
+                                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RQC-zi-Z0f">
                                                     <frame key="frameInset" maxY="-6"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <connections>
-                                                        <outlet property="delegate" destination="Z84-vr-L5e" id="IXL-tb-4tK"/>
+                                                        <outlet property="delegate" destination="Z84-vr-L5e" id="zwP-iU-QGh"/>
                                                     </connections>
                                                 </mapView>
                                             </subviews>
@@ -677,7 +660,7 @@
                         <outlet property="detailLabelSex" destination="XiM-iz-UKJ" id="RkA-Zp-M3s"/>
                         <outlet property="detailLabelSpeices" destination="bfZ-wV-NMM" id="HZl-AY-PYO"/>
                         <outlet property="detailsTextView" destination="ta5-Im-Xdc" id="sAI-Ym-cWf"/>
-                        <outlet property="mapView" destination="wDB-2b-AOY" id="2BQ-xH-88b"/>
+                        <outlet property="mapView" destination="RQC-zi-Z0f" id="qs7-av-ieE"/>
                         <outlet property="petNameField" destination="gFf-71-fJy" id="LSb-wC-Foo"/>
                         <outlet property="petPicker" destination="57k-w8-ltk" id="m14-gw-Dgh"/>
                         <outlet property="phoneTextField" destination="gFf-71-fJy" id="LcW-nn-w24"/>
