@@ -22,28 +22,65 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var detailsTextView: UITextView!
     @IBOutlet var detailLabelDate: UILabel!
+    @IBOutlet var statusLabel: UILabel!
 
+    @IBOutlet var breedTextField: UITextField!
+    
+    @IBOutlet var sexLabel: UILabel!
+   
+    
+    
+    @IBOutlet var speciesLabel: UILabel!
+    @IBOutlet var statusPicker: UIPickerView!
     @IBOutlet var datePicker: UIDatePicker!
     
-    @IBOutlet var textFields: [UITextField]!
-
     var mapPins = [MKPointAnnotation]()
     let mapLocationManager = CLLocationManager()
     var petPickerHidden = true
     var speciesPickerHidden = true
     var datePickerHidden = true
-    var genderValues = ["Select", "Male", "Female"]
-    var speciesValues = ["Select", "Bird", "Cat", "Dog", "Reptile", "Other"]
-
+    var statusPickerHidden = true
+    var genderValues = ["Male", "Female"]
+    var speciesValues = ["Bird", "Cat", "Dog", "Reptile", "Other"]
+    var statusValues = ["Lost", "Found", "Available to Adopt"]
+    
+    func formatDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd, yyyy"
+        
+        let date = "\(datePicker.date)"
+        dateFormatter.date(from: "\(date)")
+        return dateFormatterPrint.string(from: datePicker.date)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! PreviewViewController
+        
+        destinationVC.date = "\(formatDate())"
+        destinationVC.petName = "\(petNameField.text!)"
+        destinationVC.species = "\(speciesLabel.text!)"
+        destinationVC.breed = "\(breedTextField.text!)"
+        destinationVC.sex = "\(sexLabel.text!)"
+        destinationVC.petDescription = "\(detailsTextView.text!)"
+        destinationVC.status = "\(statusLabel.text!)"
+        
+    }
+    
+    @IBAction func unwindToInputSegue(_ segue: UIStoryboardSegue) {
+        print("Performing unwind segue to Lost VC.")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+            
         hidePickers()
         datePickerChanged()
         hideDatePicker()
         
         mapLocationManager.delegate = self
         
-    //TODO: If the distance below is exceeded, the map will likely try to drop a new pin. The old pin will have to be deleted before this can occur.
         mapLocationManager.distanceFilter = 300.0
         mapAuthorization()
         
@@ -55,13 +92,12 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         super.viewWillDisappear(true)
         mapPins.removeAll()
     }
-
     
     //MARK: Table View
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (true, indexPath.section, indexPath.row) {
-        case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 3, 1) :
+        case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 3, 1), (statusPickerHidden, 3, 3) :
             return 0
         default:
             return super.tableView(tableView, heightForRowAt: indexPath)
@@ -81,6 +117,10 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         case (3, 0):
             tableView.deselectRow(at: indexPath, animated: true)
             toggleDatePickerOn()
+        case (3, 2):
+            tableView.deselectRow(at: indexPath, animated: true)
+            statusPickerHidden = false
+            toggleOn(picker: statusPicker)
         default:
             tableView.deselectRow(at: indexPath, animated: true)
             print("hit default case for didSelectRowAt")
@@ -178,36 +218,51 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     //MARK: Picker and DatePicker Views
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView.tag == 0 {
+        switch pickerView.tag {
+        case 0:
             return genderValues.count
-        } else {
+        case 1:
             return speciesValues.count
+        case 3:
+            return statusValues.count
+        default:
+            return 0
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView.tag == 0 {
+        switch pickerView.tag {
+        case 0:
             return genderValues[row]
-        } else {
+        case 1:
             return speciesValues[row]
+        case 3:
+            return statusValues[row]
+        default:
+            print("ERROR: DEFAULT CASE HIT - pickerView: TitleForRow")
+            return "Select"
         }
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //switch statement would be good here
-        if pickerView.tag == 0 {
+        switch pickerView.tag {
+        case 0:
             detailLabelSex.text = genderValues[row]
             petPickerHidden = true
             togglePickerOff(picker: petPicker)
-        } else if pickerView.tag == 1 {
+        case 1:
             detailLabelSpeices.text = speciesValues[row]
             speciesPickerHidden = true
             togglePickerOff(picker: speciesPicker)
-        } else if datePicker.tag == 2 {
-            datePicker.isHidden = true
+        case 2:
             toggleDatePickerOff()
+        case 3:
+            statusLabel.text = statusValues[row]
+            statusPickerHidden = true
+            togglePickerOff(picker: statusPicker)
+        default:
+            print("Default case for pickerView: didSelectRow.")
         }
-        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -217,6 +272,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     func hidePickers() {
         petPicker.isHidden = true
         speciesPicker.isHidden = true
+        statusPicker.isHidden = true
     }
     
     func toggleOn(picker: UIPickerView) {
@@ -283,9 +339,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         let newText = nsString.replacingCharacters(in: range, with: string)
         return  newText.characters.count <= limitCount
     }
-    
-    
-    //TODO: Change the size of the text in the labels if screen size is not big enough to dispay full label. OR - make Label longer/change label text for smaller screen sizes.
     
 }
 

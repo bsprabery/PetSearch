@@ -11,19 +11,20 @@ import UIKit
 
 struct Pet {
     
-    let name: String!
+    let name: String
     //Probably be better to do location as coordinates and map it, so you can filter by miles around the user.
-    let location: String!
-    let species: String!
+    let location: String
+    let species: String
     let breed: String
-    let petImage: UIImage!
+    let petImage: UIImage
     let petDetails: String
-    let date: String
-    
+    let date: NSDate
+    let status: String
+        
 }
 
 struct User {
-    let name: String!
+    let name: String
     let email: String
     let phoneNumber: Double
 }
