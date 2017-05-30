@@ -23,13 +23,10 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     @IBOutlet var detailsTextView: UITextView!
     @IBOutlet var detailLabelDate: UILabel!
     @IBOutlet var statusLabel: UILabel!
-
+    @IBOutlet var userNameTextField: UITextField!
+    @IBOutlet var emailTextField: UILabel!
     @IBOutlet var breedTextField: UITextField!
-    
     @IBOutlet var sexLabel: UILabel!
-   
-    
-    
     @IBOutlet var speciesLabel: UILabel!
     @IBOutlet var statusPicker: UIPickerView!
     @IBOutlet var datePicker: UIDatePicker!
@@ -56,16 +53,35 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! PreviewViewController
+        if segue.identifier == "PreviewViewController" {
+            let destinationVC = segue.destination as! PreviewViewController
         
-        destinationVC.date = "\(formatDate())"
-        destinationVC.petName = "\(petNameField.text!)"
-        destinationVC.species = "\(speciesLabel.text!)"
-        destinationVC.breed = "\(breedTextField.text!)"
-        destinationVC.sex = "\(sexLabel.text!)"
-        destinationVC.petDescription = "\(detailsTextView.text!)"
-        destinationVC.status = "\(statusLabel.text!)"
-        
+            //TODO:  Successfully checks to ensure fields are not empty, but if you hit cancel on the next view and return to this view, you can delete information and then hit the next button and it will transition to the next view with that field as empty. Does this mean that editing these fields after segue-ing to the next view will not reflect changes made upon returning to the view?
+            
+            if self.petNameField.text?.isEmpty ?? true || self.speciesLabel.text?.isEmpty ?? true || self.statusLabel.text?.isEmpty ?? true || self.userNameTextField.text?.isEmpty ?? true || self.emailTextField.text?.isEmpty ?? true {
+                    let alertController = UIAlertController(title: "Missing Information!", message: "Please check to make sure all required fields are answered.", preferredStyle: .alert)
+                    let okayAction = UIAlertAction(title: "Okay", style: .default) { (action) in
+                        print("Okay.")
+                    }
+                    
+                    alertController.addAction(okayAction)
+                    self.present(alertController, animated: true)
+            } else {
+           
+                destinationVC.pet = Pet(name: petNameField.text!,
+                                        species: speciesLabel.text!,
+                                        sex: sexLabel.text!,
+                                        breed: breedTextField.text!,
+                                        photoUrl: "",
+                                        petDetails: detailsTextView.text!,
+                                        date: "\(formatDate())",
+                                        status: statusLabel.text!,
+                                        user: userNameTextField.text!,
+                                        email: emailTextField.text!,
+                                        phoneNumber: phoneTextField.text!)
+            }
+        }
+ 
     }
     
     @IBAction func unwindToInputSegue(_ segue: UIStoryboardSegue) {

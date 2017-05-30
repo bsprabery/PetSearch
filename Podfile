@@ -8,6 +8,8 @@ target 'PetSearch' do
   # Pods for PetSearch
 pod ‘Firebase/Core’
 pod 'FirebaseUI'
+pod 'Firebase/Storage'
+pod 'Firebase/Database'
 
 
 
