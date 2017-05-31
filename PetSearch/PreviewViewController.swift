@@ -92,7 +92,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func presentAlert(message: String) {
-        let alertController = UIAlertController(title: "Default Style", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Wait!", message: message, preferredStyle: .alert)
         let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
             print("Okay.")
         }
@@ -126,6 +126,8 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
                 print("Download URL: \(metadata?.downloadURL())")
             }
         }
+        
+        self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
     }
 
     
@@ -139,13 +141,9 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         uploadImageToFirebaseStorage(uniqueID: (pet?.photoUrl)!)
     }
     
-    
+    //MARK: Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
     @IBAction func savePreview(_ sender: AnyObject) {
-        //MARK: Save the information to firebase Database
-        //MARK: Save photo to firebase Storage
         uploadInfoToFirebaseDatabase()
-        
-        //TODO: Transition back to original view controller
         
     }
     

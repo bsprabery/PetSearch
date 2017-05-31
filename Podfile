@@ -10,7 +10,7 @@ pod ‘Firebase/Core’
 pod 'FirebaseUI'
 pod 'Firebase/Storage'
 pod 'Firebase/Database'
-
+# pod 'GeoFire', 'https://github.com/firebase/geofire-objc.git'
 
 
   target 'PetSearchTests' do

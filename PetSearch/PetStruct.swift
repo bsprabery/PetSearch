@@ -24,8 +24,10 @@ struct Pet {
     let user: String
     let email: String
     let phoneNumber: String
+    let latitude: Double
+    let longitude: Double
     
-    init(name: String, species: String, sex: String, breed: String, photoUrl: String, petDetails: String, date: String, status: String, user: String, email: String, phoneNumber: String) {
+    init(name: String, species: String, sex: String, breed: String, photoUrl: String, petDetails: String, date: String, status: String, user: String, email: String, phoneNumber: String, latitude: Double, longitude: Double) {
         self.name = name
         self.species = species
         self.sex = sex
@@ -37,9 +39,11 @@ struct Pet {
         self.user = user
         self.email = email
         self.phoneNumber = phoneNumber
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
-    func toAnyObject() -> [String:String] {
+    func toAnyObject() -> [String:Any] {
         return [
             "name": name,
             "species": species,
@@ -51,7 +55,9 @@ struct Pet {
             "status": status,
             "user": user,
             "email": email,
-            "phoneNumber": phoneNumber
+            "phoneNumber": phoneNumber,
+            "latitude": latitude,
+            "longitude": longitude
         ]
     }
     

@@ -40,6 +40,8 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     var genderValues = ["Male", "Female"]
     var speciesValues = ["Bird", "Cat", "Dog", "Reptile", "Other"]
     var statusValues = ["Lost", "Found", "Available to Adopt"]
+    private var latitude: Double!
+    private var longitude: Double!
     
     func formatDate() -> String {
         let dateFormatter = DateFormatter()
@@ -78,7 +80,10 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         status: statusLabel.text!,
                                         user: userNameTextField.text!,
                                         email: emailTextField.text!,
-                                        phoneNumber: phoneTextField.text!)
+                                        phoneNumber: phoneTextField.text!,
+                                        latitude: latitude,
+                                        longitude: longitude
+                )
             }
         }
  
@@ -182,6 +187,10 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
             let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "myPin")
             pinAnnotationView.isDraggable = true
             pinAnnotationView.animatesDrop = true
+            
+            self.latitude = annotation.coordinate.latitude
+            self.longitude = annotation.coordinate.longitude
+            
             return pinAnnotationView
         }
         return nil
@@ -193,11 +202,8 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
             let newCoordinate = mapView.convert(touchPoint, toCoordinateFrom: self.mapView)
             let annotation = MKPointAnnotation()
             
-        //Later will need to add the coordinates to a managed Object or to firebase to be persisted
             annotation.coordinate = newCoordinate
             annotation.title = "Pet Location"
-//            let latitude = annotation.coordinate.latitude
-//            let longitude = annotation.coordinate.longitude
             
             mapPins.append(annotation)
             
@@ -218,6 +224,9 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         default:
             print("break")
         }
+        
+        self.latitude = view.annotation?.coordinate.latitude
+        self.longitude = view.annotation?.coordinate.longitude
     }
     
     func addDropPinTouch() {
@@ -230,6 +239,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error: \(error)")
     }
+    
     
     //MARK: Picker and DatePicker Views
     
