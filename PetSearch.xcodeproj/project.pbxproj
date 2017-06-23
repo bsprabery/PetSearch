@@ -20,6 +20,8 @@
 		3815A7E01E9D2A420048275C /* PetSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7DF1E9D2A420048275C /* PetSearchTests.swift */; };
 		3815A7EB1E9D2A420048275C /* PetSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7EA1E9D2A420048275C /* PetSearchUITests.swift */; };
 		389854DA1E9FFDF7003F2115 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 389854D81E9FFDF7003F2115 /* Main.storyboard */; };
+		38C6FB071EF31110002289D3 /* Pet Profile View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB061EF31110002289D3 /* Pet Profile View.swift */; };
+		38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB081EF322D8002289D3 /* LoginScreen.swift */; };
 		38F90DAF1E9EC57D0097E6C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38F90DAE1E9EC57D0097E6C7 /* GoogleService-Info.plist */; };
 		38F90DB11E9EC65E0097E6C7 /* LostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F90DB01E9EC65E0097E6C7 /* LostViewController.swift */; };
 		38F90DB31E9EC6700097E6C7 /* FoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F90DB21E9EC6700097E6C7 /* FoundViewController.swift */; };
@@ -64,6 +66,8 @@
 		3815A7EA1E9D2A420048275C /* PetSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetSearchUITests.swift; sourceTree = "<group>"; };
 		3815A7EC1E9D2A420048275C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		389854D91E9FFDF7003F2115 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		38C6FB061EF31110002289D3 /* Pet Profile View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pet Profile View.swift"; sourceTree = "<group>"; };
+		38C6FB081EF322D8002289D3 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		38F90DAE1E9EC57D0097E6C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38F90DB01E9EC65E0097E6C7 /* LostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostViewController.swift; sourceTree = "<group>"; };
 		38F90DB21E9EC6700097E6C7 /* FoundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +147,8 @@
 				38F90DAD1E9EC4BF0097E6C7 /* Support Files */,
 				381418421EA1564700B51DAC /* InputPetTableViewController.swift */,
 				381418461EAE6CEC00B51DAC /* PreviewViewController.swift */,
+				38C6FB061EF31110002289D3 /* Pet Profile View.swift */,
+				38C6FB081EF322D8002289D3 /* LoginScreen.swift */,
 			);
 			path = PetSearch;
 			sourceTree = "<group>";
@@ -492,6 +498,8 @@
 				3815A7CA1E9D2A420048275C /* LaunchScreenViewController.swift in Sources */,
 				381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */,
 				3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */,
+				38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */,
+				38C6FB071EF31110002289D3 /* Pet Profile View.swift in Sources */,
 				3815A7D01E9D2A420048275C /* PetSearch.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +660,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Sprabery.PetSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -667,6 +676,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Sprabery.PetSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

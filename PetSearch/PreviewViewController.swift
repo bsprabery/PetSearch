@@ -23,6 +23,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet var breedLabel: UILabel!
     @IBOutlet var descriptionView: UITextView!
     @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var userNameLabel: UILabel!
     
     var petPhoto: UIImage?
     

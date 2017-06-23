@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "LoginScreen.(layoutView() -&gt; ()).(closure #1):LoginScreen.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "stackContainerHeight.constant">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginScreen.layoutView() -&gt; ():LoginScreen.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "stackContainerBottom.constant">
+            </PersistentString>
+            <PersistentString
+               value = "stackContainerHeight.constant">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
