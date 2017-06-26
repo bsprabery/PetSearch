@@ -39,11 +39,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PetSearch/LoginScreen.swift"
-            timestampString = "519943221.970313"
+            timestampString = "520195603.171819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
+            startingLineNumber = "518"
+            endingLineNumber = "518"
             landmarkName = "layoutView()"
             landmarkType = "7">
             <Locations>
@@ -87,11 +87,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PetSearch/LoginScreen.swift"
-            timestampString = "519942447.659145"
+            timestampString = "520188143.213387"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "newUserLayout()"
             landmarkType = "7">
          </BreakpointContent>

@@ -73,10 +73,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()
         newUserLayout()
-        
-        
-//        stackContainerHeight.constant = 300.0
-//        stackContainerBottom.constant = 155.0
     }
     
     func detectResolution() -> (CGFloat, CGFloat) {
@@ -104,20 +100,51 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         
         switch resolution {
         case (640, 1136):
-            print("Switch")
+            print("iPhone 5, iPhone 5s, iPhone SE")
+            UIView.animate(withDuration: 0.15) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 218.0
+                self.stackContainerBottom.constant = 78.0
+                self.loginButtonTop.constant = 23
+                self.cancelButtonTop.constant = 23
+            }
         case (750, 1334):
             print("iPhone 6, iPhone 6s, and iPhone 7")
+            UIView.animate(withDuration: 0.15) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 250.0
+                self.stackContainerBottom.constant = 100.0
+                self.loginButtonTop.constant = 28
+                self.cancelButtonTop.constant = 28
+            }
+            
         case (1242, 2208):
             print("iPhone 7 Plus, iPhone 6s Plus")
+            UIView.animate(withDuration: 0.15) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 260.0
+                self.stackContainerBottom.constant = 110.0
+                self.loginButtonTop.constant = 28
+                self.cancelButtonTop.constant = 28
+            }
+                
+            
         case (1536, 2048):
-            stackContainerHeight.constant = 300.0
-            stackContainerBottom.constant = 155.0
-            loginButtonTop.constant = 30
-            cancelButtonTop.constant = 30
+            UIView.animate(withDuration: 0.15) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 300.0
+                self.stackContainerBottom.constant = 155.0
+                self.loginButtonTop.constant = 30
+                self.cancelButtonTop.constant = 30
+            }
+            
         case (2048, 2732):
             print("iPad Pro 12.9")
-            stackContainerHeight.constant = 410.0
-            stackContainerBottom.constant = 200.0
+            UIView.animate(withDuration: 0.15) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 410.0
+                self.stackContainerBottom.constant = 200.0
+            }
         default:
             print("Unknown device.")
             
@@ -136,22 +163,65 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         
         let resolution = detectResolution()
         
+        
+        
         switch resolution {
         case (640, 1136):
-            print("Switch")
+            print("iPhone 5, iPhone SE, iPhone 5s")
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 90.0
+                self.stackContainerBottom.constant = 105.0
+                self.cancelButtonTop.constant = 31
+                self.loginButtonTop.constant = 31
+            }
+            
+            forgotPasswordTop.constant = 1
+            forgotPasswordLeading.constant = 180
         case (750, 1334):
             print("iPhone 6, iPhone 6s, and iPhone 7")
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 100.0
+                self.stackContainerBottom.constant = 105.0
+                self.cancelButtonTop.constant = 31
+                self.loginButtonTop.constant = 31
+                
+                self.forgotPasswordTop.constant = 1
+                self.forgotPasswordLeading.constant = 230
+            }
+            
         case (1242, 2208):
             print("iPhone 7 Plus, iPhone 6s Plus")
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 100.0
+                self.stackContainerBottom.constant = 125.0
+                self.cancelButtonTop.constant = 31
+                self.loginButtonTop.constant = 31
+                
+                self.forgotPasswordTop.constant = 1
+                self.forgotPasswordLeading.constant = 260
+            }
+            
         case (1536, 2048):
-            stackContainerHeight.constant = 120.0
-            stackContainerBottom.constant = 300.0
-            cancelButtonTop.constant = 53
-            loginButtonTop.constant = 53
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 120.0
+                self.stackContainerBottom.constant = 300.0
+                self.cancelButtonTop.constant = 53
+                self.loginButtonTop.constant = 53
+                
+                self.forgotPasswordTop.constant = 2
+                self.forgotPasswordLeading.constant = 545
+            }
         case (2048, 2732):
             print("iPad Pro 12.9")
-            stackContainerHeight.constant = 140.0
-            stackContainerBottom.constant = 400.0
+            UIView.animate(withDuration: 0.5) {
+                self.view.layoutIfNeeded()
+                self.stackContainerHeight.constant = 140.0
+                self.stackContainerBottom.constant = 400.0
+            }
         default:
             print("Unknown device.")
         }
@@ -184,6 +254,12 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         case (640, 1136):
             print("iPhone SE, iPhone 5, and iPhone 5s")
             
+            if launchedBefore {
+                repeatUserLayout()
+            } else {
+                newUserLayout()
+            }
+            
             //Font Sizes:
             loginButtonStackView.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             registerButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -198,8 +274,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             titleLabel.font = UIFont.systemFont(ofSize: 33)
             
             let stackContainerLeading = NSLayoutConstraint(item: stackContainer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 17)
-            let stackContainerBottom = NSLayoutConstraint(item: stackContainer, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -100)
-            let stackContainerHeight = NSLayoutConstraint(item: stackContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150)
             let stackContainerWidth = NSLayoutConstraint(item: stackContainer, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 288)
             
             //Stack View Constraints
@@ -213,8 +287,14 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             loginButtonStackView.layer.borderWidth = 1.0
             registerButton.layer.borderWidth = 1.0
             
+            emailTextField.layer.borderWidth = 0.0
+            passwordTextField.layer.borderWidth = 0.0
+            confirmPasswordTextField.layer.borderWidth = 1.0
+            firstNameTextField.layer.borderWidth = 1.0
+            lastNameTextField.layer.borderWidth = 1.0
+            phoneNumberTextField.layer.borderWidth = 1.0
+            
             //Cancel Button Constraints
-            let cancelButtonTop = NSLayoutConstraint(item: cancelButton, attribute: .top, relatedBy: .equal, toItem: stackView, attribute: .bottom, multiplier: 1, constant: 26)
             let cancelButtonLeading = NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 58)
             let cancelButtonWidth = NSLayoutConstraint(item: cancelButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 85)
             let cancelButtonHeight = NSLayoutConstraint(item: cancelButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 28)
@@ -223,7 +303,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             cancelButton.layer.borderWidth = 1.3
             
             //Login Button Constraints
-            let loginButtonTop = NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: stackView, attribute: .bottom, multiplier: 1, constant: 26)
             let loginButtonLeading = NSLayoutConstraint(item: loginButton, attribute: .leading, relatedBy: .equal, toItem: cancelButton, attribute: .trailing, multiplier: 1, constant: 45)
             let loginButtonWidth = NSLayoutConstraint(item: loginButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 85)
             let loginButtonHeight = NSLayoutConstraint(item: loginButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 28)
@@ -235,11 +314,22 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 100)
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 55)
             
+            //Forgot Password Button Constraints
+            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
+            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
+            
             //Activate Constraints
-            NSLayoutConstraint.activate([stackViewLeading, stackContainerBottom, stackContainerHeight, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonTop, cancelButtonLeading, cancelButtonWidth, cancelButtonHeight,loginButtonTop, loginButtonLeading, loginButtonWidth, loginButtonHeight, titleLabelLeading, titleLabelTop])
+            NSLayoutConstraint.activate([stackViewLeading, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonLeading, cancelButtonWidth, cancelButtonHeight, loginButtonLeading, loginButtonWidth, loginButtonHeight, titleLabelLeading, titleLabelTop])
             
         case (750, 1334):
             print("iPhone 6, iPhone 6s, and iPhone 7")
+            
+            if launchedBefore {
+                repeatUserLayout()
+            } else {
+                newUserLayout()
+            }
             
             //Font Sizes:
             loginButtonStackView.titleLabel?.font = UIFont.systemFont(ofSize: 16)
@@ -255,8 +345,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             titleLabel.font = UIFont.systemFont(ofSize: 40)
             
             let stackContainerLeading = NSLayoutConstraint(item: stackContainer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 17)
-            let stackContainerBottom = NSLayoutConstraint(item: stackContainer, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -120)
-            let stackContainerHeight = NSLayoutConstraint(item: stackContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 178)
             let stackContainerWidth = NSLayoutConstraint(item: stackContainer, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 340)
             
             //Stack View Constraints
@@ -270,8 +358,14 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             loginButtonStackView.layer.borderWidth = 1.0
             registerButton.layer.borderWidth = 1.0
             
+            emailTextField.layer.borderWidth = 0.0
+            passwordTextField.layer.borderWidth = 0.0
+            confirmPasswordTextField.layer.borderWidth = 1.0
+            firstNameTextField.layer.borderWidth = 1.0
+            lastNameTextField.layer.borderWidth = 1.0
+            phoneNumberTextField.layer.borderWidth = 1.0
+            
             //Cancel Button Constraints
-            let cancelButtonTop = NSLayoutConstraint(item: cancelButton, attribute: .top, relatedBy: .equal, toItem: stackView, attribute: .bottom, multiplier: 1, constant: 30)
             let cancelButtonLeading = NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 65)
             let cancelButtonWidth = NSLayoutConstraint(item: cancelButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 95)
             let cancelButtonHeight = NSLayoutConstraint(item: cancelButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 28)
@@ -280,7 +374,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             cancelButton.layer.borderWidth = 1.3
             
             //Login Button Constraints
-            let loginButtonTop = NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: stackView, attribute: .bottom, multiplier: 1, constant: 30)
             let loginButtonLeading = NSLayoutConstraint(item: loginButton, attribute: .leading, relatedBy: .equal, toItem: cancelButton, attribute: .trailing, multiplier: 1, constant: 55)
             let loginButtonWidth = NSLayoutConstraint(item: loginButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 95)
             let loginButtonHeight = NSLayoutConstraint(item: loginButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 28)
@@ -292,8 +385,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 120)
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 75)
             
+            //Forgot Password Button Constraints
+            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
+            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
+            
             //Activate Constraints
-            NSLayoutConstraint.activate([stackViewLeading, stackContainerBottom, stackContainerHeight, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonTop, cancelButtonLeading, cancelButtonWidth, cancelButtonHeight,loginButtonTop, loginButtonLeading, loginButtonWidth, loginButtonHeight, titleLabelLeading, titleLabelTop])
+            NSLayoutConstraint.activate([stackViewLeading, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonLeading, cancelButtonWidth, cancelButtonHeight, loginButtonLeading, loginButtonWidth, loginButtonHeight, titleLabelLeading, titleLabelTop])
             
         case (1242, 2208):
             print("iPhone 7 Plus, iPhone 6s Plus")
@@ -311,9 +409,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
             titleLabel.font = UIFont.systemFont(ofSize: 43)
             
+            if launchedBefore {
+                repeatUserLayout()
+            } else {
+                newUserLayout()
+            }
+            
             let stackContainerLeading = NSLayoutConstraint(item: stackContainer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 17)
-            let stackContainerBottom = NSLayoutConstraint(item: stackContainer, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -120)
-            let stackContainerHeight = NSLayoutConstraint(item: stackContainer, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 180)
             let stackContainerWidth = NSLayoutConstraint(item: stackContainer, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 380)
             
             //Stack View Constraints
@@ -327,8 +429,14 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             loginButtonStackView.layer.borderWidth = 1.0
             registerButton.layer.borderWidth = 1.0
             
+            emailTextField.layer.borderWidth = 0.0
+            passwordTextField.layer.borderWidth = 0.0
+            confirmPasswordTextField.layer.borderWidth = 1.0
+            firstNameTextField.layer.borderWidth = 1.0
+            lastNameTextField.layer.borderWidth = 1.0
+            phoneNumberTextField.layer.borderWidth = 1.0
+            
             //Cancel Button Constraints
-            let cancelButtonTop = NSLayoutConstraint(item: cancelButton, attribute: .top, relatedBy: .equal, toItem: stackView, attribute: .bottom, multiplier: 1, constant: 30)
             let cancelButtonLeading = NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 80)
             let cancelButtonWidth = NSLayoutConstraint(item: cancelButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100)
             
@@ -336,7 +444,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             cancelButton.layer.borderWidth = 1.3
             
             //Login Button Constraints
-            let loginButtonTop = NSLayoutConstraint(item: loginButton, attribute: .top, relatedBy: .equal, toItem: stackView, attribute: .bottom, multiplier: 1, constant: 30)
             let loginButtonLeading = NSLayoutConstraint(item: loginButton, attribute: .leading, relatedBy: .equal, toItem: cancelButton, attribute: .trailing, multiplier: 1, constant: 65)
             let loginButtonWidth = NSLayoutConstraint(item: loginButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100)
             
@@ -347,8 +454,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 120)
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 75)
             
+            //Forgot Password Button Constraints
+            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
+            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
+            
             //Activate Constraints
-            NSLayoutConstraint.activate([stackViewLeading, stackContainerBottom, stackContainerHeight, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonTop, cancelButtonLeading, cancelButtonWidth, loginButtonTop, loginButtonLeading, loginButtonWidth, titleLabelLeading, titleLabelTop])
+            NSLayoutConstraint.activate([stackViewLeading, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonLeading, cancelButtonWidth, loginButtonLeading, loginButtonWidth, titleLabelLeading, titleLabelTop])
             
         case (1536, 2048):
             print("iPad Mini, iPad Air, iPad Retina, and iPad Pro 9.7")
@@ -399,8 +511,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 18), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
             let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
             forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
-            forgotPasswordTop.constant = 2
-            forgotPasswordLeading.constant = 545
             
             //Title Label Constraints
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 295)
@@ -510,13 +620,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     
     //Shift view when keyboard obscures text fields:
     func keyboardWillShow(notification: NSNotification) {
-        if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true {
+        if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = -getKeyboardHeight(notification: notification)
         } else {}
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true {
+        if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = 0
         } else {}
     }
