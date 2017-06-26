@@ -10,8 +10,7 @@ pod ‘Firebase/Core’
 pod 'FirebaseUI'
 pod 'Firebase/Storage'
 pod 'Firebase/Database'
-# pod 'GeoFire', 'https://github.com/firebase/geofire-objc.git'
-
+pod ‘Firebase/Auth’
 
   target 'PetSearchTests' do
     inherit! :search_paths

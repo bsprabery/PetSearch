@@ -68,11 +68,54 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         repeatUserLayout()
     }
     
+    func handleRegister() {
+        
+        guard let email = emailTextField.text, let password = passwordTextField.text, let firstName = firstNameTextField.text, let lastName = lastNameTextField.text, let phoneNumber = phoneNumberTextField.text else {
+            print("Form is not valid.")
+            //TODO: Present an alert to the user
+            return
+        }
+        
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            guard let uid = user?.uid else {
+                return
+            }
+            
+            let ref = FIRDatabase.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
+            let usersRef = ref.child("users").child(uid)
+            let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber]
+            usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                //TODO: Password must be at least 6 characters long - present error to user
+                if err != nil {
+                    print(err)
+                    return
+                }
+                
+                print("Successfully saved user into Firebase Database.")
+            })
+        })
+        
+        
+    }
+    
     @IBAction func registerButtonClicked(_ sender: AnyObject) {
         registerButtonTapped = true
         registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()
         newUserLayout()
+        
+        if registerButtonTapped == true {
+            print("\(registerButtonTapped)")
+            loginButton.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        } else {
+            print("Register button was not tapped.")
+        }
+        
     }
     
     func detectResolution() -> (CGFloat, CGFloat) {
