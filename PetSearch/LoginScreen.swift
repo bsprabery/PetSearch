@@ -52,13 +52,33 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Check to see if user is logged in:
+        if FIRAuth.auth()?.currentUser?.uid == nil {
+            print("User is not logged in.")
+        } else {
+            //TODO: Present InputPetTableVC
+        }
+        
         addStackContainerToView()
         layoutView()
         addObservers()
         setTextFieldDelegates()
         
+        loginButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginScreen.dismissKeyboard))
         view.addGestureRecognizer(tap)
+    }
+    
+    func handleLogout() {
+        do {
+            try FIRAuth.auth()?.signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        let loginController = LoginScreen()
+        present(loginController, animated: true, completion: nil)
     }
   
     @IBAction func loginButtonClicked(_ sender: AnyObject) {
@@ -99,8 +119,37 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
                 print("Successfully saved user into Firebase Database.")
             })
         })
+    }
+    
+    func handleLoginRegister() {
+        if registerButtonTapped == true {
+            print("Register")
+            handleRegister()
+        } else {
+            print("Login")
+            handleLogin()
+        }
+    }
+    
+    func handleLogin() {
+        print("Handle Login: Login button clicked.")
         
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            print("Form is not valid.")
+            //TODO: Present an alert to the user
+            return
+        }
         
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            self.dismiss(animated: true, completion: nil)
+            
+            //TODO: Present InputTableViewController
+        })
     }
     
     @IBAction func registerButtonClicked(_ sender: AnyObject) {
@@ -108,14 +157,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()
         newUserLayout()
-        
-        if registerButtonTapped == true {
-            print("\(registerButtonTapped)")
-            loginButton.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
-        } else {
-            print("Register button was not tapped.")
-        }
-        
     }
     
     func detectResolution() -> (CGFloat, CGFloat) {
