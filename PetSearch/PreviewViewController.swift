@@ -24,6 +24,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet var descriptionView: UITextView!
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var contactButton: UIButton!
     
     var petPhoto: UIImage?
     
@@ -37,6 +38,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.delegate = self
         setText()
         addTap()
+        contactButton.isEnabled = false
     }
     
     func setText() {
@@ -108,7 +110,8 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
             presentAlert(message: "Please select a photo of your pet to display.")
             return
         }
-        
+        //TODO: Do not save to database unless it passes this check
+        //Does not fail if no photo is selected. Pet profile is still saved to the database without a photo.
         guard let imageData = UIImageJPEGRepresentation(petPhoto, 0.8) else {
             presentAlert(message: "Please select a photo of your pet to display.")
             return

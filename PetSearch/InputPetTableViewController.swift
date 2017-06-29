@@ -17,14 +17,11 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     @IBOutlet var detailLabelSex: UILabel!
     @IBOutlet var speciesPicker: UIPickerView!
     @IBOutlet var detailLabelSpeices: UILabel!
-    @IBOutlet var phoneTextField: UITextField!
     @IBOutlet var textView: UITextView!
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var detailsTextView: UITextView!
     @IBOutlet var detailLabelDate: UILabel!
     @IBOutlet var statusLabel: UILabel!
-    @IBOutlet var userNameTextField: UITextField!
-    @IBOutlet var emailTextField: UILabel!
     @IBOutlet var breedTextField: UITextField!
     @IBOutlet var sexLabel: UILabel!
     @IBOutlet var speciesLabel: UILabel!
@@ -60,7 +57,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         
             //TODO:  Successfully checks to ensure fields are not empty, but if you hit cancel on the next view and return to this view, you can delete information and then hit the next button and it will transition to the next view with that field as empty. Does this mean that editing these fields after segue-ing to the next view will not reflect changes made upon returning to the view?
             
-            if self.petNameField.text?.isEmpty ?? true || self.speciesLabel.text?.isEmpty ?? true || self.statusLabel.text?.isEmpty ?? true || self.userNameTextField.text?.isEmpty ?? true || self.emailTextField.text?.isEmpty ?? true {
+            if self.petNameField.text?.isEmpty ?? true || self.speciesLabel.text?.isEmpty ?? true || self.statusLabel.text?.isEmpty ?? true {
                     let alertController = UIAlertController(title: "Missing Information!", message: "Please check to make sure all required fields are answered.", preferredStyle: .alert)
                     let okayAction = UIAlertAction(title: "Okay", style: .default) { (action) in
                         print("Okay.")
@@ -78,9 +75,9 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         petDetails: detailsTextView.text!,
                                         date: "\(formatDate())",
                                         status: statusLabel.text!,
-                                        user: userNameTextField.text!,
-                                        email: emailTextField.text!,
-                                        phoneNumber: phoneTextField.text!,
+                                        user: "Retrieve UserName from Database",
+                                        email: "Retrieve email from database",
+                                        phoneNumber: "Retrieve phone number from Database",
                                         latitude: latitude,
                                         longitude: longitude
                 )
@@ -118,7 +115,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (true, indexPath.section, indexPath.row) {
-        case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 3, 1), (statusPickerHidden, 3, 3) :
+        case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 2, 1), (statusPickerHidden, 2, 3) :
             return 0
         default:
             return super.tableView(tableView, heightForRowAt: indexPath)
@@ -135,10 +132,10 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
             tableView.deselectRow(at: indexPath, animated: true)
             speciesPickerHidden = false
             toggleOn(picker: speciesPicker)
-        case (3, 0):
+        case (2, 0):
             tableView.deselectRow(at: indexPath, animated: true)
             toggleDatePickerOn()
-        case (3, 2):
+        case (2, 2):
             tableView.deselectRow(at: indexPath, animated: true)
             statusPickerHidden = false
             toggleOn(picker: statusPicker)

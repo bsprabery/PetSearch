@@ -40,4 +40,10 @@ class AdoptViewController: UITableViewController {
         print("Performing unwind segue to Adopt VC.")
     }
     
+    @IBAction func addButtonTapped(_ sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "Login Screen")
+        present(destination, animated: true, completion: nil)
+    }
+    
 }

@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import UIKit
 
 struct Pet {
-    
+        
     let name: String
     //Probably be better to do location as coordinates and map it, so you can filter by miles around the user.
    // let location: String
@@ -62,9 +61,4 @@ struct Pet {
     }
     
 }
-//
-//struct User {
-//    let name: String
-//    let email: String
-//    let phoneNumber: Double
-//}
+

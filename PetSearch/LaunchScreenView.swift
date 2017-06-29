@@ -1,5 +1,5 @@
 //
-//  LaunchScreenViewController.swift
+//  LaunchScreenView.swift
 //  PetSearch
 //
 //  Created by Brittany Sprabery on 4/11/17.
@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 
-class LaunchScreenViewController: UIViewController {
+class LaunchScreenView: UIViewController {
     
     fileprivate var _authHandle: FIRAuthStateDidChangeListenerHandle!
     var user: FIRUser?

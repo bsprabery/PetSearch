@@ -36,12 +36,9 @@ class LostViewController: UITableViewController {
     }
     
     @IBAction func addPet(_ sender: AnyObject) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        let destination = storyboard.instantiateViewController(withIdentifier: "Input Table View")
-////        navigationController?.setViewControllers([destination], animated: true)
-//        
-//        present(destination, animated: true, completion: nil)
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "Login Screen")
+        present(destination, animated: true, completion: nil)
     }
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
