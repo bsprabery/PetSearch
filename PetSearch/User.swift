@@ -10,8 +10,11 @@ import Foundation
 
 struct User {
     
-    var name: String?
+    static var sharedSingleton = User()
+    
+    var firstName: String?
+    var lastName: String?
     var email: String?
-    var phoneNumber: Double?
+    var phoneNumber: String?
     
 }

@@ -49,6 +49,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.sexLabel.text = pet?.sex
         self.descriptionView.text = pet?.petDetails
         self.statusLabel.text = pet?.status
+        self.userNameLabel.text = pet?.user
     }
     
     func addTap() {

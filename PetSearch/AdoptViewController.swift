@@ -11,6 +11,10 @@ import UIKit
 
 class AdoptViewController: UITableViewController {
     
+    //TODO: Add a link to the website icons8.com where I got the top left bar button item - or pay them money.
+    
+    let service: Service = Service()
+    
     var adoptPets: [Pet] = []
     
     override func viewDidLoad() {
@@ -41,9 +45,21 @@ class AdoptViewController: UITableViewController {
     }
     
     @IBAction func addButtonTapped(_ sender: AnyObject) {
+        service.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+    }
+}
+    
+extension UIViewController {
+    func segueToLoginScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "Login Screen")
         present(destination, animated: true, completion: nil)
+    }
+    
+    func segueToInputView() {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let destination = storyboard.instantiateViewController(withIdentifier: "Nav Controller Two")
+        self.present(destination, animated: true, completion: nil)
     }
     
 }

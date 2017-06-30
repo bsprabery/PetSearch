@@ -75,9 +75,9 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         petDetails: detailsTextView.text!,
                                         date: "\(formatDate())",
                                         status: statusLabel.text!,
-                                        user: "Retrieve UserName from Database",
-                                        email: "Retrieve email from database",
-                                        phoneNumber: "Retrieve phone number from Database",
+                                        user: "\(User.sharedSingleton.firstName!)",
+                                        email: "\(User.sharedSingleton.email!)",
+                                        phoneNumber: "\(User.sharedSingleton.phoneNumber!)",
                                         latitude: latitude,
                                         longitude: longitude
                 )

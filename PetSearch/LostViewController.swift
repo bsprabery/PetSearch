@@ -12,6 +12,7 @@ import Firebase
 
 class LostViewController: UITableViewController {
     
+    let service: Service = Service()
     
     @IBOutlet var searchPetsButton: UIBarButtonItem!
     @IBOutlet var addPetButton: UIBarButtonItem!
@@ -36,9 +37,7 @@ class LostViewController: UITableViewController {
     }
     
     @IBAction func addPet(_ sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "Login Screen")
-        present(destination, animated: true, completion: nil)
+        service.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
     }
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {

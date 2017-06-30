@@ -53,7 +53,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.checkIfUserIsLoggedIn()
         addStackContainerToView()
         layoutView()
         addObservers()
@@ -105,13 +104,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             service.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
         }
     }
-    
-    func segueToInputView() {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "Nav Controller Two")
-        self.present(destination, animated: true, completion: nil)
-    }
-    
+        
     //Shift view when keyboard obscures text fields:
     func keyboardWillShow(notification: NSNotification) {
         if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {

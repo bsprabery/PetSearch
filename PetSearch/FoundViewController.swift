@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class FoundViewController: UITableViewController {
-    
+    let service: Service = Service()
     var foundPets: [Pet] = []
     
     override func viewDidLoad() {
@@ -48,11 +48,7 @@ class FoundViewController: UITableViewController {
 //    }
     
     @IBAction func addButtonTapped(_ sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "Login Screen")
-        //navigationController?.setViewControllers([destination], animated: true)
-        
-        present(destination, animated: true, completion: nil)
+        service.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
     }
     
     

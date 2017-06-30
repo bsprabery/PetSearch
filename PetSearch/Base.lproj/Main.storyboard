@@ -72,7 +72,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="more" id="PBh-tD-FXP"/>
                     <navigationItem key="navigationItem" title="Lost" id="xuy-Fu-FUZ">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="nYi-pf-AsM"/>
+                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="nYi-pf-AsM"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9bb-pR-lY5">
                             <connections>
                                 <action selector="addPet:" destination="WDo-qw-RPj" id="G10-P2-ZlU"/>
@@ -135,7 +135,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="YeT-qb-JzE"/>
                     <navigationItem key="navigationItem" title="Adopt" id="VR2-Vy-MfI">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="vTg-MP-HVl"/>
+                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="vTg-MP-HVl"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="625-ZY-H3f">
                             <connections>
                                 <action selector="addButtonTapped:" destination="cnw-lL-eTf" id="Zzz-T2-Cig"/>
@@ -194,7 +194,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="featured" id="E9y-rc-L0b"/>
                     <navigationItem key="navigationItem" title="Found" id="0wW-Tv-W3c">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="fG6-pW-C3a"/>
+                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="fG6-pW-C3a"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QUu-va-7of">
                             <connections>
                                 <action selector="addButtonTapped:" destination="goU-Z5-mM1" id="vbJ-9J-vQy"/>
@@ -494,7 +494,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="RQC-zi-Z0f">
-                                                    <frame key="frameInset" minX="-2" minY="-10" maxX="7"/>
+                                                    <frame key="frameInset" minX="-2" minY="-12" maxX="7"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="Z84-vr-L5e" id="zwP-iU-QGh"/>
@@ -579,13 +579,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Breed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-Ye-Mnf">
-                                <frame key="frameInset" minX="34" minY="445" width="160" height="21"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNd-Zd-Ekc">
                                 <frame key="frameInset" minX="34" minY="387" width="160" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -622,8 +615,8 @@
                                     <action selector="contactButtonClicked:" destination="sdn-2y-M8A" eventType="touchUpInside" id="UTd-N1-pwo"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pet Owner's Name " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMW-4f-eid">
-                                <frame key="frameInset" minX="34" minY="474" width="160" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMW-4f-eid">
+                                <frame key="frameInset" minX="34" minY="445" width="160" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -636,6 +629,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Breed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-Ye-Mnf">
+                                <frame key="frameInset" minX="34" minY="474" width="160" height="21"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -775,7 +775,7 @@
                     <tabBarItem key="tabBarItem" title="Lost" id="qhO-IX-OTL"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Iey-zL-xJU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Iey-zL-xJU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -795,7 +795,7 @@
                     <tabBarItem key="tabBarItem" title="Adopt" id="O8O-fL-zBN"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KyT-KQ-08u">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KyT-KQ-08u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -815,7 +815,7 @@
                     <tabBarItem key="tabBarItem" title="Found" id="lQo-kT-dHD"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5Qr-hK-Koh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Qr-hK-Koh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -835,7 +835,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fRS-Cx-a6k">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fRS-Cx-a6k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1014,6 +1014,7 @@
     </scenes>
     <resources>
         <image name="Placeholder" width="512" height="512"/>
+        <image name="Small Menu" width="25" height="25"/>
         <image name="Torrey_Wiley_Cookie" width="3504" height="2336"/>
         <image name="Torrey_Wiley_Cookie_Med" width="500" height="333"/>
     </resources>

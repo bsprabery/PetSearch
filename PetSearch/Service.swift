@@ -9,20 +9,32 @@
 import Foundation
 import Firebase
 
-class Service: NSObject {
+class Service : NSObject {
     
-    func checkIfUserIsLoggedIn() {
+    func checkIfUserIsLoggedIn(segueOne: () -> Void, segueTwo: @escaping () -> Void) {
         if FIRAuth.auth()?.currentUser?.uid == nil {
             print("User is not logged in.")
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        
+        //Present Login Screen
+            segueOne()
+            
         } else {
             let uid = FIRAuth.auth()?.currentUser?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot)
                 
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    User.sharedSingleton.email = dictionary["email"] as? String
+                    User.sharedSingleton.firstName = dictionary["firstName"] as? String
+                    User.sharedSingleton.lastName = dictionary["lastName"] as? String
+                    User.sharedSingleton.phoneNumber = dictionary["phoneNumber"] as? String
+                    
+                }
+                print("\(User.sharedSingleton)")
                 }, withCancel: nil)
-            //TODO: Present InputPetTableVC
             
+            //Present InputPetTableVC
+                segueTwo()
         }
     }
     
@@ -76,7 +88,7 @@ class Service: NSObject {
                 return
             }
             
-            completion()
+             completion()
         })
     }
     
@@ -88,6 +100,6 @@ class Service: NSObject {
         }
     }
 
-    
+
     
 }

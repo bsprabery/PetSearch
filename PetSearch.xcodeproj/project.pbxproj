@@ -145,11 +145,11 @@
 			children = (
 				389854D81E9FFDF7003F2115 /* Main.storyboard */,
 				3815A7C71E9D2A420048275C /* AppDelegate.swift */,
+				38F352541F057549005460FA /* Service.swift */,
 				3850FB711F0401460083F6AA /* Model */,
 				3850FB741F0407780083F6AA /* Controller */,
 				3850FB771F040E900083F6AA /* View */,
 				38F90DAD1E9EC4BF0097E6C7 /* Support Files */,
-				38F352541F057549005460FA /* Service.swift */,
 			);
 			path = PetSearch;
 			sourceTree = "<group>";
