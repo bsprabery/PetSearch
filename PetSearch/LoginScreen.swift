@@ -94,7 +94,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+    //TODO: When attempting to register for the first time, the register button is actually the login button. Until the user clicks the login switch and then the register switch, they can't register a new user
     func handleLoginRegister() {
         if registerButtonTapped == true {
             print("Register")

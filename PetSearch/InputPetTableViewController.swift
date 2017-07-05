@@ -67,6 +67,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                     self.present(alertController, animated: true)
             } else {
            
+                //TODO: After registering and attempting to post a pet for the first time, this always fails at latitude (nil value). Why? Does not happen second time.
                 destinationVC.pet = Pet(name: petNameField.text!,
                                         species: speciesLabel.text!,
                                         sex: sexLabel.text!,
@@ -79,7 +80,9 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         email: "\(User.sharedSingleton.email!)",
                                         phoneNumber: "\(User.sharedSingleton.phoneNumber!)",
                                         latitude: latitude,
-                                        longitude: longitude
+                                        longitude: longitude,
+                                        petID: "",
+                                        userID: ""
                 )
             }
         }

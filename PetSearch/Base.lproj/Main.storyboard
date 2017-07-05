@@ -92,7 +92,7 @@
         <!--Adopt-->
         <scene sceneID="jdU-9G-XXD">
             <objects>
-                <tableViewController id="cnw-lL-eTf" customClass="AdoptViewController" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="&quot;AdoptVC&quot;" id="cnw-lL-eTf" customClass="AdoptViewController" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="vJq-ht-b8W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

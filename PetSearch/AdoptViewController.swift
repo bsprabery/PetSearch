@@ -8,21 +8,26 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class AdoptViewController: UITableViewController {
     
     //TODO: Add a link to the website icons8.com where I got the top left bar button item - or pay them money.
     
     let service: Service = Service()
+  
     
     var adoptPets: [Pet] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        service.fetchPets(viewControllerName: "Adopt")
     }
+    
+
  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 5
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

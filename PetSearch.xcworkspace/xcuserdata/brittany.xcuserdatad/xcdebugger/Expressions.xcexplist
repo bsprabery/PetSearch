@@ -11,6 +11,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "Service.(checkIfUserIsLoggedIn(segueOne : () -&gt; (), segueTwo : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "uid">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "LoginScreen.layoutView() -&gt; ():LoginScreen.swift">
          <PersistentStrings>
             <PersistentString

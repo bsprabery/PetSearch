@@ -21,16 +21,16 @@ class Service : NSObject {
             
         } else {
             let uid = FIRAuth.auth()?.currentUser?.uid
-            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
+            FIRDatabase.database().reference().child("users").child(uid!).child("userInfo").observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     User.sharedSingleton.email = dictionary["email"] as? String
                     User.sharedSingleton.firstName = dictionary["firstName"] as? String
                     User.sharedSingleton.lastName = dictionary["lastName"] as? String
                     User.sharedSingleton.phoneNumber = dictionary["phoneNumber"] as? String
-                    
+                    User.sharedSingleton.uid = dictionary["uid"] as? String
                 }
-                print("\(User.sharedSingleton)")
+
                 }, withCancel: nil)
             
             //Present InputPetTableVC
@@ -58,13 +58,19 @@ class Service : NSObject {
             
             let ref = FIRDatabase.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
             let usersRef = ref.child("users").child(uid)
-            let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber]
+            let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber, "uid": uid]
             usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                 //TODO: Password must be at least 6 characters long - present error to user
                 if err != nil {
                     print(err)
                     return
                 }
+                
+                User.sharedSingleton.email = email
+                User.sharedSingleton.firstName = firstName
+                User.sharedSingleton.lastName = lastName
+                User.sharedSingleton.phoneNumber = phoneNumber
+                User.sharedSingleton.uid = uid
                 
                 print("Successfully saved user into Firebase Database.")
                 
@@ -99,7 +105,99 @@ class Service : NSObject {
             print(logoutError)
         }
     }
+    
+    
+    //MARK: The pet photo can be retrieved with the pet ID. There is no need for a pet photoUrl anymore.
+    func uploadInfoToFirebaseDatabase(photo: UIImage, pet: inout Pet, completion: () -> ()) {
+        let ref = FIRDatabase.database().reference()
+      
+        let petRef = ref.child("pets").childByAutoId()
+        let petString = "\(petRef)"
+        let petID = petString.components(separatedBy: "https://petsearch-8b839.firebaseio.com/pets/")
+        pet.petID = petID[1]
+        pet.userID = "\(User.sharedSingleton.uid!)"
+        pet.photoUrl = petID[1]
+        
+        petRef.setValue(pet.toAnyObject())
+        uploadImageToFirebaseStorage(photo: photo, pet: pet, completion: completion)
+    }
+    
+    func uploadImageToFirebaseStorage(photo: UIImage, pet: Pet, completion: () -> ()) {
+        
+        guard let imageData = UIImageJPEGRepresentation(photo, 0.8) else {
+            return
+        }
+        
+        let data = imageData
+        let storageRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
+        let uploadMetadata = FIRStorageMetadata()
+        uploadMetadata.contentType = "image/jpeg"
+        
+        storageRef.put(data as Data, metadata: uploadMetadata) { (metadata, error) in
+            if (error != nil) {
+               // self.presentAlert(message: "There was an error uploading your image. Please try again.")
+                print("There was an error! \(error?.localizedDescription)")
+            } else {
+                print("Upload complete! Here's some metadata: \(metadata)")
+                print("Download URL: \(metadata?.downloadURL())")
+            }
+        }
+        
+        completion()
+    }
+    
+    
+    func fetchPets(viewControllerName: String) {
+       
+        let ref = FIRDatabase.database().reference().child("pets").queryOrdered(byChild: "status")
+        
+        switch viewControllerName {
+        case "Adopt":
+            ref.queryEqual(toValue: "Available to Adopt").observe(.value, with: { (snapshot) in
+                print("Count: ", snapshot.childrenCount)
+                var petsToReturn = [String]()
+                for child in snapshot.children {
+                    print("\((child as! FIRDataSnapshot).value)")
 
+                    print("Pet: \((child as! FIRDataSnapshot).key)")
+                    let petToReturn = (child as! FIRDataSnapshot).key
+
+                    petsToReturn.append(petToReturn)
+                    print("Pets Array: ", petsToReturn)
+                }
+        })
+        case "Found":
+            ref.queryEqual(toValue: "Found").observe(.value, with: { (snapshot) in
+                print("Count: ", snapshot.childrenCount)
+                var petsToReturn = [String]()
+                for child in snapshot.children {
+                    print("\((child as! FIRDataSnapshot).value)")
+
+                    print("Pet: \((child as! FIRDataSnapshot).key)")
+                    let petToReturn = (child as! FIRDataSnapshot).key
+
+                    petsToReturn.append(petToReturn)
+                    print("Pets Array: ", petsToReturn)
+                }
+        })
+        case "Lost":
+            ref.queryEqual(toValue: "Lost").observe(.value, with: { (snapshot) in
+                print("Count: ", snapshot.childrenCount)
+                var lostPets = [String]()
+                for child in snapshot.children {
+                    //This returns a wrapped optional of the pet's information:
+                    print("\((child as! FIRDataSnapshot).value)")
+
+                    //This returns the pet's ID number
+                    let lostPet = (child as! FIRDataSnapshot).key
+                    lostPets.append(lostPet)
+                }
+        })
+        default:
+            print("There were no views found with this identifier.")
+        }
+        
+    }
 
     
 }

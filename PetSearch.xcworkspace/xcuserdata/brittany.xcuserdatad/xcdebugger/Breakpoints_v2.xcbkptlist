@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PetSearch/Service.swift"
-            timestampString = "520547621.628175"
+            timestampString = "520981046.75564"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "checkIfUserIsLoggedIn(segueOne:segueTwo:)"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "fetchPets(viewControllerName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PetSearch/PreviewViewController.swift"
-            timestampString = "520548133.170772"
+            filePath = "PetSearch/Service.swift"
+            timestampString = "520981046.75564"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "fetchPets(viewControllerName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

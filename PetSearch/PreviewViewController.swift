@@ -12,8 +12,8 @@ import Firebase
 
 class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let ref = FIRDatabase.database().reference()
-    
+ //   let ref = FIRDatabase.database().reference()
+    let service: Service = Service()
 
     @IBOutlet var petNameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
@@ -105,57 +105,25 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(alertController, animated: true)
     }
     
-    func uploadImageToFirebaseStorage(uniqueID: String) {
-        
-        guard let petPhoto = petPhoto else {
-            presentAlert(message: "Please select a photo of your pet to display.")
-            return
-        }
-        //TODO: Do not save to database unless it passes this check
-        //Does not fail if no photo is selected. Pet profile is still saved to the database without a photo.
-        guard let imageData = UIImageJPEGRepresentation(petPhoto, 0.8) else {
-            presentAlert(message: "Please select a photo of your pet to display.")
-            return
-        }
 
-        let data = imageData
-        let storageRef = FIRStorage.storage().reference(withPath: "petPhotos/\(uniqueID).jpg")
-        let uploadMetadata = FIRStorageMetadata()
-        uploadMetadata.contentType = "image/jpeg"
-        storageRef.put(data as Data, metadata: uploadMetadata) { (metadata, error) in
-            if (error != nil) {
-                self.presentAlert(message: "There was an error uploading your image. Please try again.")
-                print("There was an error! \(error?.localizedDescription)")
-            } else {
-                print("Upload complete! Here's some metadata: \(metadata)")
-                print("Download URL: \(metadata?.downloadURL())")
-            }
-        }
-        
-        self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
-    }
-
-    
-    func uploadInfoToFirebaseDatabase() {
-
-        let petRef = self.ref.childByAutoId()
-        let stringRef = "\(petRef)"
-        let photoRef = stringRef.components(separatedBy: "https://petsearch-8b839.firebaseio.com/")
-        pet?.photoUrl = photoRef[1]
-        petRef.setValue(pet?.toAnyObject())
-        uploadImageToFirebaseStorage(uniqueID: (pet?.photoUrl)!)
-    }
     
     //MARK: Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
     @IBAction func savePreview(_ sender: AnyObject) {
-        uploadInfoToFirebaseDatabase()
-        
+        if let photo = petPhoto {
+            if var pet = pet {
+                service.uploadInfoToFirebaseDatabase(photo: photo, pet: &pet, completion: segueToUnwind)
+            } else {
+                print("pet was nil.")
+            }
+        } else {
+            presentAlert(message: "Please select a photo of your pet to display.")
+            print("No pet photo was selected.")
+        }  
     }
-    
-  
-    
-    
-    
+       
+    func segueToUnwind() {
+        self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
+    }
     
     
 }

@@ -21,6 +21,7 @@ class LostViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        service.fetchPets(viewControllerName: "Lost")
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -31,6 +31,7 @@ extension LoginScreen {
         forgotPasswordButton.isHidden = true
         
         loginButton.setTitle("Register", for: .normal)
+        registerButtonTapped = true
         
         let resolution = detectResolution()
         
@@ -96,6 +97,7 @@ extension LoginScreen {
         forgotPasswordButton.isHidden = false
         
         loginButton.setTitle("Login", for: .normal)
+        registerButtonTapped = false
         
         let resolution = detectResolution()
         
