@@ -15,15 +15,23 @@ class FoundViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.fetchPets(viewControllerName: "Found")
+        service.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
+        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        self.foundPets = service.getPets()
+        print(foundPets)
+        return foundPets.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Found Cell", for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
+        let pet = foundPets[indexPath.row]
+        cell.petImageView?.image = service.fetchImage(photoUrl: pet.photoUrl)
+        cell.nameLabel.text = pet.name
+        cell.detailsLabel.text = pet.petDetails
+        
         return cell
     }
     

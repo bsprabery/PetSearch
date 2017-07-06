@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import Firebase
 
 struct Pet {
         
-    let name: String
+    var name: String
     //Probably be better to do location as coordinates and map it, so you can filter by miles around the user.
    // let location: String
     let species: String
@@ -19,7 +20,7 @@ struct Pet {
     var photoUrl: String
     let petDetails: String
     let date: String
-    let status: String
+    var status: String
     let user: String
     let email: String
     let phoneNumber: String
@@ -27,8 +28,9 @@ struct Pet {
     let longitude: Double
     var petID: String
     var userID: String
+    var key: String
     
-    init(name: String, species: String, sex: String, breed: String, photoUrl: String, petDetails: String, date: String, status: String, user: String, email: String, phoneNumber: String, latitude: Double, longitude: Double, petID: String, userID: String) {
+    init(name: String, species: String, sex: String, breed: String, photoUrl: String, petDetails: String, date: String, status: String, user: String, email: String, phoneNumber: String, latitude: Double, longitude: Double, petID: String, userID: String, key: String = "") {
         self.name = name
         self.species = species
         self.sex = sex
@@ -44,6 +46,28 @@ struct Pet {
         self.longitude = longitude
         self.petID = petID
         self.userID = userID
+        self.key = key
+    }
+    
+    init(snapshot: FIRDataSnapshot) {
+        key = snapshot.key
+        let snapshotValue = snapshot.value! as! [String: AnyObject]
+        name = snapshotValue["name"] as! String
+        species = snapshotValue["species"] as! String
+        sex = snapshotValue["sex"] as! String
+        breed = snapshotValue["breed"] as! String
+        photoUrl = snapshotValue["photoUrl"] as! String
+        petDetails = snapshotValue["petDetails"] as! String
+        date = snapshotValue["date"] as! String
+        status = snapshotValue["status"] as! String
+        user = snapshotValue["user"] as! String
+        email = snapshotValue["email"] as! String
+        phoneNumber = snapshotValue["phoneNumber"] as! String
+        latitude = snapshotValue["latitude"] as! Double
+        longitude = snapshotValue["longitude"] as! Double
+        petID = snapshotValue["petID"] as! String
+        userID = snapshotValue["userID"] as! String
+        
     }
     
     func toAnyObject() -> [String:Any] {
@@ -66,5 +90,31 @@ struct Pet {
         ]
     }
     
+
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

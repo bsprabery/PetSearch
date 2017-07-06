@@ -15,23 +15,35 @@ class AdoptViewController: UITableViewController {
     //TODO: Add a link to the website icons8.com where I got the top left bar button item - or pay them money.
     
     let service: Service = Service()
-  
     
     var adoptPets: [Pet] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.fetchPets(viewControllerName: "Adopt")
+        service.fetchPets(viewControllerName: "Adopt", completion: tableView.reloadData)
+        
+        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
     }
     
-
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 107
+//    }
  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        self.adoptPets = service.getPets()
+        print(adoptPets)
+        return adoptPets.count
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Adopt Cell", for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
+        let pet = adoptPets[indexPath.row]
+        cell.petImageView?.image = service.fetchImage(photoUrl: pet.photoUrl)
+        cell.nameLabel.text = pet.name
+        cell.detailsLabel.text = pet.petDetails
+        
         return cell
     }
     

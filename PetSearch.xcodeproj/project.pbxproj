@@ -21,6 +21,8 @@
 		3815A7EB1E9D2A420048275C /* PetSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3815A7EA1E9D2A420048275C /* PetSearchUITests.swift */; };
 		3850FB761F0408430083F6AA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850FB751F0408430083F6AA /* User.swift */; };
 		3850FB831F054FB00083F6AA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850FB821F054FB00083F6AA /* LoginView.swift */; };
+		3860CE5C1F0EBACC0028ADB2 /* PetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860CE5A1F0EBACC0028ADB2 /* PetCell.swift */; };
+		3860CE5D1F0EBACC0028ADB2 /* PetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3860CE5B1F0EBACC0028ADB2 /* PetCell.xib */; };
 		389854DA1E9FFDF7003F2115 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 389854D81E9FFDF7003F2115 /* Main.storyboard */; };
 		38C6FB071EF31110002289D3 /* PetProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB061EF31110002289D3 /* PetProfileView.swift */; };
 		38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB081EF322D8002289D3 /* LoginScreen.swift */; };
@@ -70,6 +72,8 @@
 		3815A7EC1E9D2A420048275C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3850FB751F0408430083F6AA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3850FB821F054FB00083F6AA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3860CE5A1F0EBACC0028ADB2 /* PetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetCell.swift; sourceTree = "<group>"; };
+		3860CE5B1F0EBACC0028ADB2 /* PetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PetCell.xib; sourceTree = "<group>"; };
 		389854D91E9FFDF7003F2115 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		38C6FB061EF31110002289D3 /* PetProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetProfileView.swift; sourceTree = "<group>"; };
 		38C6FB081EF322D8002289D3 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 				38C6FB061EF31110002289D3 /* PetProfileView.swift */,
 				38C6FB081EF322D8002289D3 /* LoginScreen.swift */,
 				381418421EA1564700B51DAC /* InputPetTableViewController.swift */,
+				3860CE5A1F0EBACC0028ADB2 /* PetCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -199,6 +204,7 @@
 		3850FB771F040E900083F6AA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3860CE5B1F0EBACC0028ADB2 /* PetCell.xib */,
 				3850FB821F054FB00083F6AA /* LoginView.swift */,
 			);
 			name = View;
@@ -360,6 +366,7 @@
 				3815A7D51E9D2A420048275C /* LaunchScreen.storyboard in Resources */,
 				389854DA1E9FFDF7003F2115 /* Main.storyboard in Resources */,
 				38F90DAF1E9EC57D0097E6C7 /* GoogleService-Info.plist in Resources */,
+				3860CE5D1F0EBACC0028ADB2 /* PetCell.xib in Resources */,
 				3815A7D21E9D2A420048275C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,6 +538,7 @@
 				3815A7CA1E9D2A420048275C /* LaunchScreenView.swift in Sources */,
 				381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */,
 				3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */,
+				3860CE5C1F0EBACC0028ADB2 /* PetCell.swift in Sources */,
 				38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */,
 				3850FB831F054FB00083F6AA /* LoginView.swift in Sources */,
 				38C6FB071EF31110002289D3 /* PetProfileView.swift in Sources */,

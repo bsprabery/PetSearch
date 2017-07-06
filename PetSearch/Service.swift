@@ -147,57 +147,72 @@ class Service : NSObject {
     }
     
     
-    func fetchPets(viewControllerName: String) {
+    func fetchPets(viewControllerName: String, completion: @escaping () -> Void) {
        
         let ref = FIRDatabase.database().reference().child("pets").queryOrdered(byChild: "status")
         
         switch viewControllerName {
         case "Adopt":
             ref.queryEqual(toValue: "Available to Adopt").observe(.value, with: { (snapshot) in
-                print("Count: ", snapshot.childrenCount)
-                var petsToReturn = [String]()
-                for child in snapshot.children {
-                    print("\((child as! FIRDataSnapshot).value)")
-
-                    print("Pet: \((child as! FIRDataSnapshot).key)")
-                    let petToReturn = (child as! FIRDataSnapshot).key
-
-                    petsToReturn.append(petToReturn)
-                    print("Pets Array: ", petsToReturn)
+                var adoptPets: [Pet] = []
+                
+                for pet in snapshot.children {
+                    let adoptPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                    adoptPets.append(adoptPet)
+                    
+                    self.setPets(pets: adoptPets)
                 }
+                completion()
         })
         case "Found":
             ref.queryEqual(toValue: "Found").observe(.value, with: { (snapshot) in
-                print("Count: ", snapshot.childrenCount)
-                var petsToReturn = [String]()
-                for child in snapshot.children {
-                    print("\((child as! FIRDataSnapshot).value)")
-
-                    print("Pet: \((child as! FIRDataSnapshot).key)")
-                    let petToReturn = (child as! FIRDataSnapshot).key
-
-                    petsToReturn.append(petToReturn)
-                    print("Pets Array: ", petsToReturn)
+                var foundPets: [Pet] = []
+                
+                for pet in snapshot.children {
+                    let foundPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                    foundPets.append(foundPet)
+                    
+                    self.setPets(pets: foundPets)
                 }
+                completion()
         })
         case "Lost":
             ref.queryEqual(toValue: "Lost").observe(.value, with: { (snapshot) in
-                print("Count: ", snapshot.childrenCount)
-                var lostPets = [String]()
-                for child in snapshot.children {
-                    //This returns a wrapped optional of the pet's information:
-                    print("\((child as! FIRDataSnapshot).value)")
+                var lostPets: [Pet] = []
 
-                    //This returns the pet's ID number
-                    let lostPet = (child as! FIRDataSnapshot).key
+                for pet in snapshot.children {
+                    let lostPet = Pet(snapshot: pet as! FIRDataSnapshot)
                     lostPets.append(lostPet)
+                    
+                    self.setPets(pets: lostPets)
                 }
+                completion()
         })
         default:
             print("There were no views found with this identifier.")
         }
         
     }
+    
+    func fetchImage(photoUrl: String) -> UIImage {
+        
+        let storRef = FIRStorage.storage().reference(withPath: "\(photoUrl).jpg")
+        
+        return #imageLiteral(resourceName: "Torrey_Wiley_Cookie")
+    }
+    
+    private var petArray: [Pet]
+    
+    override init() {
+        petArray = [Pet]()
+    }
+    
+    func setPets(pets: [Pet]) {
+        self.petArray = pets
+    }
 
+    func getPets() -> [Pet] {
+        return petArray
+    }
     
 }

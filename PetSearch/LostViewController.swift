@@ -21,15 +21,25 @@ class LostViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.fetchPets(viewControllerName: "Lost")
+        service.fetchPets(viewControllerName: "Lost", completion: tableView.reloadData)
+        
+        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        self.lostPets = service.getPets()
+        print(lostPets)
+        return lostPets.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Lost Cell", for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
+        let pet = lostPets[indexPath.row]
+        cell.petImageView?.image = service.fetchImage(photoUrl: pet.photoUrl)
+        cell.nameLabel.text = pet.name
+        cell.detailsLabel.text = pet.petDetails
+        
         return cell
     }
     
