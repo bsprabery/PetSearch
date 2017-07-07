@@ -15,5 +15,4 @@ class PetCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var detailsLabel: UILabel!
 
-    
 }

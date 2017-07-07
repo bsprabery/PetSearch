@@ -194,12 +194,26 @@ class Service : NSObject {
         
     }
     
-    func fetchImage(photoUrl: String) -> UIImage {
+//    func fetchImage(photoUrl: String) -> UIImage {
+    
+    //    let storRef = FIRStorage.storage().reference(withPath: "\(photoUrl).jpg")
         
-        let storRef = FIRStorage.storage().reference(withPath: "\(photoUrl).jpg")
         
-        return #imageLiteral(resourceName: "Torrey_Wiley_Cookie")
-    }
+        
+//        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        let fileUrl = documentsUrl.appendingPathComponent("\(photoUrl).png")
+//    
+//        let downloadTask = storRef.write(toFile: fileUrl) { url, error in
+//            if let error = error {
+//                
+//            } else {
+//                
+//            }
+//        }
+
+//        
+//        return #imageLiteral(resourceName: "Torrey_Wiley_Cookie")
+//    }
     
     private var petArray: [Pet]
     

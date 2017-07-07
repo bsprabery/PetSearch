@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
+import FirebaseStorageUI
 
 class LostViewController: UITableViewController {
     
@@ -36,9 +37,16 @@ class LostViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
         let pet = lostPets[indexPath.row]
-        cell.petImageView?.image = service.fetchImage(photoUrl: pet.photoUrl)
+        
+        let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+        let placeholderImage = UIImage(named: "Placeholder")
+        
+        cell.petImageView?.sd_setImage(with: storRef, placeholderImage: placeholderImage)
+        
         cell.nameLabel.text = pet.name
         cell.detailsLabel.text = pet.petDetails
+        
+        cell.petImageView.layer.cornerRadius = 5.0
         
         return cell
     }

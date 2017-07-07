@@ -35,36 +35,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Lost Cell" rowHeight="120" id="3yF-qm-Do3">
-                                <rect key="frame" x="0.0" y="92" width="375" height="120"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3yF-qm-Do3" id="BSF-ht-GFL">
-                                    <frame key="frameInset" width="375" height="119"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j5I-fx-T9Z">
-                                            <frame key="frameInset" minX="137" minY="8" height="22" maxX="16"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Torrey_Wiley_Cookie_Med" translatesAutoresizingMaskIntoConstraints="NO" id="W2W-TX-tLx">
-                                            <frame key="frameInset" minX="8" minY="4" width="130" height="110"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YY6-pp-Mxz">
-                                            <frame key="frameInset" minX="141" minY="32" height="82" maxX="16"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <string key="text">Nulla venenatis pretium ullamcorper. Donec dictum, justo eget luctus aliquam, ligula ex aliquet ligula, quis fermentum est orci ut felis. Aliquam eget ex a purus aliquam vulputate. Suspendisse vestibulum tortor lorem. Phasellus vitae laoreet diam. Sed aliquam diam erat. Donec id quam in quam pellentesque sagittis vitae </string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="WDo-qw-RPj" id="k2R-Ml-xzq"/>
                             <outlet property="delegate" destination="WDo-qw-RPj" id="Rlj-L9-vSz"/>
@@ -125,37 +95,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Found Cell" rowHeight="119" id="szV-J2-bj0">
-                                <rect key="frame" x="0.0" y="92" width="375" height="119"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="szV-J2-bj0" id="PS3-74-MHZ">
-                                    <frame key="frameInset" width="375" height="118"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Torrey_Wiley_Cookie" translatesAutoresizingMaskIntoConstraints="NO" id="Xc0-LK-Pmw">
-                                            <frame key="frameInset" minX="8" minY="4" width="130" height="110"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQA-eA-DCB">
-                                            <frame key="frameInset" minX="146" minY="8" width="221" height="22"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPh-SX-kf4">
-                                            <frame key="frameInset" minX="137" minY="32" height="82" maxX="12"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <string key="text">Nulla venenatis pretium ullamcorper. Donec dictum, justo eget luctus aliquam, ligula ex aliquet ligula, quis fermentum est orci ut felis. Aliquam eget ex a purus aliquam vulputate. Suspendisse vestibulum tortor lorem. Phasellus vitae laoreet diam. Sed aliquam diam erat. Donec id quam in quam pellentesque sagittis vitae </string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="goU-Z5-mM1" id="bIz-dY-Y0c"/>
                             <outlet property="delegate" destination="goU-Z5-mM1" id="B21-tl-4kQ"/>
@@ -640,7 +579,7 @@
         <!--Pet Profile View-->
         <scene sceneID="Ask-er-GwV">
             <objects>
-                <viewController id="UOW-WB-Efy" customClass="PetProfileView" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Pet Profile View" id="UOW-WB-Efy" customClass="PetProfileView" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sOm-42-t9I"/>
                         <viewControllerLayoutGuide type="bottom" id="LYR-08-vKZ"/>
@@ -984,7 +923,5 @@
     <resources>
         <image name="Placeholder" width="512" height="512"/>
         <image name="Small Menu" width="25" height="25"/>
-        <image name="Torrey_Wiley_Cookie" width="3504" height="2336"/>
-        <image name="Torrey_Wiley_Cookie_Med" width="500" height="333"/>
     </resources>
 </document>
