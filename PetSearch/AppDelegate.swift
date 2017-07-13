@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Documents Directory: \(documentsPath)")
             }
         #endif
+            
         FIRApp.configure()
         return true
     }

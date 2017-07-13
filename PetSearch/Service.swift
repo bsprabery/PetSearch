@@ -213,6 +213,7 @@ class Service : NSObject {
                     self.setPets(pets: adoptPets)
                 }
                 completion()
+                self.setPets(pets: [])
         })
         case "Found":
             ref.queryEqual(toValue: "Found").observe(.value, with: { (snapshot) in
@@ -225,6 +226,7 @@ class Service : NSObject {
                     self.setPets(pets: foundPets)
                 }
                 completion()
+                self.setPets(pets: [])
         })
         case "Lost":
             ref.queryEqual(toValue: "Lost").observe(.value, with: { (snapshot) in
@@ -237,6 +239,7 @@ class Service : NSObject {
                     self.setPets(pets: lostPets)
                 }
                 completion()
+                self.setPets(pets: [])
         })
         default:
             print("There were no views found with this identifier.")

@@ -25,18 +25,13 @@ class AdoptViewController: UITableViewController {
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
     }
-    
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 107
-//    }
+
  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.adoptPets = Service.sharedSingleton.getPets()
         print(adoptPets)
         return adoptPets.count
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
@@ -69,8 +64,39 @@ class AdoptViewController: UITableViewController {
     @IBAction func addButtonTapped(_ sender: AnyObject) {
         Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
     }
-}
     
+    @IBAction func optionsButtonTapped(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
+                print("Manage my pets clicked.")
+            }))
+            alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
+                Service.sharedSingleton.handleLogout()
+                self.presentAlert(message: "You have signed out successfully.")
+                print("Logged out successful")
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func presentAlert(message: String) {
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        }
+        
+        alertController.addAction(okayAction)
+        self.present(alertController, animated: true)
+    }
+}
+
 extension UIViewController {
     func segueToLoginScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)

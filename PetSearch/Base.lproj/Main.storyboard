@@ -30,7 +30,7 @@
         <!--Lost-->
         <scene sceneID="nh6-fk-Mgm">
             <objects>
-                <tableViewController id="WDo-qw-RPj" customClass="LostViewController" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="LostViewController" id="WDo-qw-RPj" customClass="LostViewController" customModule="PetSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="oXn-Sr-b96">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -42,7 +42,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="more" id="PBh-tD-FXP"/>
                     <navigationItem key="navigationItem" title="Lost" id="xuy-Fu-FUZ">
-                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="nYi-pf-AsM">
+                        <barButtonItem key="leftBarButtonItem" title="Options" id="nYi-pf-AsM">
                             <connections>
                                 <action selector="optionsButtonTapped:" destination="WDo-qw-RPj" id="PSS-lM-GPH"/>
                             </connections>
@@ -78,7 +78,11 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="YeT-qb-JzE"/>
                     <navigationItem key="navigationItem" title="Adopt" id="VR2-Vy-MfI">
-                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="vTg-MP-HVl"/>
+                        <barButtonItem key="leftBarButtonItem" title="Options" id="vTg-MP-HVl">
+                            <connections>
+                                <action selector="optionsButtonTapped:" destination="cnw-lL-eTf" id="zLZ-aR-4ZR"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="625-ZY-H3f">
                             <connections>
                                 <action selector="addButtonTapped:" destination="cnw-lL-eTf" id="Zzz-T2-Cig"/>
@@ -106,7 +110,11 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="featured" id="E9y-rc-L0b"/>
                     <navigationItem key="navigationItem" title="Found" id="0wW-Tv-W3c">
-                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="fG6-pW-C3a"/>
+                        <barButtonItem key="leftBarButtonItem" title="Options" id="fG6-pW-C3a">
+                            <connections>
+                                <action selector="optionsButtonTapped:" destination="goU-Z5-mM1" id="o3J-a1-3KF"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QUu-va-7of">
                             <connections>
                                 <action selector="addButtonTapped:" destination="goU-Z5-mM1" id="vbJ-9J-vQy"/>
@@ -926,6 +934,5 @@
     </scenes>
     <resources>
         <image name="Placeholder" width="512" height="512"/>
-        <image name="Small Menu" width="25" height="25"/>
     </resources>
 </document>
