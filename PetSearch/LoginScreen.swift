@@ -12,8 +12,6 @@ import Firebase
 
 class LoginScreen: UIViewController, UITextFieldDelegate {
     
-    let service: Service = Service()
-    
     @IBOutlet var firstNameTextField: UITextField!
     @IBOutlet var lastNameTextField: UITextField!
     @IBOutlet var emailTextField: UITextField!
@@ -98,10 +96,10 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     func handleLoginRegister() {
         if registerButtonTapped == true {
             print("Register")
-            service.handleRegister(email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
+            Service.sharedSingleton.handleRegister(email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
         } else {
             print("Login")
-            service.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
+            Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
         }
     }
         

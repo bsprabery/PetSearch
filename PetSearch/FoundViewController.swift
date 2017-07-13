@@ -12,17 +12,17 @@ import Firebase
 import FirebaseStorageUI
 
 class FoundViewController: UITableViewController {
-    let service: Service = Service()
+    
     var foundPets: [Pet] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
+        Service.sharedSingleton.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.foundPets = service.getPets()
+        self.foundPets = Service.sharedSingleton.getPets()
         print(foundPets)
         return foundPets.count
     }
@@ -64,7 +64,7 @@ class FoundViewController: UITableViewController {
 //    }
     
     @IBAction func addButtonTapped(_ sender: AnyObject) {
-        service.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
     }
     
     

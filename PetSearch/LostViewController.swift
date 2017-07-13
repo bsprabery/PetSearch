@@ -12,9 +12,7 @@ import Firebase
 import FirebaseStorageUI
 
 class LostViewController: UITableViewController {
-    
-    let service: Service = Service()
-    
+        
     @IBOutlet var searchPetsButton: UIBarButtonItem!
     @IBOutlet var addPetButton: UIBarButtonItem!
     
@@ -22,45 +20,73 @@ class LostViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.fetchPets(viewControllerName: "Lost", completion: tableView.reloadData)
+        Service.sharedSingleton.fetchPets(viewControllerName: "Lost", completion: tableView.reloadData)
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
 
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.lostPets = service.getPets()
+        self.lostPets = Service.sharedSingleton.getPets()
         print(lostPets)
         return lostPets.count
     }
     
+    let imageCache = NSCache<NSString, UIImage>()
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
         let pet = lostPets[indexPath.row]
-        
-        let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
         let placeholderImage = UIImage(named: "Placeholder")
-        
-        cell.petImageView?.sd_setImage(with: storRef, placeholderImage: placeholderImage)
-        
+        cell.petImageView?.image = placeholderImage!
         cell.nameLabel.text = pet.name
         cell.detailsLabel.text = pet.petDetails
-        
         cell.petImageView.layer.cornerRadius = 5.0
+        
+        
+        if let cachedImage = imageCache.object(forKey: pet.photoUrl as NSString) {
+            cell.petImageView?.image = cachedImage
+            cell.setNeedsLayout()
+        } else {
+            let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+                
+                guard error == nil else {
+                    print("Error downloading: \(error)")
+                    return
+                }
+                
+                let petImage = UIImage.init(data: data!, scale: 50)
+                self.imageCache.setObject(petImage!, forKey: pet.photoUrl as NSString)
+                if cell == tableView.cellForRow(at: indexPath) {
+                    DispatchQueue.main.async {
+                        cell.petImageView.image = petImage
+                        cell.setNeedsLayout()
+                        print(petImage)
+                    }
+                }
+            }
+        }
         
         return cell
     }
+    
+      //  let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
     @IBAction func addPet(_ sender: AnyObject) {
-        service.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
     }
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         print("Performing unwind segue to Lost VC.")
+    }
+    
+    @IBAction func optionsButtonTapped(_ sender: AnyObject) {
+        Service.sharedSingleton.handleLogout()
     }
     
     

@@ -42,7 +42,11 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" systemItem="more" id="PBh-tD-FXP"/>
                     <navigationItem key="navigationItem" title="Lost" id="xuy-Fu-FUZ">
-                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="nYi-pf-AsM"/>
+                        <barButtonItem key="leftBarButtonItem" image="Small Menu" id="nYi-pf-AsM">
+                            <connections>
+                                <action selector="optionsButtonTapped:" destination="WDo-qw-RPj" id="PSS-lM-GPH"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9bb-pR-lY5">
                             <connections>
                                 <action selector="addPet:" destination="WDo-qw-RPj" id="G10-P2-ZlU"/>

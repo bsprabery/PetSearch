@@ -8,8 +8,11 @@
 
 import Foundation
 import Firebase
+import FirebaseAuthUI
 
 class Service : NSObject {
+    
+    static var sharedSingleton = Service()
     
     func checkIfUserIsLoggedIn(segueOne: () -> Void, segueTwo: @escaping () -> Void) {
         if FIRAuth.auth()?.currentUser?.uid == nil {
@@ -21,14 +24,16 @@ class Service : NSObject {
             
         } else {
             let uid = FIRAuth.auth()?.currentUser?.uid
-            FIRDatabase.database().reference().child("users").child(uid!).child("userInfo").observeSingleEvent(of: .value, with: { (snapshot) in
+            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
-                    User.sharedSingleton.email = dictionary["email"] as? String
-                    User.sharedSingleton.firstName = dictionary["firstName"] as? String
-                    User.sharedSingleton.lastName = dictionary["lastName"] as? String
-                    User.sharedSingleton.phoneNumber = dictionary["phoneNumber"] as? String
-                    User.sharedSingleton.uid = dictionary["uid"] as? String
+                    
+                    let uid = dictionary["uid"] as? String
+                    let email = dictionary["email"] as? String
+                    let firstName = dictionary["firstName"] as? String
+                    let phoneNumber = dictionary["phoneNumber"] as? String
+                    
+                    self.writeToDisk(email: email!, firstName: firstName!, phoneNumber: phoneNumber!, uid: uid!)
                 }
 
                 }, withCancel: nil)
@@ -59,6 +64,9 @@ class Service : NSObject {
             let ref = FIRDatabase.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
             let usersRef = ref.child("users").child(uid)
             let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber, "uid": uid]
+            
+            self.writeToDisk(email: email, firstName: firstName, phoneNumber: phoneNumber, uid: uid)
+            
             usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                 //TODO: Password must be at least 6 characters long - present error to user
                 if err != nil {
@@ -66,17 +74,51 @@ class Service : NSObject {
                     return
                 }
                 
-                User.sharedSingleton.email = email
-                User.sharedSingleton.firstName = firstName
-                User.sharedSingleton.lastName = lastName
-                User.sharedSingleton.phoneNumber = phoneNumber
-                User.sharedSingleton.uid = uid
-                
                 print("Successfully saved user into Firebase Database.")
                 
                 completion()
             })
         })
+    }
+
+    func writeToDisk(email: String, firstName: String, phoneNumber: String, uid: String) {
+        let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+        let documentsDirectory = directories[0] as! String
+        let path = documentsDirectory.appending("/userInfo.plist")
+        self.setUrl(path: path)
+        
+        let dictionary = ["email" : email, "name" : firstName, "phoneNumber" : phoneNumber, "uid" : uid] as NSDictionary
+        dictionary.write(toFile: path, atomically: true)
+        print(dictionary)
+    }
+    
+    func getUserDetails() {
+        let uid = FIRAuth.auth()?.currentUser?.uid
+        FIRDatabase.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                
+                let uid = dictionary["uid"] as? String
+                let email = dictionary["email"] as? String
+                let firstName = dictionary["firstName"] as? String
+                let phoneNumber = dictionary["phoneNumber"] as? String
+                
+                let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+                let documentsDirectory = directories[0] as! String
+                let path = documentsDirectory.appending("/userInfo.plist")
+                self.setUrl(path: path)
+  
+                let dictionary = ["email" : email!, "name" : firstName!, "phoneNumber" : phoneNumber!, "uid" : uid!] as NSDictionary
+                dictionary.write(toFile: path, atomically: true)
+            }
+        }, withCancel: nil)
+    }
+
+    func readFromDisk() -> NSMutableDictionary {
+        print(getUrl())
+        let userInfo = NSMutableDictionary(contentsOfFile: getUrl())
+        print(userInfo!)
+        return userInfo!
     }
     
     func handleLogin(email: String?, password: String?, completion: @escaping () -> Void) {
@@ -88,14 +130,18 @@ class Service : NSObject {
             return
         }
         
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
             if error != nil {
                 print(error)
                 return
             }
             
+            self.getUserDetails()
+            
              completion()
         })
+        
+        
     }
     
     func handleLogout() {
@@ -115,8 +161,12 @@ class Service : NSObject {
         let petString = "\(petRef)"
         let petID = petString.components(separatedBy: "https://petsearch-8b839.firebaseio.com/pets/")
         pet.petID = petID[1]
-        pet.userID = "\(User.sharedSingleton.uid!)"
         pet.photoUrl = petID[1]
+        
+        let userDict = readFromDisk()
+        let uid = userDict["uid"] as! String
+        pet.userID = "\(uid)"
+
         
         petRef.setValue(pet.toAnyObject())
         uploadImageToFirebaseStorage(photo: photo, pet: pet, completion: completion)
@@ -193,32 +243,13 @@ class Service : NSObject {
         }
         
     }
-    
-//    func fetchImage(photoUrl: String) -> UIImage {
-    
-    //    let storRef = FIRStorage.storage().reference(withPath: "\(photoUrl).jpg")
-        
-        
-        
-//        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let fileUrl = documentsUrl.appendingPathComponent("\(photoUrl).png")
-//    
-//        let downloadTask = storRef.write(toFile: fileUrl) { url, error in
-//            if let error = error {
-//                
-//            } else {
-//                
-//            }
-//        }
 
-//        
-//        return #imageLiteral(resourceName: "Torrey_Wiley_Cookie")
-//    }
-    
     private var petArray: [Pet]
+    private var userInfoPath: String
     
     override init() {
         petArray = [Pet]()
+        userInfoPath = String()
     }
     
     func setPets(pets: [Pet]) {
@@ -227,6 +258,16 @@ class Service : NSObject {
 
     func getPets() -> [Pet] {
         return petArray
+    }
+    
+    func setUrl(path: String) {
+        self.userInfoPath = path
+        print(path)
+    }
+    
+    func getUrl() -> String {
+        print(self.userInfoPath)
+        return self.userInfoPath
     }
     
 }

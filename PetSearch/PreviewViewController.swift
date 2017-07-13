@@ -11,9 +11,6 @@ import UIKit
 import Firebase
 
 class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
- //   let ref = FIRDatabase.database().reference()
-    let service: Service = Service()
 
     @IBOutlet var petNameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
@@ -111,7 +108,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func savePreview(_ sender: AnyObject) {
         if let photo = petPhoto {
             if var pet = pet {
-                service.uploadInfoToFirebaseDatabase(photo: photo, pet: &pet, completion: segueToUnwind)
+                Service.sharedSingleton.uploadInfoToFirebaseDatabase(photo: photo, pet: &pet, completion: segueToUnwind)
             } else {
                 print("pet was nil.")
             }

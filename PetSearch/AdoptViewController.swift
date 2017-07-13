@@ -15,13 +15,13 @@ class AdoptViewController: UITableViewController {
     
     //TODO: Add a link to the website icons8.com where I got the top left bar button item - or pay them money.
     
-    let service: Service = Service()
+    
     
     var adoptPets: [Pet] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        service.fetchPets(viewControllerName: "Adopt", completion: tableView.reloadData)
+        Service.sharedSingleton.fetchPets(viewControllerName: "Adopt", completion: tableView.reloadData)
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
     }
@@ -31,7 +31,7 @@ class AdoptViewController: UITableViewController {
 //    }
  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.adoptPets = service.getPets()
+        self.adoptPets = Service.sharedSingleton.getPets()
         print(adoptPets)
         return adoptPets.count
     }
@@ -67,7 +67,7 @@ class AdoptViewController: UITableViewController {
     }
     
     @IBAction func addButtonTapped(_ sender: AnyObject) {
-        service.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
     }
 }
     

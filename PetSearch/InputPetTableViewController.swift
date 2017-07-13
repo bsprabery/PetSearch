@@ -40,6 +40,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     private var latitude: Double!
     private var longitude: Double!
     
+    
     func formatDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy"
@@ -66,8 +67,14 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                     alertController.addAction(okayAction)
                     self.present(alertController, animated: true)
             } else {
-           
-                //TODO: After registering and attempting to post a pet for the first time, this always fails at latitude (nil value). Why? Does not happen second time.
+                
+                let userInfoDict = Service.sharedSingleton.readFromDisk()
+                let userName = userInfoDict["name"] as! String!
+                let userEmail = userInfoDict["email"] as! String!
+                let phoneNumber = userInfoDict["phoneNumber"] as! String!
+                let uid = userInfoDict["uid"] as! String!
+                
+                //TODO: After registering and attempting to post a pet for the first time, this always fails at user/latitude (nil value). Why? Does not happen second time.
                 destinationVC.pet = Pet(name: petNameField.text!,
                                         species: speciesLabel.text!,
                                         sex: sexLabel.text!,
@@ -76,13 +83,13 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         petDetails: detailsTextView.text!,
                                         date: "\(formatDate())",
                                         status: statusLabel.text!,
-                                        user: "\(User.sharedSingleton.firstName!)",
-                                        email: "\(User.sharedSingleton.email!)",
-                                        phoneNumber: "\(User.sharedSingleton.phoneNumber!)",
+                                        user: userName!,
+                                        email: userEmail!,
+                                        phoneNumber: phoneNumber!,
                                         latitude: latitude,
                                         longitude: longitude,
                                         petID: "",
-                                        userID: ""
+                                        userID: uid!
                 )
             }
         }
@@ -107,6 +114,11 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
