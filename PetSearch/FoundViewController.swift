@@ -14,6 +14,8 @@ import FirebaseStorageUI
 class FoundViewController: UITableViewController {
     
     var foundPets: [Pet] = []
+    var petDetails: Pet?
+    var petPic: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,25 +45,23 @@ class FoundViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         let indexPath = tableView.indexPathForSelectedRow!
-         let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+        let indexPath = tableView.indexPathForSelectedRow!
+        petDetails = foundPets[indexPath.row]
         
-//        valueToPass = currentCell.textLabel?.text
-//        performSegue(withIdentifier: "Found to Detail", sender: self)
+        let cell = tableView.cellForRow(at: indexPath) as! PetCell
+        petPic = cell.petImageView.image
         
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        let destination = storyboard.instantiateViewController(withIdentifier: "Detail View")
-//        navigationController?.pushViewController(destination, animated: true)
-        
+        performSegue(withIdentifier: "SegueToProfileView", sender: self)
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if (segue.identifier == "Found to Detail") {
-//            var viewController = segue.destination as! DetailViewController
-//            viewController. = valueToPass
-//            
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueToProfileView" {
+            let destinationNavController = segue.destination as! UINavigationController
+            let petProfileVC = destinationNavController.topViewController as! PetProfileView
+            petProfileVC.petProfile = petDetails
+            petProfileVC.petImage = petPic!
+        }
+    }
     
     @IBAction func addButtonTapped(_ sender: AnyObject) {
         Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)

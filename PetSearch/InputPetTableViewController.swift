@@ -68,6 +68,14 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                     self.present(alertController, animated: true)
             } else {
                 
+                var breedText: String
+                
+                if breedTextField.text == "" {
+                    breedText = "Unknown Breed"
+                } else {
+                    breedText = breedTextField.text!
+                }
+                
                 let userInfoDict = Service.sharedSingleton.readFromDisk()
                 let userName = userInfoDict["name"] as! String!
                 let userEmail = userInfoDict["email"] as! String!
@@ -78,7 +86,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                 destinationVC.pet = Pet(name: petNameField.text!,
                                         species: speciesLabel.text!,
                                         sex: sexLabel.text!,
-                                        breed: breedTextField.text!,
+                                        breed: breedText,
                                         photoUrl: "",
                                         petDetails: detailsTextView.text!,
                                         date: "\(formatDate())",

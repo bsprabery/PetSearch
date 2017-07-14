@@ -17,6 +17,8 @@ class LostViewController: UITableViewController {
     @IBOutlet var addPetButton: UIBarButtonItem!
     
     var lostPets: [Pet] = []
+    var petDetails: Pet?
+    var petPic: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +64,6 @@ class LostViewController: UITableViewController {
                     DispatchQueue.main.async {
                         cell.petImageView.image = petImage
                         cell.setNeedsLayout()
-                        print(petImage)
                     }
                 }
             }
@@ -71,10 +72,26 @@ class LostViewController: UITableViewController {
         return cell
     }
     
-      //  let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let indexPath = tableView.indexPathForSelectedRow!
+        petDetails = lostPets[indexPath.row]
         
+        let cell = tableView.cellForRow(at: indexPath) as! PetCell
+        petPic = cell.petImageView.image
+        
+        performSegue(withIdentifier: "SegueToProfileView", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueToProfileView" {
+            let destinationNavController = segue.destination as! UINavigationController
+            let petProfileVC = destinationNavController.topViewController as! PetProfileView
+            petProfileVC.petProfile = petDetails
+            petProfileVC.petImage = petPic!
+            
+        }
     }
     
     @IBAction func addPet(_ sender: AnyObject) {

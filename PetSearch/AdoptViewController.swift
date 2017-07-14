@@ -18,6 +18,8 @@ class AdoptViewController: UITableViewController {
     
     
     var adoptPets: [Pet] = []
+    var petDetails: Pet?
+    var petPic: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,13 +50,23 @@ class AdoptViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      //  let indexPath = tableView.indexPathForSelectedRow!
-       // let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+        let indexPath = tableView.indexPathForSelectedRow!
+        petDetails = adoptPets[indexPath.row]
         
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let destination = storyboard.instantiateViewController(withIdentifier: "Detail View")
-        navigationController?.pushViewController(destination, animated: true)
+        let cell = tableView.cellForRow(at: indexPath) as! PetCell
+        petPic = cell.petImageView.image
         
+        performSegue(withIdentifier: "SegueToProfileView", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueToProfileView" {
+            let destinationNavController = segue.destination as! UINavigationController
+            let petProfileVC = destinationNavController.topViewController as! PetProfileView
+            petProfileVC.petProfile = petDetails
+            petProfileVC.petImage = petPic!
+            
+        }
     }
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
