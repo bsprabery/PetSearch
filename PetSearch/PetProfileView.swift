@@ -21,7 +21,7 @@ class PetProfileView: UIViewController {
     @IBOutlet var petOwnerNameLabel: UILabel!
     @IBOutlet var petDetailsLabel: UILabel!
     @IBOutlet var contactButton: UIButton!
-    
+        
     var petProfile: Pet?
     var petImage: UIImage?
     
@@ -30,6 +30,7 @@ class PetProfileView: UIViewController {
         
         setUpProfile(petDetails: petProfile)
         roundCorners()
+        layoutView()
     }
     
     
@@ -38,7 +39,7 @@ class PetProfileView: UIViewController {
         guard let petDetails = petProfile else {
             return
         }
-        petImageView.backgroundColor = UIColor.black
+     //   petImageView.backgroundColor = UIColor.black
         
         statusLabel.text! = "\(petDetails.status) since \(petDetails.date)"
         petNameLabel.text! = petDetails.name
