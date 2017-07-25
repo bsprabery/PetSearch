@@ -73,6 +73,7 @@ class FoundViewController: UITableViewController {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
+                      
                 print("Manage my pets clicked.")
             }))
             alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
@@ -87,6 +88,7 @@ class FoundViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
     
     func presentAlert(message: String) {
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)

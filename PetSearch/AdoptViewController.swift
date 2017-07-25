@@ -13,10 +13,6 @@ import Firebase
 
 class AdoptViewController: UITableViewController {
     
-    //TODO: Add a link to the website icons8.com where I got the top left bar button item - or pay them money.
-    
-    
-    
     var adoptPets: [Pet] = []
     var petDetails: Pet?
     var petPic: UIImage?
@@ -120,6 +116,11 @@ extension UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "Nav Controller Two")
         self.present(destination, animated: true, completion: nil)
+    }
+    
+    func segueToManageScreen() {
+        self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
+        
     }
     
 }

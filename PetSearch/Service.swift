@@ -38,8 +38,20 @@ class Service : NSObject {
 
                 }, withCancel: nil)
             
-            //Present InputPetTableVC
+            //Present InputPetTableVC or Manage Pets View
                 segueTwo()
+        }
+    }
+    
+    func IsUserLoggedInReturnBool() -> Bool {
+        if FIRAuth.auth()?.currentUser?.uid == nil {
+            print("User is not logged in.")
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+            
+            return false
+            
+        } else {
+            return true
         }
     }
     
@@ -196,9 +208,53 @@ class Service : NSObject {
         completion()
     }
     
+    func deletePets(petID: String) {
+        
+        let ref = FIRDatabase.database().reference().child("pets").child("\(petID)")
+        let storageRef = FIRStorage.storage().reference(withPath: "\(petID).jpg")
+        
+        //Delete pet data from database:
+        ref.removeValue { error in
+            if error != nil {
+                print("There was an error deleting the pet from the database. Error: \(error)")
+            }
+        }
+        
+        //Deletes the photo from storage:
+        storageRef.delete(completion: { (error) in
+            if let error = error {
+                print("There was an error deleting an image from storage: \(error)")
+            } else {
+                print("Image was successfully deleted from storage.")
+            }
+        })
+        
+    }
+    
+    func fetchPetsForUser(segue: @escaping () -> ()) {
+        
+        self.setPets(pets: [])
+        let ref = FIRDatabase.database().reference().child("pets").queryOrdered(byChild: "userID")
+        let userID = FIRAuth.auth()?.currentUser?.uid
+        
+        ref.queryEqual(toValue: userID).observe(.value, with: { (snapshot) in
+          
+            var userPets: [Pet] = []
+            
+            for pet in snapshot.children {
+                print(pet)
+                let userPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                userPets.append(userPet)
+                
+                self.setPets(pets: userPets)
+            }
+            segue()
+        })
+    }
+    
     
     func fetchPets(viewControllerName: String, completion: @escaping () -> Void) {
-       
+        self.setPets(pets: [])
         let ref = FIRDatabase.database().reference().child("pets").queryOrdered(byChild: "status")
         
         switch viewControllerName {

@@ -21,17 +21,24 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jg0-Xm-cS9">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="67" id="JXH-Tz-kZ0"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AIB-qn-SLA">
                         <constraints>
                             <constraint firstAttribute="height" constant="95" id="7e0-TZ-ypL"/>
                             <constraint firstAttribute="width" constant="95" id="q3P-Hv-EQ4"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jg0-Xm-cS9">
-                        <constraints>
-                            <constraint firstAttribute="height" constant="67" id="JXH-Tz-kZ0"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrC-Zc-8cM">
+                        <frame key="frameInset" minX="101" minY="21" width="15" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -52,6 +59,7 @@
                 <outlet property="detailsLabel" destination="Jg0-Xm-cS9" id="fBQ-e4-haU"/>
                 <outlet property="nameLabel" destination="Mxm-3k-qdA" id="UhJ-rg-hoc"/>
                 <outlet property="petImageView" destination="AIB-qn-SLA" id="cPx-YU-cmk"/>
+                <outlet property="petInfoLabel" destination="vrC-Zc-8cM" id="3oq-Jt-thC"/>
             </connections>
             <point key="canvasLocation" x="40" y="1.5"/>
         </tableViewCell>

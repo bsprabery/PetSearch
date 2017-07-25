@@ -91,8 +91,10 @@ class LostViewController: UITableViewController {
             petProfileVC.petProfile = petDetails
             petProfileVC.petImage = petPic!
             
-        }
+        } 
     }
+    
+
     
     @IBAction func addPet(_ sender: AnyObject) {
         Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
@@ -109,6 +111,13 @@ class LostViewController: UITableViewController {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
+                if Service.sharedSingleton.IsUserLoggedInReturnBool() {
+                    Service.sharedSingleton.fetchPetsForUser(segue: self.segueToManageScreen)
+                    //self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
+                } else {
+                    self.segueToLoginScreen()
+                }
+                
                 print("Manage my pets clicked.")
             }))
             alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
