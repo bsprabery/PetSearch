@@ -46,7 +46,7 @@ class PetProfileView: UIViewController {
         petImageView.image = petImage!
         animalTypeLabel.text! = "\(petDetails.species), \(petDetails.sex)"
         breedLabel.text! = petDetails.breed
-        petOwnerNameLabel.text! = "Contact Person: \(petDetails.user)"
+        petOwnerNameLabel.text! = "Point of contact: \(petDetails.user)"
         petDetailsLabel.text! = petDetails.petDetails
         setNavTitle(status: petDetails.status)
 

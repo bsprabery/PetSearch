@@ -25,12 +25,12 @@ class LostViewController: UITableViewController {
         Service.sharedSingleton.fetchPets(viewControllerName: "Lost", completion: tableView.reloadData)
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
-
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.lostPets = Service.sharedSingleton.getPets()
-        print(lostPets)
         return lostPets.count
     }
     

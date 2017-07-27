@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Documents Directory: \(documentsPath)")
             }
         #endif
-            
+        
+        FIRDatabase.database().persistenceEnabled = true
         FIRApp.configure()
         return true
     }

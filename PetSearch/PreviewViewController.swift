@@ -13,15 +13,14 @@ import Firebase
 class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet var petNameLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
     @IBOutlet var petImage: UIImageView!
     @IBOutlet var sexLabel: UILabel!
-    @IBOutlet var speciesLabel: UILabel!
     @IBOutlet var breedLabel: UILabel!
     @IBOutlet var descriptionView: UITextView!
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var contactButton: UIButton!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var petPhoto: UIImage?
     
@@ -36,17 +35,25 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         setText()
         addTap()
         contactButton.isEnabled = false
+        activityIndicator.isHidden = true
+        layoutView()
+        roundCorners()
+        activityIndicator.layer.zPosition = 1
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     func setText() {
-        self.petNameLabel.text = pet?.name
-        self.dateLabel.text = pet?.date
-        self.speciesLabel.text = pet?.species
-        self.breedLabel.text = pet?.breed
-        self.sexLabel.text = pet?.sex
-        self.descriptionView.text = pet?.petDetails
-        self.statusLabel.text = pet?.status
-        self.userNameLabel.text = pet?.user
+        
+        if let pet = pet {
+            self.petNameLabel.text = pet.name
+            self.breedLabel.text = pet.breed
+            self.sexLabel.text = "\(pet.sex) \(pet.species)"
+            self.descriptionView.text = pet.petDetails
+            self.statusLabel.text = "\(pet.status) since \(pet.date)"
+            self.userNameLabel.text = "Point of contact: \(pet.user)"
+        } else {
+            //TODO: Present an error message to the user.
+        }
     }
     
     func addTap() {
@@ -109,6 +116,9 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         if let photo = petPhoto {
             if var pet = pet {
                 Service.sharedSingleton.uploadInfoToFirebaseDatabase(photo: photo, pet: &pet, completion: segueToUnwind)
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                activityIndicator.isHidden = false
+                activityIndicator.startAnimating()
             } else {
                 print("pet was nil.")
             }
@@ -120,6 +130,8 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
        
     func segueToUnwind() {
         self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     
     

@@ -94,6 +94,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="kUa-TR-qlC" kind="presentation" identifier="SegueToProfileView" id="PeP-kj-td3"/>
+                        <segue destination="jjh-qY-9dh" kind="show" identifier="Segue To Manage" id="Cij-Km-Pju"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5M-up-ujO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -129,6 +130,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="kUa-TR-qlC" kind="presentation" identifier="SegueToProfileView" id="MHD-MD-dx5"/>
+                        <segue destination="jjh-qY-9dh" kind="show" identifier="Segue To Manage" id="68X-tE-4zA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG9-Zr-2Yr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -489,40 +491,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5VP-kG-Le4">
-                                <frame key="frameInset" minX="77" minY="142" width="221" height="208"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pet Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWI-sA-SAm">
-                                <frame key="frameInset" minX="34" minY="358" width="160" height="21"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type of Animal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1De-a9-tVB">
-                                <frame key="frameInset" minX="34" minY="416" width="160" height="21"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNd-Zd-Ekc">
-                                <frame key="frameInset" minX="34" minY="387" width="160" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pet Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWI-sA-SAm">
+                                <frame key="frameInset" minX="107" minY="76" width="160" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayt-u7-u0I">
-                                <frame key="frameInset" minX="77" minY="72" width="221" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Wt-G4-NJZ">
-                                <frame key="frameInset" minX="129" minY="109" width="117" height="21"/>
+                                <frame key="frameInset" minX="66" minY="105" width="221" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -552,14 +529,29 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="A0T-6B-rld">
-                                <frame key="frameInset" minX="34" minY="503" height="106" maxX="34"/>
+                                <frame key="frameInset" minX="34" minY="474" height="122" maxX="34"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Breed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIT-Ye-Mnf">
-                                <frame key="frameInset" minX="34" minY="474" width="160" height="21"/>
+                                <frame key="frameInset" minX="34" minY="427" width="160" height="21"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ccv-77-7oy">
+                                <frame key="frameInset" minX="169" minY="302" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="5VP-kG-Le4">
+                                <frame key="frameInset" minX="46" minY="142" width="295" height="255"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sex" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNd-Zd-Ekc">
+                                <frame key="frameInset" minX="34" minY="405" width="160" height="21"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -579,14 +571,13 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="ccv-77-7oy" id="i7u-Fn-gOR"/>
                         <outlet property="breedLabel" destination="rIT-Ye-Mnf" id="HLs-1Y-BYp"/>
                         <outlet property="contactButton" destination="bBy-Ie-AA4" id="CZL-7z-hz1"/>
-                        <outlet property="dateLabel" destination="4Wt-G4-NJZ" id="bgh-b9-I0Y"/>
                         <outlet property="descriptionView" destination="A0T-6B-rld" id="8L1-xt-HOo"/>
                         <outlet property="petImage" destination="5VP-kG-Le4" id="28c-Ex-VBT"/>
                         <outlet property="petNameLabel" destination="dWI-sA-SAm" id="3X7-yh-vLu"/>
                         <outlet property="sexLabel" destination="KNd-Zd-Ekc" id="XSZ-8p-UEN"/>
-                        <outlet property="speciesLabel" destination="1De-a9-tVB" id="8TN-PO-lzB"/>
                         <outlet property="statusLabel" destination="ayt-u7-u0I" id="9l7-m6-8DO"/>
                         <outlet property="userNameLabel" destination="BMW-4f-eid" id="MVG-6R-VtD"/>
                         <segue destination="HbH-7w-2Cl" kind="unwind" identifier="unwindAfterSaving" unwindAction="unwindSegue:" id="zqV-MM-sv8"/>
@@ -595,7 +586,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Gb-wI-O0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="HbH-7w-2Cl" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5191" y="106"/>
+            <point key="canvasLocation" x="5189.6000000000004" y="105.69715142428787"/>
         </scene>
         <!--Manage Pets-->
         <scene sceneID="y7W-it-MXD">
@@ -726,7 +717,7 @@
                     <tabBarItem key="tabBarItem" title="Lost" id="qhO-IX-OTL"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Iey-zL-xJU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Iey-zL-xJU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -746,7 +737,7 @@
                     <tabBarItem key="tabBarItem" title="Adopt" id="O8O-fL-zBN"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KyT-KQ-08u">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KyT-KQ-08u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -766,7 +757,7 @@
                     <tabBarItem key="tabBarItem" title="Found" id="lQo-kT-dHD"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5Qr-hK-Koh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Qr-hK-Koh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -786,7 +777,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fRS-Cx-a6k">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fRS-Cx-a6k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -967,7 +958,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kUa-TR-qlC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JUM-6m-PZf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JUM-6m-PZf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -985,7 +976,7 @@
             <objects>
                 <navigationController title="Nav Manage Controller" automaticallyAdjustsScrollViewInsets="NO" id="jjh-qY-9dh" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bZU-TA-Mlb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bZU-TA-Mlb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1003,6 +994,7 @@
         <image name="Placeholder" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PeP-kj-td3"/>
+        <segue reference="MHD-MD-dx5"/>
+        <segue reference="68X-tE-4zA"/>
     </inferredMetricsTieBreakers>
 </document>

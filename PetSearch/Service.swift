@@ -166,7 +166,7 @@ class Service : NSObject {
     
     
     //MARK: The pet photo can be retrieved with the pet ID. There is no need for a pet photoUrl anymore.
-    func uploadInfoToFirebaseDatabase(photo: UIImage, pet: inout Pet, completion: () -> ()) {
+    func uploadInfoToFirebaseDatabase(photo: UIImage, pet: inout Pet, completion: @escaping () -> ()) {
         let ref = FIRDatabase.database().reference()
       
         let petRef = ref.child("pets").childByAutoId()
@@ -184,7 +184,7 @@ class Service : NSObject {
         uploadImageToFirebaseStorage(photo: photo, pet: pet, completion: completion)
     }
     
-    func uploadImageToFirebaseStorage(photo: UIImage, pet: Pet, completion: () -> ()) {
+    func uploadImageToFirebaseStorage(photo: UIImage, pet: Pet, completion: @escaping () -> ()) {
         
         guard let imageData = UIImageJPEGRepresentation(photo, 0.8) else {
             return
@@ -203,9 +203,13 @@ class Service : NSObject {
                 print("Upload complete! Here's some metadata: \(metadata)")
                 print("Download URL: \(metadata?.downloadURL())")
             }
+            
+            DispatchQueue.main.async {
+                completion()
+            }
         }
         
-        completion()
+//        completion()
     }
     
     func deletePets(petID: String) {

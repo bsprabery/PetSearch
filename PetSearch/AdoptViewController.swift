@@ -16,6 +16,7 @@ class AdoptViewController: UITableViewController {
     var adoptPets: [Pet] = []
     var petDetails: Pet?
     var petPic: UIImage?
+    let imageCacheAdopt = NSCache<NSString, UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,15 +35,47 @@ class AdoptViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
         let pet = adoptPets[indexPath.row]
-        let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
-        let placeholderImage = UIImage(named: "Placeholder")
         
-        cell.petImageView?.sd_setImage(with: storRef, placeholderImage: placeholderImage)
+        let placeholderImage = UIImage(named: "Placeholder")
+        cell.petImageView?.image = placeholderImage!
         cell.nameLabel.text = pet.name
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.cornerRadius = 5.0
-       
+        
+        
+        if let cachedImage = imageCacheAdopt.object(forKey: pet.photoUrl as NSString) {
+            cell.petImageView?.image = cachedImage
+            cell.setNeedsLayout()
+        } else {
+            let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+                
+                guard error == nil else {
+                    print("Error downloading: \(error)")
+                    return
+                }
+                
+                let petImage = UIImage.init(data: data!, scale: 50)
+                self.imageCacheAdopt.setObject(petImage!, forKey: pet.photoUrl as NSString)
+                if cell == tableView.cellForRow(at: indexPath) {
+                    DispatchQueue.main.async {
+                        cell.petImageView.image = petImage
+                        cell.setNeedsLayout()
+                    }
+                }
+            }
+        }
+        
         return cell
+//        let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+//        let placeholderImage = UIImage(named: "Placeholder")
+//        
+//        cell.petImageView?.sd_setImage(with: storRef, placeholderImage: placeholderImage)
+//        cell.nameLabel.text = pet.name
+//        cell.detailsLabel.text = pet.petDetails
+//        cell.petImageView.layer.cornerRadius = 5.0
+//       
+//        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -79,6 +112,12 @@ class AdoptViewController: UITableViewController {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
+                if Service.sharedSingleton.IsUserLoggedInReturnBool() {
+                    Service.sharedSingleton.fetchPetsForUser(segue: self.segueToManageScreen)
+                    //self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
+                } else {
+                    self.segueToLoginScreen()
+                }
                 print("Manage my pets clicked.")
             }))
             alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
