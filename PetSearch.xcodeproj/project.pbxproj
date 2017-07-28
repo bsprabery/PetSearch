@@ -26,6 +26,7 @@
 		3860CE631F1FF3D80028ADB2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860CE621F1FF3D70028ADB2 /* ProfileView.swift */; };
 		3860CE651F2665B30028ADB2 /* ManagePets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860CE641F2665B30028ADB2 /* ManagePets.swift */; };
 		3860CE671F2A66130028ADB2 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860CE661F2A66130028ADB2 /* PreviewView.swift */; };
+		3860CE6B1F2A774F0028ADB2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3860CE6A1F2A774F0028ADB2 /* Reachability.m */; };
 		389854DA1E9FFDF7003F2115 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 389854D81E9FFDF7003F2115 /* Main.storyboard */; };
 		38C6FB071EF31110002289D3 /* PetProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB061EF31110002289D3 /* PetProfileView.swift */; };
 		38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB081EF322D8002289D3 /* LoginScreen.swift */; };
@@ -80,6 +81,9 @@
 		3860CE621F1FF3D70028ADB2 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		3860CE641F2665B30028ADB2 /* ManagePets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagePets.swift; sourceTree = "<group>"; };
 		3860CE661F2A66130028ADB2 /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
+		3860CE681F2A773F0028ADB2 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		3860CE691F2A774E0028ADB2 /* PetSearch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PetSearch-Bridging-Header.h"; sourceTree = "<group>"; };
+		3860CE6A1F2A774F0028ADB2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		389854D91E9FFDF7003F2115 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		38C6FB061EF31110002289D3 /* PetProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetProfileView.swift; sourceTree = "<group>"; };
 		38C6FB081EF322D8002289D3 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
@@ -222,6 +226,9 @@
 		38F90DAD1E9EC4BF0097E6C7 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				3860CE691F2A774E0028ADB2 /* PetSearch-Bridging-Header.h */,
+				3860CE681F2A773F0028ADB2 /* Reachability.h */,
+				3860CE6A1F2A774F0028ADB2 /* Reachability.m */,
 				38F90DAE1E9EC57D0097E6C7 /* GoogleService-Info.plist */,
 				3815A7D11E9D2A420048275C /* Assets.xcassets */,
 				3815A7D31E9D2A420048275C /* LaunchScreen.storyboard */,
@@ -333,6 +340,7 @@
 					3815A7C31E9D2A420048275C = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 66QFFLPG4F;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					3815A7DA1E9D2A420048275C = {
@@ -549,6 +557,7 @@
 				3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */,
 				3860CE631F1FF3D80028ADB2 /* ProfileView.swift in Sources */,
 				3860CE5C1F0EBACC0028ADB2 /* PetCell.swift in Sources */,
+				3860CE6B1F2A774F0028ADB2 /* Reachability.m in Sources */,
 				38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */,
 				3860CE671F2A66130028ADB2 /* PreviewView.swift in Sources */,
 				3850FB831F054FB00083F6AA /* LoginView.swift in Sources */,
@@ -709,12 +718,15 @@
 			baseConfigurationReference = 53E688F00B74E8269B01F20A /* Pods-PetSearch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 66QFFLPG4F;
 				INFOPLIST_FILE = PetSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Sprabery.PetSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PetSearch/PetSearch-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -725,12 +737,14 @@
 			baseConfigurationReference = D915691FFC242D26FFD4F53E /* Pods-PetSearch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 66QFFLPG4F;
 				INFOPLIST_FILE = PetSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Sprabery.PetSearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PetSearch/PetSearch-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

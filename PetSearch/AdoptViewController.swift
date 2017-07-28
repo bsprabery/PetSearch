@@ -23,6 +23,10 @@ class AdoptViewController: UITableViewController {
         Service.sharedSingleton.fetchPets(viewControllerName: "Adopt", completion: tableView.reloadData)
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
+        
+//        if self.hasConnectivity() == false {
+//            presentWarningToUser(title: "Warning", message: "Your device cannot connect to the network. App functionality may be impaired.")
+//        }
     }
 
  
@@ -67,15 +71,6 @@ class AdoptViewController: UITableViewController {
         }
         
         return cell
-//        let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
-//        let placeholderImage = UIImage(named: "Placeholder")
-//        
-//        cell.petImageView?.sd_setImage(with: storRef, placeholderImage: placeholderImage)
-//        cell.nameLabel.text = pet.name
-//        cell.detailsLabel.text = pet.petDetails
-//        cell.petImageView.layer.cornerRadius = 5.0
-//       
-//        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -103,7 +98,12 @@ class AdoptViewController: UITableViewController {
     }
     
     @IBAction func addButtonTapped(_ sender: AnyObject) {
-        Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        
+        if hasConnectivity() == false {
+            self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to add a pet.")
+        } else {
+            Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        }
     }
     
     @IBAction func optionsButtonTapped(_ sender: AnyObject) {
@@ -122,8 +122,8 @@ class AdoptViewController: UITableViewController {
             }))
             alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
                 Service.sharedSingleton.handleLogout()
-                self.presentAlert(message: "You have signed out successfully.")
-                print("Logged out successful")
+                
+                self.presentWarningToUser(title: "Success!", message: "You have logged out.")
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 self.dismiss(animated: true, completion: nil)
@@ -132,15 +132,6 @@ class AdoptViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
         
-    }
-    
-    func presentAlert(message: String) {
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        }
-        
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true)
     }
 }
 
@@ -160,6 +151,43 @@ extension UIViewController {
     func segueToManageScreen() {
         self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
         
+    }
+    
+    func hasConnectivity() -> Bool {
+        let reachability: Reachability = Reachability.forInternetConnection()
+        let networkStatus: Int = reachability.currentReachabilityStatus().rawValue
+        print(networkStatus)
+        if networkStatus != 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func presentWarningToUser(title: String?, message: String) {
+        
+        var topController = UIApplication.shared.keyWindow!.rootViewController
+        while ((topController?.presentedViewController) != nil) {
+            topController = topController?.presentedViewController
+        }
+        
+        if let title = title {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            }
+            
+            alertController.addAction(okayAction)
+            topController?.present(alertController, animated: true)
+        } else {
+            let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            
+            let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            }
+            
+            alertController.addAction(okayAction)
+            topController?.present(alertController, animated: true)
+        }
     }
     
 }

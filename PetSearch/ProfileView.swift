@@ -10,19 +10,9 @@ import Foundation
 import UIKit
 
 extension PetProfileView {
-    
-    func detectResolution() -> (CGFloat, CGFloat) {
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        let screenScale = UIScreen.main.scale
-        let resolution = ((screenWidth * screenScale), (screenHeight * screenScale))
-        print("Resolution: \(resolution)")
-        return resolution
-    }
-    
+        
     func layoutView() {
-        let resolution = detectResolution()
+        let resolution = self.view.detectResolution()
         
         self.statusLabel.translatesAutoresizingMaskIntoConstraints = false
         self.petImageView.translatesAutoresizingMaskIntoConstraints =  false

@@ -46,7 +46,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             print("First time launch, setting NSUserDefaults.")
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
-        
     }
     
     override func viewDidLoad() {
@@ -63,6 +62,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
   
     @IBAction func loginButtonClicked(_ sender: AnyObject) {
+        
         registerButtonTapped = false
         loginButtonStackView.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()
@@ -92,14 +92,20 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             self.present(alert, animated: true, completion: nil)
         }
     }
+    
     //TODO: When attempting to register for the first time, the register button is actually the login button. Until the user clicks the login switch and then the register switch, they can't register a new user
     func handleLoginRegister() {
-        if registerButtonTapped == true {
-            print("Register")
-            Service.sharedSingleton.handleRegister(email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
+        
+        if hasConnectivity() == false {
+            self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
-            print("Login")
-            Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
+            if registerButtonTapped == true {
+                print("Register")
+                Service.sharedSingleton.handleRegister(email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
+            } else {
+                print("Login")
+                Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
+            }
         }
     }
         
@@ -145,5 +151,19 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         emailTextField.delegate = self
         
     }
+}
+
+extension UIView {
+
+    func detectResolution() -> (CGFloat, CGFloat) {
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        let screenScale = UIScreen.main.scale
+        let resolution = ((screenWidth * screenScale), (screenHeight * screenScale))
+        print("Resolution: \(resolution)")
+        return resolution
+    }
+
 }
 

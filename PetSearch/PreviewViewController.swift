@@ -99,17 +99,6 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismiss(animated: true, completion: nil)
     }
     
-    func presentAlert(message: String) {
-        let alertController = UIAlertController(title: "Wait!", message: message, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            print("Okay.")
-        }
-        
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true)
-    }
-    
-
     
     //MARK: Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
     @IBAction func savePreview(_ sender: AnyObject) {
@@ -123,9 +112,8 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
                 print("pet was nil.")
             }
         } else {
-            presentAlert(message: "Please select a photo of your pet to display.")
-            print("No pet photo was selected.")
-        }  
+            self.presentWarningToUser(title: "Photo Required", message: "Please choose a photo of your pet to display.")
+        }
     }
        
     func segueToUnwind() {

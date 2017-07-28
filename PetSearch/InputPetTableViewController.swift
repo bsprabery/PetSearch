@@ -120,6 +120,8 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         mapLocationManager.distanceFilter = 300.0
         mapAuthorization()
         
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
     }

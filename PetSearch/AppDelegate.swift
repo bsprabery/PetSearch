@@ -15,6 +15,7 @@ import FirebaseAuthUI
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var internetReach: Reachability?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -24,8 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         #endif
         
-        FIRDatabase.database().persistenceEnabled = true
         FIRApp.configure()
+        FIRDatabase.database().persistenceEnabled = true
+        
         return true
     }
 

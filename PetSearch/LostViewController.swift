@@ -27,6 +27,10 @@ class LostViewController: UITableViewController {
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         tableView.delegate = self
         tableView.dataSource = self
+        
+//        if self.hasConnectivity() == false {
+//            presentWarningToUser(title: "Warning", message: "Your device cannot connect to the network. App functionality may be impaired.")
+//        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -97,7 +101,11 @@ class LostViewController: UITableViewController {
 
     
     @IBAction func addPet(_ sender: AnyObject) {
-        Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        if hasConnectivity() == false {
+            self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to add a pet.")
+        } else {
+            Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
+        }
     }
 
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
@@ -122,8 +130,7 @@ class LostViewController: UITableViewController {
             }))
             alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
                 Service.sharedSingleton.handleLogout()
-                self.presentAlert(message: "You have signed out successfully.")
-                print("Logged out successful")
+                self.presentWarningToUser(title: "Success!", message: "You have logged out.")
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 self.dismiss(animated: true, completion: nil)
@@ -132,15 +139,6 @@ class LostViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
     
-    }
-    
-    func presentAlert(message: String) {
-        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        }
-        
-        alertController.addAction(okayAction)
-        self.present(alertController, animated: true)
     }
 }
 

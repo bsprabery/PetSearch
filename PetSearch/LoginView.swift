@@ -11,16 +11,6 @@ import UIKit
 
 extension LoginScreen {
     
-    func detectResolution() -> (CGFloat, CGFloat) {
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        let screenScale = UIScreen.main.scale
-        let resolution = ((screenWidth * screenScale), (screenHeight * screenScale))
-        print("Resolution: \(resolution)")
-        return resolution
-    }
-    
     func newUserLayout() {
         loginButtonStackView.backgroundColor = UIColor.lightGray
         registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
@@ -33,7 +23,7 @@ extension LoginScreen {
         loginButton.setTitle("Register", for: .normal)
         registerButtonTapped = true
         
-        let resolution = detectResolution()
+        let resolution = self.view.detectResolution()
         
         switch resolution {
         case (640, 1136):
@@ -99,7 +89,7 @@ extension LoginScreen {
         loginButton.setTitle("Login", for: .normal)
         registerButtonTapped = false
         
-        let resolution = detectResolution()
+        let resolution = self.view.detectResolution()
         
         
         
@@ -185,7 +175,7 @@ extension LoginScreen {
     }
     
     func layoutView() {
-        let resolution = detectResolution()
+        let resolution = self.view.detectResolution()
         layoutBackgroundImage()
         
         //Stack Container Constraints

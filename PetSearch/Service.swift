@@ -197,7 +197,6 @@ class Service : NSObject {
         
         storageRef.put(data as Data, metadata: uploadMetadata) { (metadata, error) in
             if (error != nil) {
-               // self.presentAlert(message: "There was an error uploading your image. Please try again.")
                 print("There was an error! \(error?.localizedDescription)")
             } else {
                 print("Upload complete! Here's some metadata: \(metadata)")
@@ -208,8 +207,6 @@ class Service : NSObject {
                 completion()
             }
         }
-        
-//        completion()
     }
     
     func deletePets(petID: String) {
