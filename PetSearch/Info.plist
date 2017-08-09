@@ -21,7 +21,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allowing access to your location will enable &quot;PetSearch&quot; to display your post in your area.</string>
+	<string>Allowing access to your location will enable &quot;PetSearch&quot; to display your pets in your area.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Choose a photo of your pet from your Photo Library</string>
 	<key>UILaunchStoryboardName</key>

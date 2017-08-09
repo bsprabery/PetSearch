@@ -127,7 +127,6 @@ class Service : NSObject {
     }
 
     func readFromDisk() -> NSMutableDictionary {
-        print(getUrl())
         let userInfo = NSMutableDictionary(contentsOfFile: getUrl())
         print(userInfo!)
         return userInfo!
@@ -168,12 +167,15 @@ class Service : NSObject {
     //MARK: The pet photo can be retrieved with the pet ID. There is no need for a pet photoUrl anymore.
     func uploadInfoToFirebaseDatabase(photo: UIImage, pet: inout Pet, completion: @escaping () -> ()) {
         let ref = FIRDatabase.database().reference()
-      
+        
+    
         let petRef = ref.child("pets").childByAutoId()
         let petString = "\(petRef)"
         let petID = petString.components(separatedBy: "https://petsearch-8b839.firebaseio.com/pets/")
         pet.petID = petID[1]
-        pet.photoUrl = petID[1]
+        
+        let geoFire = GeoFire(firebaseRef: ref.child("pets_location"))
+        geoFire?.setLocation(CLLocation(latitude: pet.latitude, longitude: pet.longitude), forKey: pet.petID)
         
         let userDict = readFromDisk()
         let uid = userDict["uid"] as! String
@@ -231,6 +233,29 @@ class Service : NSObject {
         })
         
     }
+    
+    
+//    func writeUserLocationToDisk(latitude: Double, longitude: Double) {
+//        let directories = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+//        let documentsDirectory = directories[0] as! String
+//        let path = documentsDirectory.appending("/userLocation.plist")
+//        self.setUserLocationPath(path: path)
+//        
+//        let dictionary = ["latitude": latitude, "longitude": longitude] as NSDictionary
+//        dictionary.write(toFile: path, atomically: true)
+//        print(dictionary)
+//    }
+//    
+//    func readUserLocationFromDisk() -> CLLocation {
+//        let userLocationDict = NSMutableDictionary(contentsOfFile: getUserLocationPath())
+//        print(userLocationDict)
+//        let latitude = userLocationDict?["latitude"]
+//        let longitude = userLocationDict?["longitude"]
+//        let location = CLLocation(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
+//        setUserLocation(location: location)
+//        print(location)
+//        return location
+//    }
     
     func fetchPetsForUser(segue: @escaping () -> ()) {
         
@@ -301,15 +326,65 @@ class Service : NSObject {
         default:
             print("There were no views found with this identifier.")
         }
+    }
+    
+    func fetchPetsForLocation() {
         
+        let userLocation = getUserLocation()
+        let geoFireRef = FIRDatabase.database().reference().child("pets_location")
+        let geoFire = GeoFire(firebaseRef: geoFireRef)
+        let center = CLLocation(latitude: (userLocation?.coordinate.latitude)!, longitude: (userLocation?.coordinate.longitude)!)
+        let circleQuery = geoFire!.query(at: center, withRadius: 25)
+        
+        _ = circleQuery?.observe(.keyEntered, with: { (key, location) in
+            self.locatedPetIDs.append(key!)
+            print("There are \(self.locatedPetIDs.count) pets in the locatedPetIDs array.")
+        })
+        
+    }
+
+    func fetchLocatedPets() {
+        let ref = FIRDatabase.database().reference()
+        var locatedPetObjects = [Pet]()
+        print("There are \(self.locatedPetIDs.count) pets in the locatedPetIDs array.")
+        
+        for petID in self.locatedPetIDs{
+            ref.child(petID).observeSingleEvent(of: .value, with: { (snapshot) in
+                if (snapshot.exists()) {
+                    print(snapshot.childrenCount)
+                }
+            
+            })
+        }
+        
+        
+        
+        
+        
+//        for petID in self.locatedPetIDs {
+//            ref.queryEqual(toValue: petID).observe(.value, with: { (snapshot) in
+//                
+//                for pet in snapshot.children {
+//                    let locatedPet = Pet(snapshot: pet as! FIRDataSnapshot)
+//                    locatedPetObjects.append(locatedPet)
+//                    print(locatedPetObjects)
+//                }
+//                
+//            })
+//        }
+        print("FETCH LOCATED PETS")
     }
 
     private var petArray: [Pet]
     private var userInfoPath: String
+    private var userLocation: CLLocation?
+    private var locatedPetIDs: [String]
     
     override init() {
         petArray = [Pet]()
         userInfoPath = String()
+        userLocation = CLLocation()
+        locatedPetIDs = [String]()
     }
     
     func setPets(pets: [Pet]) {
@@ -329,5 +404,29 @@ class Service : NSObject {
         print(self.userInfoPath)
         return self.userInfoPath
     }
+    
+    func setUserLocation(location: CLLocation) {
+        self.userLocation = location
+    }
+    
+    func getUserLocation() -> CLLocation? {
+        return self.userLocation
+    }
+    
+    func setPetsForLocation(array: [String]) {
+        self.locatedPetIDs = array
+    }
+    
+    func getPetsForLocation() -> [String] {
+        return self.locatedPetIDs
+    }
+    
+//    func setUserLocationPath(path: String) {
+//        self.userLocationPath = path
+//    }
+//    
+//    func getUserLocationPath() -> String {
+//        return self.userLocationPath
+//    }
     
 }

@@ -87,7 +87,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         species: speciesLabel.text!,
                                         sex: sexLabel.text!,
                                         breed: breedText,
-                                        photoUrl: "",
                                         petDetails: detailsTextView.text!,
                                         date: "\(formatDate())",
                                         status: statusLabel.text!,
@@ -98,6 +97,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         longitude: longitude,
                                         petID: "",
                                         userID: uid!
+                                      //  location: CLLocation(latitude: latitude, longitude: longitude)
                 )
             }
         }

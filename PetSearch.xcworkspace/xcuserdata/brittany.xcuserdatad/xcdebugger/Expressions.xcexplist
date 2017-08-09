@@ -19,6 +19,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "AdoptViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():AdoptViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Service.(fetchPetsForLocation(viewControllerName : String, completion : () -&gt; ()) -&gt; ()).(closure #2).(closure #1):Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "snapshot.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "LoginScreen.layoutView() -&gt; ():LoginScreen.swift">
          <PersistentStrings>
             <PersistentString

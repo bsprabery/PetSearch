@@ -43,11 +43,11 @@ class ManagePets: UITableViewController {
         cell.petImageView.layer.contents = 5.0
         cell.petInfoLabel.text = "\(pet.petID)"
         
-        if let cachedImage = imageCache.object(forKey: pet.photoUrl as NSString) {
+        if let cachedImage = imageCache.object(forKey: pet.petID as NSString) {
             cell.petImageView?.image = cachedImage
             cell.setNeedsLayout()
         } else {
-            let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
             storRef.data(withMaxSize: INT64_MAX) { (data, error) in
                 
                 guard error == nil else {
@@ -56,7 +56,7 @@ class ManagePets: UITableViewController {
                 }
                 
                 let petImage = UIImage.init(data: data!, scale: 50)
-                self.imageCache.setObject(petImage!, forKey: pet.photoUrl as NSString)
+                self.imageCache.setObject(petImage!, forKey: pet.petID as NSString)
                 if cell == tableView.cellForRow(at: indexPath) {
                     DispatchQueue.main.async {
                         cell.petImageView.image = petImage

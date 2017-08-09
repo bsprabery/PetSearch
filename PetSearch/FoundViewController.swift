@@ -1,4 +1,4 @@
-//
+
 //  FoundViewController.swift
 //  PetSearch
 //
@@ -11,26 +11,97 @@ import UIKit
 import Firebase
 import FirebaseStorageUI
 
-class FoundViewController: UITableViewController {
+class FoundViewController: UITableViewController, CLLocationManagerDelegate {
     
     var foundPets: [Pet] = []
     var petDetails: Pet?
     var petPic: UIImage?
     let imageCache = NSCache<NSString, UIImage>()
+    let locationManager = CLLocationManager()
+    var warningHasBeenShown: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Service.sharedSingleton.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
-        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         
-//        if self.hasConnectivity() == false {
-//            presentWarningToUser(title: "Warning", message: "Your device cannot connect to the network. App functionality may be impaired.")
-//        }
+        Service.sharedSingleton.fetchPetsForLocation()
+
+        //DispatchQueue.main.async {
+         //  Service.sharedSingleton.fetchLocatedPets()
+        //}
+        
+        
+            
+        // move this to background thread
+        // wrap the tableView.reloadData function in a function in this class
+        // in that new wrapper function, dispatch async on main to reload the data
+      //  Service.sharedSingleton.fetchPetsForLocation(viewControllerName: "Found", completion: tableView.reloadData)
+    //    Service.sharedSingleton.fetchLocatedPetsForStatus(viewController: "Found", completion: tableView.reloadData)
+        
+        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
+    
+        configureLocationServices()
+        locationManager.startUpdatingLocation()
     }
     
+    func configureLocationServices() {
+        self.locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 1000.0
+        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        
+        switch authorizationStatus {
+        case .notDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+            break
+        case .denied:
+            showWarningOnce()
+            Service.sharedSingleton.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
+        default: break
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        Service.sharedSingleton.setUserLocation(location: location)
+   //     Service.sharedSingleton.fetchPetsForLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedAlways:
+            print("Location Services: Authorized Always")
+        case .authorizedWhenInUse:
+            print("Location Services: Authorized When In Use")
+        case .denied:
+            showWarningOnce()
+            Service.sharedSingleton.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted:
+            showWarningOnce()
+            Service.sharedSingleton.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
+        default:
+            break
+        }
+    }
+    
+    func showWarningOnce() {
+        if self.warningHasBeenShown == false {
+            self.presentWarningToUser(title: "Location Services Restricted", message: "In order to see pets in your area, please open this app's settings and enable location access.")
+            self.warningHasBeenShown = true
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        //TODO: Notify the user of an error?
+        print("Error: \(error)")
+    }
+        
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.foundPets = Service.sharedSingleton.getPets()
-        print(foundPets)
+        let foundPetsArray = Service.sharedSingleton.getPets()
+        self.foundPets = foundPetsArray.reversed()
         return foundPets.count
     }
     
@@ -43,12 +114,12 @@ class FoundViewController: UITableViewController {
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.cornerRadius = 5.0
         
-        if let cachedImage = imageCache.object(forKey: pet.photoUrl as NSString) {
+        if let cachedImage = imageCache.object(forKey: pet.petID as NSString) {
             cell.petImageView?.image = cachedImage
             cell.setNeedsLayout()
         } else {
             //Returning the cell before completing the storage download:
-            let storRef = FIRStorage.storage().reference(withPath: "\(pet.photoUrl).jpg")
+            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
             storRef.data(withMaxSize: INT64_MAX) { (data, error) in
                 
                 guard error == nil else {
@@ -57,7 +128,7 @@ class FoundViewController: UITableViewController {
                 }
                 
                 let petImage = UIImage.init(data: data!, scale: 50)
-                self.imageCache.setObject(petImage!, forKey: pet.photoUrl as NSString)
+                self.imageCache.setObject(petImage!, forKey: pet.petID as NSString)
                 if cell == tableView.cellForRow(at: indexPath) {
                     DispatchQueue.main.async {
                         cell.petImageView.image = petImage
