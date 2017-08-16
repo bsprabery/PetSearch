@@ -26,9 +26,9 @@ struct Pet {
     var petID: String
     var userID: String
     var key: String
- //   var location: CLLocation
+    var timeStamp: NSNumber
     
-    init(name: String, species: String, sex: String, breed: String, petDetails: String, date: String, status: String, user: String, email: String, phoneNumber: String, latitude: Double, longitude: Double, petID: String, userID: String, key: String = "") {
+    init(name: String, species: String, sex: String, breed: String, petDetails: String, date: String, status: String, user: String, email: String, phoneNumber: String, latitude: Double, longitude: Double, petID: String, userID: String, key: String = "", timeStamp: NSNumber) {
         self.name = name
         self.species = species
         self.sex = sex
@@ -44,7 +44,7 @@ struct Pet {
         self.petID = petID
         self.userID = userID
         self.key = key
-  //      self.location = location
+        self.timeStamp = timeStamp
     }
     
     init(snapshot: FIRDataSnapshot) {
@@ -64,7 +64,7 @@ struct Pet {
         longitude = snapshotValue["longitude"] as! Double
         petID = snapshotValue["petID"] as! String
         userID = snapshotValue["userID"] as! String
-     //   location = snapshotValue["location"] as! CLLocation
+        timeStamp = snapshotValue["timeStamp"] as! NSNumber
     }
     
     func toAnyObject() -> [String:Any] {
@@ -82,8 +82,8 @@ struct Pet {
             "latitude": latitude,
             "longitude": longitude,
             "petID": petID,
-            "userID": userID
- //           "location": location
+            "userID": userID,
+            "timeStamp": timeStamp
         ]
     }
     

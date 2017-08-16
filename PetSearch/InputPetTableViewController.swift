@@ -96,8 +96,8 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         latitude: latitude,
                                         longitude: longitude,
                                         petID: "",
-                                        userID: uid!
-                                      //  location: CLLocation(latitude: latitude, longitude: longitude)
+                                        userID: uid!,
+                                        timeStamp: ticks
                 )
             }
         }
@@ -388,5 +388,14 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         return  newText.characters.count <= limitCount
     }
     
+
+    
+    @NSManaged var id: NSNumber
+    
+    var ticks: NSNumber {
+        let value = Int64((Date().timeIntervalSince1970 + 62_135_596_800) * 10_000_000)
+        let ticks = NSNumber(value: value)
+        return ticks
+    }
 }
 

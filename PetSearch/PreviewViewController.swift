@@ -104,7 +104,10 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func savePreview(_ sender: AnyObject) {
         if let photo = petPhoto {
             if var pet = pet {
-                Service.sharedSingleton.uploadInfoToFirebaseDatabase(photo: photo, pet: &pet, completion: segueToUnwind)
+                Service.sharedSingleton.uploadInfoToFirebaseDatabase(status: pet.status,
+                                                                     photo: photo,
+                                                                     pet: &pet,
+                                                                     completion: segueToUnwind)
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
                 activityIndicator.isHidden = false
                 activityIndicator.startAnimating()
@@ -115,7 +118,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.presentWarningToUser(title: "Photo Required", message: "Please choose a photo of your pet to display.")
         }
     }
-       
+    
     func segueToUnwind() {
         self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
         activityIndicator.isHidden = true

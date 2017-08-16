@@ -129,13 +129,27 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="eo7-eb-qIJ" id="EFG-yq-hBo"/>
+                        <outlet property="activityView" destination="5pp-pa-aT7" id="bFd-Hw-wgn"/>
                         <segue destination="kUa-TR-qlC" kind="presentation" identifier="SegueToProfileView" id="MHD-MD-dx5"/>
                         <segue destination="jjh-qY-9dh" kind="show" identifier="Segue To Manage" id="68X-tE-4zA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG9-Zr-2Yr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="5pp-pa-aT7">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="287"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-eb-qIJ"/>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="eo7-eb-qIJ" firstAttribute="centerY" secondItem="5pp-pa-aT7" secondAttribute="centerY" id="Vj7-o0-oMa"/>
+                        <constraint firstItem="eo7-eb-qIJ" firstAttribute="centerX" secondItem="5pp-pa-aT7" secondAttribute="centerX" id="yGX-5V-sjZ"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1361" y="-653"/>
+            <point key="canvasLocation" x="1360.8" y="-653.52323838080963"/>
         </scene>
         <!--Add Pet-->
         <scene sceneID="kHD-v8-vTa">
@@ -211,7 +225,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <pickerView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="57k-w8-ltk">
-                                                    <frame key="frameInset" minX="-3" minY="1" height="85" maxX="7"/>
+                                                    <frame key="frameInset" minX="-3" minY="1" height="85" maxX="8"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <outlet property="dataSource" destination="Z84-vr-L5e" id="Syn-Xl-TwU"/>
@@ -253,7 +267,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <pickerView clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ilk-0Y-IjP">
-                                                    <frame key="frameInset" minX="-3" height="115" maxX="7"/>
+                                                    <frame key="frameInset" minX="-3" height="115" maxX="8"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <outlet property="dataSource" destination="Z84-vr-L5e" id="AtO-js-yhQ"/>
@@ -309,7 +323,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ta5-Im-Xdc">
-                                                    <frame key="frameInset" minX="-3" height="131" maxX="7"/>
+                                                    <frame key="frameInset" minX="-3" height="131" maxX="8"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <string key="text">Additional details regarding the listing that may be necessary such as the pet's personality, distinctive physical markings, or the best time to contact you.</string>
@@ -358,7 +372,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="wNW-Db-sXH">
-                                                    <frame key="frameInset" minX="-3" height="209" maxX="7"/>
+                                                    <frame key="frameInset" minX="-3" height="209" maxX="8"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="514229277.13314801">
                                                         <!--2017-04-18 17:27:57 +0000-->
@@ -402,7 +416,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <pickerView tag="3" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vBl-oV-8TT">
-                                                    <frame key="frameInset" minX="-3" height="160" maxX="7"/>
+                                                    <frame key="frameInset" minX="-3" height="160" maxX="8"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <connections>
                                                         <outlet property="dataSource" destination="Z84-vr-L5e" id="7D9-sB-ur9"/>
@@ -717,7 +731,7 @@
                     <tabBarItem key="tabBarItem" title="Lost" id="qhO-IX-OTL"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Iey-zL-xJU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Iey-zL-xJU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -737,7 +751,7 @@
                     <tabBarItem key="tabBarItem" title="Adopt" id="O8O-fL-zBN"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KyT-KQ-08u">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KyT-KQ-08u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -757,7 +771,7 @@
                     <tabBarItem key="tabBarItem" title="Found" id="lQo-kT-dHD"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Qr-hK-Koh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5Qr-hK-Koh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -777,7 +791,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fRS-Cx-a6k">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fRS-Cx-a6k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -958,7 +972,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kUa-TR-qlC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JUM-6m-PZf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JUM-6m-PZf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -976,7 +990,7 @@
             <objects>
                 <navigationController title="Nav Manage Controller" automaticallyAdjustsScrollViewInsets="NO" id="jjh-qY-9dh" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bZU-TA-Mlb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bZU-TA-Mlb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

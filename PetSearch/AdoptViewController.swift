@@ -49,7 +49,7 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
-        Service.sharedSingleton.setUserLocation(location: location)
+  //      Service.sharedSingleton.setUserLocation(location: location)
    //     Service.sharedSingleton.fetchPetsForLocation()
     }
     

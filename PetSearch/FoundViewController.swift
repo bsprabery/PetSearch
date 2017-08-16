@@ -19,27 +19,21 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
     let imageCache = NSCache<NSString, UIImage>()
     let locationManager = CLLocationManager()
     var warningHasBeenShown: Bool = false
+    var didFindLocation: Bool = false
     
+    @IBOutlet var activityView: UIView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        Service.sharedSingleton.fetchPetsForLocation()
-
-        //DispatchQueue.main.async {
-         //  Service.sharedSingleton.fetchLocatedPets()
-        //}
-        
-        
-            
-        // move this to background thread
-        // wrap the tableView.reloadData function in a function in this class
-        // in that new wrapper function, dispatch async on main to reload the data
-      //  Service.sharedSingleton.fetchPetsForLocation(viewControllerName: "Found", completion: tableView.reloadData)
-    //    Service.sharedSingleton.fetchLocatedPetsForStatus(viewController: "Found", completion: tableView.reloadData)
-        
+        tableView.bringSubview(toFront: activityView)
+        activityIndicator.isHidden = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+               
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
-    
+        
+        didFindLocation = false
         configureLocationServices()
         locationManager.startUpdatingLocation()
     }
@@ -60,12 +54,31 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
             Service.sharedSingleton.fetchPets(viewControllerName: "Found", completion: tableView.reloadData)
         default: break
         }
+       
     }
     
+    
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations[0]
-        Service.sharedSingleton.setUserLocation(location: location)
-   //     Service.sharedSingleton.fetchPetsForLocation()
+        if didFindLocation != true {
+            let location = locations[0]
+            Service.sharedSingleton.setUserLocation(location: location)
+            Service.sharedSingleton.fetchPetsForLocation(viewController: "found", completion: reloadTable)
+            didFindLocation = true
+        } else {
+            print("Location has already been found.")
+        }
+    }
+    
+    func reloadTable() {
+        self.foundPets = Service.sharedSingleton.getFoundPets()
+        
+        self.foundPets.sort {
+            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
+        }
+        
+        self.tableView.reloadData()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -100,8 +113,8 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
     }
         
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let foundPetsArray = Service.sharedSingleton.getPets()
-        self.foundPets = foundPetsArray.reversed()
+        
+        
         return foundPets.count
     }
     
@@ -133,6 +146,7 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
                     DispatchQueue.main.async {
                         cell.petImageView.image = petImage
                         cell.setNeedsLayout()
+                        self.activityIndicator.stopAnimating()
                     }
                 }
             }
