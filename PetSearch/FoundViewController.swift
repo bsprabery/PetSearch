@@ -16,7 +16,7 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
     var foundPets: [Pet] = []
     var petDetails: Pet?
     var petPic: UIImage?
-    let imageCache = NSCache<NSString, UIImage>()
+    private let imageCache = NSCache<NSString, UIImage>()
     let locationManager = CLLocationManager()
     var warningHasBeenShown: Bool = false
     var didFindLocation: Bool = false
@@ -33,9 +33,12 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
                
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         
+        print("Found Pets Array contains: \(foundPets.count)")
+        
         didFindLocation = false
         configureLocationServices()
         locationManager.startUpdatingLocation()
+     
     }
     
     func configureLocationServices() {
@@ -55,30 +58,6 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
         default: break
         }
        
-    }
-    
-    
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if didFindLocation != true {
-            let location = locations[0]
-            Service.sharedSingleton.setUserLocation(location: location)
-            Service.sharedSingleton.fetchPetsForLocation(viewController: "found", completion: reloadTable)
-            didFindLocation = true
-        } else {
-            print("Location has already been found.")
-        }
-    }
-    
-    func reloadTable() {
-        self.foundPets = Service.sharedSingleton.getFoundPets()
-        
-        self.foundPets.sort {
-            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
-        }
-        
-        self.tableView.reloadData()
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -118,20 +97,28 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
         return foundPets.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
-        let pet = foundPets[indexPath.row]
-        let placeholderImage = UIImage(named: "Placeholder")
-        cell.petImageView?.image = placeholderImage!
-        cell.nameLabel.text = pet.name
-        cell.detailsLabel.text = pet.petDetails
-        cell.petImageView.layer.cornerRadius = 5.0
-        
-        if let cachedImage = imageCache.object(forKey: pet.petID as NSString) {
-            cell.petImageView?.image = cachedImage
-            cell.setNeedsLayout()
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if didFindLocation != true {
+            let location = locations[0]
+            Service.sharedSingleton.setUserLocation(location: location)
+            //MARK: This function is being called multiple times which causes the downloadImage func to be called multiple times, which reloads the tableView multiple times. TableView is seriously unresponsive.
+            Service.sharedSingleton.fetchPetsForLocation(viewController: "found", completion: downloadImage)
+            didFindLocation = true
         } else {
-            //Returning the cell before completing the storage download:
+            print("Location has already been found.")
+        }
+    }
+    
+    var imageDict = [String: Data]()
+    
+    func downloadImage() {
+        var count = 0
+        self.foundPets = Service.sharedSingleton.getFoundPets()
+        
+        print("Number of found pets: \(self.foundPets.count).")
+        print("Count: \(count)")
+        
+        for pet in self.foundPets {
             let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
             storRef.data(withMaxSize: INT64_MAX) { (data, error) in
                 
@@ -140,17 +127,71 @@ class FoundViewController: UITableViewController, CLLocationManagerDelegate {
                     return
                 }
                 
-                let petImage = UIImage.init(data: data!, scale: 50)
-                self.imageCache.setObject(petImage!, forKey: pet.petID as NSString)
-                if cell == tableView.cellForRow(at: indexPath) {
-                    DispatchQueue.main.async {
-                        cell.petImageView.image = petImage
-                        cell.setNeedsLayout()
-                        self.activityIndicator.stopAnimating()
-                    }
+                self.imageDict["\(pet.petID)"] = data!
+                print("Dictionary contains: \(self.imageDict.count) pairs.")
+                print("Dictionary pairs: \(self.imageDict)")
+                count = count + 1
+                if count == self.foundPets.count {
+                    self.reloadTable()
                 }
             }
         }
+    }
+    
+    func reloadTable() {
+        self.foundPets = Service.sharedSingleton.getFoundPets()
+        
+        self.foundPets.sort {
+            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
+        }
+        
+        self.tableView.reloadData()
+    }
+    
+    //TODO: Download pet images in a separate function and add them to the Pet struct as a UIImage. Then, populate the cells with array of the pet structs.
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
+        print("\n\n\n The foundPets array contains: \(foundPets.count) number of Pets.")
+        let pet = foundPets[indexPath.row]
+        let placeholderImage = UIImage(named: "Placeholder")
+        cell.petImageView?.image = placeholderImage!
+        cell.nameLabel.text = pet.name
+        cell.detailsLabel.text = pet.petDetails
+        cell.petImageView.layer.cornerRadius = 5.0
+        cell.tag = indexPath.row
+        
+        let petImage = UIImage.init(data: imageDict["\(pet.petID)"]!, scale: 50)
+        cell.petImageView.image = petImage
+        
+////        if let cachedImage = imageCache.object(forKey: pet.petID as NSString) {
+////            cell.petImageView?.image = cachedImage
+////            cell.setNeedsLayout()
+////        } else {
+//            //Returning the cell before completing the storage download:
+//            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
+//            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+//                
+//                guard error == nil else {
+//                    print("Error downloading: \(error)")
+//                    return
+//                }
+//                
+//                let petImage = UIImage.init(data: data!, scale: 50)
+//            
+////                self.imageCache.setObject(petImage!, forKey: pet.petID as NSString)
+//                //if cell == tableView.cellForRow(at: indexPath) {
+//                    DispatchQueue.main.async {
+//                        //if cell.tag == indexPath.row {
+//                            cell.petImageView.image = petImage
+//                            cell.setNeedsLayout()
+//                            //TODO: This activity indicator does not appear in the view
+//                            self.activityIndicator.stopAnimating()
+//                        //}
+//                    }
+                //}
+//            }
+//        }
         
         return cell
     }

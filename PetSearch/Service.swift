@@ -170,7 +170,6 @@ class Service : NSObject {
         var petRef: FIRDatabaseReference = FIRDatabaseReference()
         var petStatus: String = ""
         
-        
         switch status {
         case "Lost":
             petRef = ref.child("pets").child("lost").childByAutoId()
@@ -186,17 +185,11 @@ class Service : NSObject {
             break
         }
         
-      //  let petRef = ref.child("pets").childByAutoId()
         let petString = "\(petRef)" + "\(petStatus)"
         let petID = petString.components(separatedBy: "https://petsearch-8b839.firebaseio.com/pets/\(petStatus)/")
-    //    let petID = petString.components(separatedBy: "https://petsearch-8b839.firebaseio.com/pets/")
-        
         let petIDwStatus: String = petID[1]
         let newPetID = petIDwStatus.components(separatedBy: "found")[0]
-        
         pet.petID = newPetID
-        print(pet.petID)
-       // pet.petID = petID[1]
         
         let geoFire = GeoFire(firebaseRef: ref.child("pets_location"))
         geoFire?.setLocation(CLLocation(latitude: pet.latitude, longitude: pet.longitude), forKey: pet.petID)
@@ -204,7 +197,6 @@ class Service : NSObject {
         let userDict = readFromDisk()
         let uid = userDict["uid"] as! String
         pet.userID = "\(uid)"
-
         
         petRef.setValue(pet.toAnyObject())
         uploadImageToFirebaseStorage(photo: photo, pet: pet, completion: completion)
@@ -227,6 +219,7 @@ class Service : NSObject {
             } else {
                 print("Upload complete! Here's some metadata: \(metadata)")
                 print("Download URL: \(metadata?.downloadURL())")
+                print("downloadUrl: \(metadata?.downloadURL())")
             }
             
             DispatchQueue.main.async {
@@ -385,7 +378,8 @@ class Service : NSObject {
                 }
             }
             
-            DispatchQueue.main.async {
+            //MARK: Seems sloppy:
+            if self.locatedPetIDs.count == self.foundPets.count {
                 completion()
             }
         })
