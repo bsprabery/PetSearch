@@ -15,27 +15,69 @@ class LostViewController: UITableViewController, CLLocationManagerDelegate {
         
     @IBOutlet var searchPetsButton: UIBarButtonItem!
     @IBOutlet var addPetButton: UIBarButtonItem!
+    @IBOutlet var activityView: UIView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var lostPets: [Pet] = []
     var petDetails: Pet?
     var petPic: UIImage?
     let locationManager = CLLocationManager()
     var warningHasBeenShown: Bool = false
+    var didFindLocation: Bool = false
+    var imageDict = [String: Data]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    //    Service.sharedSingleton.fetchPetsForLocation()
+        self.navigationController?.view.addSubview(activityView)
+        activityView.center = (self.navigationController?.view.center)!
+        activityIndicator.isHidden = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         tableView.delegate = self
         tableView.dataSource = self
         
-//        if self.hasConnectivity() == false {
-//            presentWarningToUser(title: "Warning", message: "Your device cannot connect to the network. App functionality may be impaired.")
-//        }
+        didFindLocation = false
         configureLocationServices()
         locationManager.startUpdatingLocation()
+        
+        self.refreshControl?.addTarget(self, action: #selector(FoundViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
     }
+    
+    func handleRefresh( _ refreshControl: UIRefreshControl) {
+        Service.sharedSingleton.addListener(viewController: "found", refreshView: reloadTable)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            refreshControl.endRefreshing()
+        }
+    }
+    
+    func downloadImage() {
+        var count = 0
+        self.lostPets = Service.sharedSingleton.getLostPets()
+        
+        for pet in self.lostPets {
+            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
+            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+                
+                guard error == nil else {
+                    print("Error downloading: \(error)")
+                    return
+                }
+                
+                self.imageDict["\(pet.petID)"] = data!
+                
+                count = count + 1
+                print("Lost Pets Count: \(self.lostPets.count)")
+                if count == self.lostPets.count {
+                    Service.sharedSingleton.emptyLocatedPetIDArray()
+                    self.reloadTable()
+                }
+            }
+        }
+    }
+    
+//MARK: Location Manager Methods:
     
     func configureLocationServices() {
         self.locationManager.delegate = self
@@ -56,9 +98,14 @@ class LostViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations[0]
-     //   Service.sharedSingleton.setUserLocation(location: location)
-     //   Service.sharedSingleton.fetchPetsForLocation()
+        if didFindLocation != true {
+            let location = locations[0]
+            Service.sharedSingleton.setUserLocation(location: location)
+            Service.sharedSingleton.fetchPetsForLocation(viewController: "lost", refreshView: downloadImage)
+            didFindLocation = true
+        } else {
+            print("Location has already been found.")
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -75,9 +122,12 @@ class LostViewController: UITableViewController, CLLocationManagerDelegate {
         case .restricted:
             showWarningOnce()
             Service.sharedSingleton.fetchPets(viewControllerName: "Lost", completion: tableView.reloadData)
-        default:
-            break
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        //TODO: Notify the user of an error?
+        print("Error: \(error)")
     }
     
     func showWarningOnce() {
@@ -87,56 +137,43 @@ class LostViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        //TODO: Notify the user of an error?
-        print("Error: \(error)")
+//MARK: Methods related to TableView: 
+    
+    func reloadTable() {
+        self.lostPets.sort {
+            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
+        }
+        
+        self.tableView.reloadData()
     }
+    
+//MARK: TableView datasource methods:
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let lostPetsArray = Service.sharedSingleton.getPets()
-        self.lostPets = lostPetsArray.reversed()
-        return lostPets.count
+        return self.lostPets.count
     }
-    
-    let imageCache = NSCache<NSString, UIImage>()
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
         let pet = lostPets[indexPath.row]
-        let placeholderImage = UIImage(named: "Placeholder")
-        cell.petImageView?.image = placeholderImage!
+        
         cell.nameLabel.text = pet.name
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.cornerRadius = 5.0
         
-        
-        if let cachedImage = imageCache.object(forKey: pet.petID as NSString) {
-            cell.petImageView?.image = cachedImage
-            cell.setNeedsLayout()
+        if let image = imageDict["\(pet.petID)"] {
+            cell.petImageView.image = UIImage.init(data: image, scale: 50)
         } else {
-            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
-            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
-                
-                guard error == nil else {
-                    print("Error downloading: \(error)")
-                    return
-                }
-                
-                let petImage = UIImage.init(data: data!, scale: 50)
-                self.imageCache.setObject(petImage!, forKey: pet.petID as NSString)
-                if cell == tableView.cellForRow(at: indexPath) {
-                    DispatchQueue.main.async {
-                        cell.petImageView.image = petImage
-                        cell.setNeedsLayout()
-                    }
-                }
-            }
+            let placeholderImage = UIImage(named: "Placeholder")
+            cell.petImageView?.image = placeholderImage!
         }
         
+        self.activityIndicator.stopAnimating()
+        self.activityView.isHidden = true
         return cell
     }
     
-    
+//MARK: TableView Delegate Methods:
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow!
@@ -148,6 +185,8 @@ class LostViewController: UITableViewController, CLLocationManagerDelegate {
         performSegue(withIdentifier: "SegueToProfileView", sender: self)
     }
     
+//MARK: Segue Methods
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueToProfileView" {
             let destinationNavController = segue.destination as! UINavigationController
@@ -155,10 +194,11 @@ class LostViewController: UITableViewController, CLLocationManagerDelegate {
             petProfileVC.petProfile = petDetails
             petProfileVC.petImage = petPic!
             
-        } 
+        }
     }
     
-
+    
+//MARK: Methods corresponding to UI Buttons:
     
     @IBAction func addPet(_ sender: AnyObject) {
         if hasConnectivity() == false {

@@ -54,7 +54,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="adg-W8-Rxr">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
+                        <outlet property="activityIndicator" destination="n4t-mt-zaJ" id="xAk-pr-1wk"/>
+                        <outlet property="activityView" destination="1ff-2Z-r7V" id="6ka-ZV-E1C"/>
                         <outlet property="addPetButton" destination="9bb-pR-lY5" id="ogc-sv-d9i"/>
                         <outlet property="searchPetsButton" destination="nYi-pf-AsM" id="Zgg-fM-lOq"/>
                         <segue destination="kUa-TR-qlC" kind="presentation" identifier="SegueToProfileView" id="iQX-Wg-ZQM"/>
@@ -62,6 +67,18 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r9E-SE-mAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="1ff-2Z-r7V">
+                    <rect key="frame" x="0.0" y="0.0" width="115" height="74"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="n4t-mt-zaJ"/>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="n4t-mt-zaJ" firstAttribute="centerY" secondItem="1ff-2Z-r7V" secondAttribute="centerY" id="UXg-hr-z71"/>
+                        <constraint firstItem="n4t-mt-zaJ" firstAttribute="centerX" secondItem="1ff-2Z-r7V" secondAttribute="centerX" id="raQ-EL-dCg"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="1361" y="42"/>
         </scene>
@@ -92,14 +109,31 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="r4n-Hp-zxJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
+                        <outlet property="activityIndicator" destination="u6O-GV-qJG" id="w5Q-ZE-U7f"/>
+                        <outlet property="activityView" destination="LvA-Rj-haz" id="Dsy-lF-N7M"/>
                         <segue destination="kUa-TR-qlC" kind="presentation" identifier="SegueToProfileView" id="PeP-kj-td3"/>
                         <segue destination="jjh-qY-9dh" kind="show" identifier="Segue To Manage" id="Cij-Km-Pju"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5M-up-ujO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="LvA-Rj-haz">
+                    <rect key="frame" x="0.0" y="0.0" width="95" height="61"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="u6O-GV-qJG"/>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="u6O-GV-qJG" firstAttribute="centerY" secondItem="LvA-Rj-haz" secondAttribute="centerY" id="Y1n-zb-KYG"/>
+                        <constraint firstItem="u6O-GV-qJG" firstAttribute="centerX" secondItem="LvA-Rj-haz" secondAttribute="centerX" id="bgf-hf-xGs"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1360.8" y="719.19040479760122"/>
+            <point key="canvasLocation" x="1361" y="773"/>
         </scene>
         <!--Found-->
         <scene sceneID="TO3-Fw-WWM">
@@ -128,6 +162,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="n77-v1-pmJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="activityIndicator" destination="eo7-eb-qIJ" id="EFG-yq-hBo"/>
                         <outlet property="activityView" destination="5pp-pa-aT7" id="bFd-Hw-wgn"/>
@@ -137,7 +174,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG9-Zr-2Yr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <view contentMode="scaleToFill" id="5pp-pa-aT7">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="287"/>
+                    <rect key="frame" x="0.0" y="0.0" width="101" height="73"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-eb-qIJ"/>
@@ -149,7 +186,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1360.8" y="-653.52323838080963"/>
+            <point key="canvasLocation" x="1350" y="-724"/>
         </scene>
         <!--Add Pet-->
         <scene sceneID="kHD-v8-vTa">
@@ -731,13 +768,13 @@
                     <tabBarItem key="tabBarItem" title="Lost" id="qhO-IX-OTL"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Iey-zL-xJU">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Iey-zL-xJU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="goU-Z5-mM1" kind="relationship" relationship="rootViewController" id="a8k-re-LRo"/>
+                        <segue destination="WDo-qw-RPj" kind="relationship" relationship="rootViewController" id="FIA-cG-XNR"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XV7-53-EML" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -751,7 +788,7 @@
                     <tabBarItem key="tabBarItem" title="Adopt" id="O8O-fL-zBN"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="KyT-KQ-08u">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KyT-KQ-08u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -771,13 +808,13 @@
                     <tabBarItem key="tabBarItem" title="Found" id="lQo-kT-dHD"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="5Qr-hK-Koh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Qr-hK-Koh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="WDo-qw-RPj" kind="relationship" relationship="rootViewController" id="JCQ-xM-zZ6"/>
+                        <segue destination="goU-Z5-mM1" kind="relationship" relationship="rootViewController" id="ZsC-cs-Aod"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A6z-Mh-mYa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -791,7 +828,7 @@
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fRS-Cx-a6k">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fRS-Cx-a6k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -972,7 +1009,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kUa-TR-qlC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JUM-6m-PZf">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JUM-6m-PZf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -990,7 +1027,7 @@
             <objects>
                 <navigationController title="Nav Manage Controller" automaticallyAdjustsScrollViewInsets="NO" id="jjh-qY-9dh" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bZU-TA-Mlb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bZU-TA-Mlb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1008,7 +1045,7 @@
         <image name="Placeholder" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MHD-MD-dx5"/>
-        <segue reference="68X-tE-4zA"/>
+        <segue reference="Cij-Km-Pju"/>
+        <segue reference="PeP-kj-td3"/>
     </inferredMetricsTieBreakers>
 </document>

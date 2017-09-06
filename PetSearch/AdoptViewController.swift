@@ -14,20 +14,67 @@ import FirebaseDatabaseUI
 
 class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
     
+    @IBOutlet var activityView: UIView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
+    
     var adoptPets: [Pet] = []
     var petDetails: Pet?
     var petPic: UIImage?
-    let imageCacheAdopt = NSCache<NSString, UIImage>()
     let locationManager = CLLocationManager()
     var warningHasBeenShown: Bool = false
+    var didFindLocation: Bool = false
+    var imageDict = [String: Data]()
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.view.addSubview(activityView)
+        activityView.center = (self.navigationController?.view.center)!
+        activityIndicator.isHidden = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         
+        didFindLocation = false
         configureLocationServices()
         locationManager.startUpdatingLocation()
+        
+        self.refreshControl?.addTarget(self, action: #selector(FoundViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
     }
+    
+    func handleRefresh( _ refreshControl: UIRefreshControl) {
+        Service.sharedSingleton.addListener(viewController: "found", refreshView: reloadTable)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            refreshControl.endRefreshing()
+        }
+    }
+    
+    func downloadImage() {
+        var count = 0
+        self.adoptPets = Service.sharedSingleton.getAdoptPets()
+        
+        for pet in self.adoptPets {
+            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
+            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+                
+                guard error == nil else {
+                    print("Error downloading: \(error)")
+                    return
+                }
+                
+                self.imageDict["\(pet.petID)"] = data!
+                
+                count = count + 1
+                if count == self.adoptPets.count {
+                    Service.sharedSingleton.emptyLocatedPetIDArray()
+                    self.reloadTable()
+                }
+            }
+        }
+    }
+    
+//MARK: Location Manager Methods
     
     func configureLocationServices() {
         self.locationManager.delegate = self
@@ -48,9 +95,14 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location = locations[0]
-  //      Service.sharedSingleton.setUserLocation(location: location)
-   //     Service.sharedSingleton.fetchPetsForLocation()
+        if didFindLocation != true {
+            let location = locations[0]
+            Service.sharedSingleton.setUserLocation(location: location)
+            Service.sharedSingleton.fetchPetsForLocation(viewController: "adopt", refreshView: downloadImage)
+            didFindLocation = true
+        } else {
+            print("Location has already been found.")
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -67,9 +119,12 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
         case .restricted:
             showWarningOnce()
             Service.sharedSingleton.fetchPets(viewControllerName: "Adopt", completion: tableView.reloadData)
-        default:
-            break
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        //TODO: Notify the user of an error?
+        print("Error: \(error)")
     }
     
     func showWarningOnce() {
@@ -79,14 +134,18 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        //TODO: Notify the user of an error?
-        print("Error: \(error)")
+//MARK: TableView Related Methods
+    
+    func reloadTable() {
+        self.adoptPets.sort {
+            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
+        }
+        self.tableView.reloadData()
     }
     
+//MARK: TableView Datasource Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let adoptPetsArray = Service.sharedSingleton.getPets()
-        self.adoptPets = adoptPetsArray.reversed()
         return adoptPets.count
     }
     
@@ -95,38 +154,24 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PetCell", for: indexPath) as! PetCell
         let pet = adoptPets[indexPath.row]
         
-        let placeholderImage = UIImage(named: "Placeholder")
-        cell.petImageView?.image = placeholderImage!
         cell.nameLabel.text = pet.name
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.cornerRadius = 5.0
         
-        
-        if let cachedImage = imageCacheAdopt.object(forKey: pet.petID as NSString) {
-            cell.petImageView?.image = cachedImage
-            cell.setNeedsLayout()
+        if let image = imageDict["\(pet.petID)"] {
+            cell.petImageView.image = UIImage.init(data: image, scale: 50)
         } else {
-            let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
-            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
-                
-                guard error == nil else {
-                    print("Error downloading: \(error)")
-                    return
-                }
-                
-                let petImage = UIImage.init(data: data!, scale: 50)
-                self.imageCacheAdopt.setObject(petImage!, forKey: pet.petID as NSString)
-                if cell == tableView.cellForRow(at: indexPath) {
-                    DispatchQueue.main.async {
-                        cell.petImageView.image = petImage
-                        cell.setNeedsLayout()
-                    }
-                }
-            }
+            let placeholderImage = UIImage(named: "Placeholder")
+            cell.petImageView?.image = placeholderImage!
         }
         
+        self.activityIndicator.stopAnimating()
+        self.activityView.isHidden = true
         return cell
     }
+
+    
+//MARK: TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow!
@@ -138,6 +183,9 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
         performSegue(withIdentifier: "SegueToProfileView", sender: self)
     }
     
+
+//MARK: Segue Methods
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueToProfileView" {
             let destinationNavController = segue.destination as! UINavigationController
@@ -147,6 +195,9 @@ class AdoptViewController: UITableViewController, CLLocationManagerDelegate {
             
         }
     }
+
+
+//MARK: Methods related to UI Buttons
     
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         print("Performing unwind segue to Adopt VC.")

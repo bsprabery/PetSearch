@@ -113,6 +113,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
                 activityIndicator.startAnimating()
             } else {
                 print("pet was nil.")
+                self.presentWarningToUser(title: "Error", message: "There was an error while saving your pet. Please try again.")
             }
         } else {
             self.presentWarningToUser(title: "Photo Required", message: "Please choose a photo of your pet to display.")

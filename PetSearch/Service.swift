@@ -164,8 +164,28 @@ class Service : NSObject {
     }
     
     
+    func insertPetIntoDict(pet: Pet, image: UIImage) {
+        self.imageDict[pet.petID] = image
+        self.petDict[pet.petID] = pet
+        
+        switch pet.status{
+        case "Found":
+            self.foundPets.append(pet)
+        case "Lost":
+            self.lostPets.append(pet)
+        case "Available to Adopt":
+            self.adoptPets.append(pet)
+        default:
+            print("Default case hit.")
+        }
+        
+    }
+    
     //MARK: The pet photo can be retrieved with the pet ID. There is no need for a pet photoUrl anymore.
     func uploadInfoToFirebaseDatabase(status: String, photo: UIImage, pet: inout Pet, completion: @escaping () -> ()) {
+        
+        //insertPetIntoDict(pet: pet, image: photo)
+        
         let ref = FIRDatabase.database().reference()
         var petRef: FIRDatabaseReference = FIRDatabaseReference()
         var petStatus: String = ""
@@ -176,9 +196,8 @@ class Service : NSObject {
             petStatus = "lost"
         case "Found":
             petRef = ref.child("pets").child("found").childByAutoId()
-            print("petRef: \(petRef)")
             petStatus = "found"
-        case "Adopt":
+        case "Available to Adopt":
             petRef = ref.child("pets").child("adopt").childByAutoId()
             petStatus = "adopt"
         default:
@@ -187,6 +206,7 @@ class Service : NSObject {
         
         let petString = "\(petRef)" + "\(petStatus)"
         let petID = petString.components(separatedBy: "https://petsearch-8b839.firebaseio.com/pets/\(petStatus)/")
+    
         let petIDwStatus: String = petID[1]
         let newPetID = petIDwStatus.components(separatedBy: "found")[0]
         pet.petID = newPetID
@@ -234,7 +254,8 @@ class Service : NSObject {
         let storageRef = FIRStorage.storage().reference(withPath: "\(petID).jpg")
         
         //Delete pet data from database:
-        ref.removeValue { error in
+        ref.removeValue { (error, ref) in
+            
             if error != nil {
                 print("There was an error deleting the pet from the database. Error: \(error)")
             }
@@ -322,73 +343,137 @@ class Service : NSObject {
         }
     }
     
-    var petsDownloaded = false
+   // var petsDownloaded = false
     
-    func fetchPetsForLocation(viewController: String, completion: @escaping () -> ()) {
+    func addListener(viewController: String, refreshView: @escaping() -> ()) {
         let userLocation = getUserLocation()
         let geoFireRef = FIRDatabase.database().reference().child("pets_location")
         let geoFire = GeoFire(firebaseRef: geoFireRef)
         let center = CLLocation(latitude: (userLocation?.coordinate.latitude)!, longitude: (userLocation?.coordinate.longitude)!)
         let circleQuery = geoFire!.query(at: center, withRadius: 100)
-        
-        
-        
-        circleQuery?.observe(.keyEntered, with: { (key, location) in
+        let handle = circleQuery?.observe(.keyEntered, with: { (key, location) in
             if let key = key {
-                self.locatedPetIDs.append(key)
-                print("The key returned by Firebase: \(key)")
-                print("The number of keys in the locatedPetIDs array: \(self.locatedPetIDs.count)")
-                
-                //This is true if the observeReady block has been called before. 
-                //Calling this ensures that any pets added to the database after the initial download, will be downloaded and added to the tableView.
-                if self.petsDownloaded {
-                    self.fetchLocatedPets(viewControllerName: viewController, petID: key, completion: completion)
-                }
-            } else {
-                completion()
+                self.fetchLocatedPets(viewControllerName: viewController, petID: key, refreshView: refreshView)
             }
         })
         
-        //This block is triggered once the above query has finished returning ALL the results for the location query:
-        circleQuery?.observeReady({
-            for petID in self.locatedPetIDs {
-                self.fetchLocatedPets(viewControllerName: viewController, petID: petID, completion: completion)
+        listeners.append(handle!)
+        
+        
+        let when = DispatchTime.now() + 1 // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: when) {
+            // Your code with delay
+            for handle in self.listeners {
+                circleQuery?.removeObserver(withFirebaseHandle: handle)
             }
-            self.petsDownloaded = true
-        })
+            self.listeners = []
+        }
     }
     
-    func fetchLocatedPets(viewControllerName: String, petID: String, completion: @escaping () -> ()) {
-        let ref = FIRDatabase.database().reference().child("pets").child(viewControllerName).queryOrdered(byChild: "petID")
-        ref.queryEqual(toValue: petID).observeSingleEvent(of: .value, with: { (snapshot) in
-            if (snapshot.exists()) {
-                for pet in snapshot.children {
-                    let locatedPet = Pet(snapshot: pet as! FIRDataSnapshot)
-                    print(locatedPet)
-                    switch viewControllerName{
-                    case "found":
-                        self.foundPets.append(locatedPet)
-                    case "lost":
-                        self.lostPets.append(locatedPet)
-                    case "adopt":
-                        self.adoptPets.append(locatedPet)
-                    default:
-                        break
-                    }
-                }
-            }
+    var listeners = [UInt]()
+    
+    var petDict = [String: Pet]()
+    
+    func fetchPetsForLocation(viewController: String, refreshView: @escaping () -> ()) {
+        addListener(viewController: viewController, refreshView: refreshView)
+//        let userLocation = getUserLocation()
+//        let geoFireRef = FIRDatabase.database().reference().child("pets_location")
+//        let geoFire = GeoFire(firebaseRef: geoFireRef)
+//        let center = CLLocation(latitude: (userLocation?.coordinate.latitude)!, longitude: (userLocation?.coordinate.longitude)!)
+//        let circleQuery = geoFire!.query(at: center, withRadius: 100)
+        
+//        circleQuery?.observe(.keyEntered, with: { (key, location) in
+//            if let key = key {
+//             //   if (!self.petsDownloaded) {
+//                    self.fetchLocatedPets(viewControllerName: viewController, petID: key, refreshView: refreshView)
+//           //     }
+//                //self.locatedPetIDs.insert(key)
+//               
+//                //This is true if the observeReady block has been called before. 
+//                //Calling this ensures that any pets added to the database after the initial download, will be downloaded and added to the tableView.
+////                if self.petsDownloaded {
+////                    self.fetchLocatedPets(viewControllerName: viewController, petID: key, downloadImage: downloadImageFunc)
+////                } else {
+////                    downloadImageFunc()
+////                }
+//            }
+//                //else {
+////                completion()
+////            }
+//        })
+        
+////        This block is triggered once the above query has finished returning ALL the results for the location query:
+//        circleQuery?.observeReady({
+////            for petID in self.locatedPetIDs {
+////                self.fetchLocatedPets(viewControllerName: viewController, petID: petID, completion: completion)
+////            }
+//            self.petsDownloaded = true
+//        })
+    }
+    
+
+    
+    func fetchLocatedPets(viewControllerName: String, petID: String, refreshView: @escaping () -> ()) {
+
+        if (!self.petDict.keys.contains(petID)) {
             
-            //MARK: Seems sloppy:
-            if self.locatedPetIDs.count == self.foundPets.count {
-                completion()
+        
+            let ref = FIRDatabase.database().reference().child("pets").child(viewControllerName).queryOrdered(byChild: "petID")
+            ref.queryEqual(toValue: petID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if (snapshot.exists()) {
+                    for pet in snapshot.children {
+                        let locatedPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                        
+                        switch locatedPet.status{
+                        case "Found":
+                            self.foundPets.append(locatedPet)
+                        case "Lost":
+                            self.lostPets.append(locatedPet)
+                        case "Available to Adopt":
+                            self.adoptPets.append(locatedPet)
+                        default:
+                            print("Default case hit.")
+                        }
+                        
+                        self.petDict[locatedPet.petID] = locatedPet
+                        refreshView()
+                        self.downloadImage(petID: locatedPet.petID, refreshView: refreshView)
+                    }
+                } else {
+                    print("Snapshot does not exist.")
+                }
+            })
+           
+        }
+    }
+    
+    var imageDict = [String: UIImage]()
+    
+    func downloadImage(petID: String, refreshView: @escaping () -> ()) {
+
+        if (!self.imageDict.keys.contains(petID)) {
+            let storRef = FIRStorage.storage().reference(withPath: "\(petID).jpg")
+            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+                
+                guard error == nil else {
+                    print("Error downloading: \(error)")
+                    return
+                }
+                
+                self.imageDict["\(petID)"] = UIImage.init(data: data!, scale: 50)
+                
+                refreshView();
             }
-        })
+        } else {
+            refreshView();
+        }
     }
 
     private var petArray: [Pet]
     private var userInfoPath: String
     private var userLocation: CLLocation?
-    private var locatedPetIDs: [String]
+    private var locatedPetIDs: Set<String>
     lazy var lostPets = [Pet]()
     lazy var foundPets = [Pet]()
     lazy var adoptPets = [Pet]()
@@ -397,7 +482,7 @@ class Service : NSObject {
         petArray = [Pet]()
         userInfoPath = String()
         userLocation = CLLocation()
-        locatedPetIDs = [String]()
+        locatedPetIDs = Set<String>()
     }
     
     func setPets(pets: [Pet]) {
@@ -427,16 +512,35 @@ class Service : NSObject {
         return self.userLocation
     }
     
-    func setPetsForLocation(array: [String]) {
-        self.locatedPetIDs = array
-    }
+//    func setPetsForLocation(array: [String]) {
+//        self.locatedPetIDs = array
+//    }
     
-    func getPetsForLocation() -> [String] {
+    func getPetsForLocation() -> Set<String> {
         return self.locatedPetIDs
     }
     
     func getFoundPets() -> [Pet] {
+        self.foundPets.sort {
+            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
+        }
         return self.foundPets
+    }
+    
+    func getImages() -> [String: UIImage] {
+        return self.imageDict
+    }
+    
+    func getAdoptPets() -> [Pet] {
+        return self.adoptPets
+    }
+    
+    func getLostPets() -> [Pet] {
+        return self.lostPets
+    }
+    
+    func emptyLocatedPetIDArray() {
+        self.locatedPetIDs.removeAll()
     }
 
 }

@@ -3,64 +3,22 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "AdoptViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():AdoptViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "LoginScreen.(layoutView() -&gt; ()).(closure #1):LoginScreen.swift">
+         contextName = "Service.(fetchLocatedPets(viewControllerName : String, petID : String, completion : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
          <PersistentStrings>
             <PersistentString
-               value = "stackContainerHeight.constant">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Service.(fetchPetsForLocation(viewControllerName : String, completion : () -&gt; ()) -&gt; ()).(closure #2).(closure #1):Service.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "snapshot.value">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Service.getUserLocation() -&gt; CLLocation?:Service.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.userLocation.coordinate.latitude">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Service.(fetchLocatedPet(petID : String, completion : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "snapshot.children">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "FoundViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():FoundViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "location.coordinate.latitude">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Service.(checkIfUserIsLoggedIn(segueOne : () -&gt; (), segueTwo : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "uid">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "LoginScreen.layoutView() -&gt; ():LoginScreen.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "stackContainerBottom.constant">
+               value = "locatedPet.status">
             </PersistentString>
             <PersistentString
-               value = "stackContainerHeight.constant">
+               value = "count">
+            </PersistentString>
+            <PersistentString
+               value = "locatedPet.petID">
+            </PersistentString>
+            <PersistentString
+               value = "locatedPet.name">
+            </PersistentString>
+            <PersistentString
+               value = "print(&quot;\(snapshot.ref)&quot;)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -87,10 +45,107 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "LostViewController.(downloadImage() -&gt; ()).(closure #1):LostViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "pet.name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginScreen.(layoutView() -&gt; ()).(closure #1):LoginScreen.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "stackContainerHeight.constant">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "FoundViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():FoundViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "location.coordinate.latitude">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.(fetchPetsForLocation(viewControllerName : String, completion : () -&gt; ()) -&gt; ()).(closure #2).(closure #1):Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "snapshot.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AdoptViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():AdoptViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Service.(checkIfUserIsLoggedIn(segueOne : () -&gt; (), segueTwo : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "uid">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginScreen.layoutView() -&gt; ():LoginScreen.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "stackContainerBottom.constant">
+            </PersistentString>
+            <PersistentString
+               value = "stackContainerHeight.constant">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "FoundViewController.(tableView(UITableView, cellForRowAt : IndexPath) -&gt; UITableViewCell).(closure #1).(closure #1):FoundViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "cell.tag">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.fetchLocatedPets(viewControllerName : String, petID : String, completion : () -&gt; ()) -&gt; ():Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.getUserLocation() -&gt; CLLocation?:Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.userLocation.coordinate.latitude">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.(fetchLocatedPet(petID : String, completion : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "snapshot.children">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.(fetchLocatedPets(viewControllerName : String, petID : String, downloadImage : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.locatedPetIDs">
+            </PersistentString>
+            <PersistentString
+               value = "self.petDict">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.uploadInfoToFirebaseDatabase(status : String, photo : UIImage, pet : inout Pet, completion : () -&gt; ()) -&gt; ():Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "status">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
