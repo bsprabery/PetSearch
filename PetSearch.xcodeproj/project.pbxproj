@@ -42,6 +42,7 @@
 		38F90DAF1E9EC57D0097E6C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38F90DAE1E9EC57D0097E6C7 /* GoogleService-Info.plist */; };
 		38F90DB91E9FC7980097E6C7 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F90DB81E9FC7980097E6C7 /* Pet.swift */; };
 		38FCFDA01F57472A005E72B7 /* MailComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCFD9F1F57472A005E72B7 /* MailComposer.swift */; };
+		38FCFDA21F604BAC005E72B7 /* PSBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCFDA11F604BAC005E72B7 /* PSBaseViewController.swift */; };
 		3DD470767AC25ADA88CE1552 /* Pods_PetSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B344E95FC22E0D4DCBFF78B5 /* Pods_PetSearchTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +116,7 @@
 		38F90DAE1E9EC57D0097E6C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38F90DB81E9FC7980097E6C7 /* Pet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		38FCFD9F1F57472A005E72B7 /* MailComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailComposer.swift; sourceTree = "<group>"; };
+		38FCFDA11F604BAC005E72B7 /* PSBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PSBaseViewController.swift; sourceTree = "<group>"; };
 		53E688F00B74E8269B01F20A /* Pods-PetSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetSearch/Pods-PetSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		5954E9C9D65D89742C0EDC40 /* Pods_PetSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9170E79FE118C04FA6549F9E /* Pods-PetSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetSearchTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetSearchTests/Pods-PetSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				3860CE5A1F0EBACC0028ADB2 /* PetCell.swift */,
 				3860CE641F2665B30028ADB2 /* ManagePets.swift */,
 				38FCFD9F1F57472A005E72B7 /* MailComposer.swift */,
+				38FCFDA11F604BAC005E72B7 /* PSBaseViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				38F3524F1F055314005460FA /* FoundViewController.swift in Sources */,
 				38F90DB91E9FC7980097E6C7 /* Pet.swift in Sources */,
 				381418471EAE6CEC00B51DAC /* PreviewViewController.swift in Sources */,
+				38FCFDA21F604BAC005E72B7 /* PSBaseViewController.swift in Sources */,
 				3860CE801F30EDE80028ADB2 /* GFBase32Utils.m in Sources */,
 				3815A7CA1E9D2A420048275C /* LaunchScreenView.swift in Sources */,
 				381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */,

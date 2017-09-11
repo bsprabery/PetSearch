@@ -35,8 +35,15 @@
                             <constraint firstAttribute="width" constant="95" id="q3P-Hv-EQ4"/>
                         </constraints>
                     </imageView>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrC-Zc-8cM">
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrC-Zc-8cM">
                         <frame key="frameInset" minX="101" minY="21" width="15" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrQ-vA-SLi">
+                        <frame key="frameInset" minX="111" minY="50" width="18" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -60,6 +67,7 @@
                 <outlet property="nameLabel" destination="Mxm-3k-qdA" id="UhJ-rg-hoc"/>
                 <outlet property="petImageView" destination="AIB-qn-SLA" id="cPx-YU-cmk"/>
                 <outlet property="petInfoLabel" destination="vrC-Zc-8cM" id="3oq-Jt-thC"/>
+                <outlet property="petStatusLabel" destination="HrQ-vA-SLi" id="i0S-9o-UhS"/>
             </connections>
             <point key="canvasLocation" x="40" y="1.5"/>
         </tableViewCell>

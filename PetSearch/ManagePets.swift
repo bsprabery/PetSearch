@@ -42,6 +42,9 @@ class ManagePets: UITableViewController {
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.contents = 5.0
         cell.petInfoLabel.text = "\(pet.petID)"
+        cell.petStatusLabel.text = "\(pet.status)"
+        
+        //TODO: Remove unnecessary code about cache
         
         if let cachedImage = imageCache.object(forKey: pet.petID as NSString) {
             cell.petImageView?.image = cachedImage
@@ -74,25 +77,40 @@ class ManagePets: UITableViewController {
         return true
     }
     
+    func getStatusFor(petID: String) -> String {
+        var status = userPets.filter({$0.petID == petID}).last?.status
+        if ((status?.range(of: "adopt")) != nil) {
+            status = "adopt"
+        }
+        return status!
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath)! as! PetCell
             
             //Get PetID to delete from database:
             let petID = cell.petInfoLabel.text
+//            let status = cell.petStatusLabel.text
             
             //Delete pet from database:
-            Service.sharedSingleton.deletePets(petID: petID!)
+            Service.sharedSingleton.deletePets(status: getStatusFor(petID: petID!), petID: petID!)
             
             //Remove from pet array populating tableView:
             userPets.remove(at: indexPath.row)
             
             //Delete row from table:
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            //TODO: Remove Pet From TableView after Deletion:
+//            Service.sharedSingleton.imageDict.removeValue(forKey: petID!)
+//            Service.sharedSingleton.petDict.removeValue(forKey: petID!)
+
         }
     }
 
     @IBAction func backButtonTapped(_ sender: AnyObject) {
+        NotificationCenter.default.post(name: Notification.Name("refreshAfterDeletion"), object: nil)
         dismiss(animated: true, completion: nil)
     }
     

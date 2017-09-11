@@ -35,7 +35,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     var datePickerHidden = true
     var statusPickerHidden = true
     var genderValues = ["Male", "Female"]
-    var speciesValues = ["Bird", "Cat", "Dog", "Reptile", "Other"]
+    var speciesValues = ["Cat", "Dog", "Other"]
     var statusValues = ["Lost", "Found", "Available to Adopt"]
     private var latitude: Double!
     private var longitude: Double!
@@ -58,8 +58,8 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         
             //TODO:  Successfully checks to ensure fields are not empty, but if you hit cancel on the next view and return to this view, you can delete information and then hit the next button and it will transition to the next view with that field as empty. Does this mean that editing these fields after segue-ing to the next view will not reflect changes made upon returning to the view?
             
-            if self.petNameField.text?.isEmpty ?? true || self.speciesLabel.text?.isEmpty ?? true || self.statusLabel.text?.isEmpty ?? true {
-                    let alertController = UIAlertController(title: "Missing Information!", message: "Please check to make sure all required fields are answered.", preferredStyle: .alert)
+            if self.petNameField.text?.isEmpty ?? true || self.speciesLabel.text == "Select" || self.statusLabel.text == "Select" || self.sexLabel.text == "Select" {
+                    let alertController = UIAlertController(title: "Missing Information!", message: "Please check to make sure all required fields are answered. Required fields include: Pet Name, Sex, Type, Status", preferredStyle: .alert)
                     let okayAction = UIAlertAction(title: "Okay", style: .default) { (action) in
                         print("Okay.")
                     }
@@ -81,7 +81,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                 let userEmail = userInfoDict["email"] as! String!
                 let phoneNumber = userInfoDict["phoneNumber"] as! String!
                 let uid = userInfoDict["uid"] as! String!
-                
+                                
                 //TODO: After registering and attempting to post a pet for the first time, this always fails at user/latitude (nil value). Why? Does not happen second time.
                 destinationVC.pet = Pet(name: petNameField.text!,
                                         species: speciesLabel.text!,
@@ -89,7 +89,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         breed: breedText,
                                         petDetails: detailsTextView.text!,
                                         date: "\(formatDate())",
-                                        status: statusLabel.text!,
+                                        status: statusLabel.text!.lowercased(),
                                         user: userName!,
                                         email: userEmail!,
                                         phoneNumber: phoneNumber!,

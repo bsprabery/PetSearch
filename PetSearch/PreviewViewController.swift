@@ -64,7 +64,6 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         imagePicker.allowsEditing = false
-        //   let tappedImage = tapGestureRecognizer.view as! UIImageView
         
         DispatchQueue.main.async {
             
@@ -124,6 +123,10 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
+    }
+    
+    @IBAction func backToInputTableView(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
     
