@@ -93,18 +93,26 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //TODO: When attempting to register for the first time, the register button is actually the login button. Until the user clicks the login switch and then the register switch, they can't register a new user
     func handleLoginRegister() {
         
         if hasConnectivity() == false {
             self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
             if registerButtonTapped == true {
-                print("Register")
                 Service.sharedSingleton.handleRegister(email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
+                Service.sharedSingleton.signedOut = false
             } else {
-                print("Login")
-                Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
+            //MARK: Handles segues to appropriate destinations after logging the user into the app:
+                if Service.sharedSingleton.manageButtonPressed {
+                    Service.sharedSingleton.signedOut = false
+                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToManageScreen)
+                } else if Service.sharedSingleton.signInButtonTapped {
+                    Service.sharedSingleton.signedOut = false
+                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: unwindSegue)
+                } else {
+                    Service.sharedSingleton.signedOut = false
+                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
+                }
             }
         }
     }

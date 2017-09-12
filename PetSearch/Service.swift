@@ -149,7 +149,7 @@ class Service : NSObject {
             
             self.getUserDetails()
             
-             completion()
+            completion()
         })
         
         
@@ -253,7 +253,7 @@ class Service : NSObject {
 
         let ref = FIRDatabase.database().reference().child("pets").child(status).child(petID)
         let storageRef = FIRStorage.storage().reference(withPath: "\(petID).jpg")
-        let locationDataRef = FIRDatabase.database().reference().child("pets_location")
+        let locationDataRef = FIRDatabase.database().reference().child("pets_location").child(petID)
         
         imageDict.removeValue(forKey: petID)
         if( petDict.removeValue(forKey: petID) == nil) {
@@ -306,16 +306,20 @@ class Service : NSObject {
         
         self.setPets(pets: [])
         let userID = FIRAuth.auth()?.currentUser?.uid
+        print("User ID: \(userID)")
         let ref = FIRDatabase.database().reference().child("users").child(userID!).child("pets")
         
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             var userPets: [Pet] = []
             
             for pet in snapshot.children {
+                
                 let userPet = Pet(snapshot: pet as! FIRDataSnapshot)
                 userPets.append(userPet)
+                print("User Pet: \(userPet)")
                 
                 self.setPets(pets: userPets)
+                print("User Pets: \(userPets)")
             }
             segue()
         })
@@ -396,47 +400,6 @@ class Service : NSObject {
         }
     }
     
-    
-    
-//    func fetchPetsForLocation(viewController: String, refreshView: @escaping () -> ()) {
-//        addListener(viewController: viewController, refreshView: refreshView)
-//        let userLocation = getUserLocation()
-//        let geoFireRef = FIRDatabase.database().reference().child("pets_location")
-//        let geoFire = GeoFire(firebaseRef: geoFireRef)
-//        let center = CLLocation(latitude: (userLocation?.coordinate.latitude)!, longitude: (userLocation?.coordinate.longitude)!)
-//        let circleQuery = geoFire!.query(at: center, withRadius: 100)
-        
-//        circleQuery?.observe(.keyEntered, with: { (key, location) in
-//            if let key = key {
-//             //   if (!self.petsDownloaded) {
-//                    self.fetchLocatedPets(viewControllerName: viewController, petID: key, refreshView: refreshView)
-//           //     }
-//                //self.locatedPetIDs.insert(key)
-//               
-//                //This is true if the observeReady block has been called before. 
-//                //Calling this ensures that any pets added to the database after the initial download, will be downloaded and added to the tableView.
-////                if self.petsDownloaded {
-////                    self.fetchLocatedPets(viewControllerName: viewController, petID: key, downloadImage: downloadImageFunc)
-////                } else {
-////                    downloadImageFunc()
-////                }
-//            }
-//                //else {
-////                completion()
-////            }
-//        })
-        
-////        This block is triggered once the above query has finished returning ALL the results for the location query:
-//        circleQuery?.observeReady({
-////            for petID in self.locatedPetIDs {
-////                self.fetchLocatedPets(viewControllerName: viewController, petID: petID, completion: completion)
-////            }
-//            self.petsDownloaded = true
-//        })
- //   }
-    
-
-    
     func fetchLocatedPets(viewControllerName: String, petID: String, refreshView: @escaping () -> ()) {
 
         print(Array(self.petDict.keys))
@@ -505,6 +468,9 @@ class Service : NSObject {
     var listeners = [UInt]()
     var petDict = [String: Pet]()
     var imageDict = [String: UIImage]()
+    var manageButtonPressed: Bool = false
+    var signedOut: Bool = false
+    var signInButtonTapped: Bool = false
     
     override init() {
         petArray = [Pet]()
@@ -541,13 +507,6 @@ class Service : NSObject {
     func getPetsForLocation() -> Set<String> {
         return self.locatedPetIDs
     }
-    
-//    func getFoundPets() -> [Pet] {
-//        self.foundPets.sort {
-//            $0.timeStamp.compare($1.timeStamp) == ComparisonResult.orderedDescending
-//        }
-//        return self.foundPets
-//    }
     
     func getPetsForStatus(status: String) -> [Pet] {
         petArray = Array(petDict.values)

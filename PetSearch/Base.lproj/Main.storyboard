@@ -661,11 +661,13 @@
                         <barButtonItem key="leftBarButtonItem" title="Back" id="8BC-uk-iXx">
                             <connections>
                                 <action selector="backButtonTapped:" destination="EKd-uM-16S" id="chV-eq-Qh8"/>
+                                <segue destination="U5b-5v-A9E" kind="unwind" identifier="unwindSegue" unwindAction="unwindSegue:" id="Wak-Uf-jg2"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9iV-FU-C52" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="U5b-5v-A9E" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="7080.8000000000002" y="104.7976011994003"/>
         </scene>
@@ -1002,6 +1004,7 @@
                         <outlet property="stackView" destination="BtA-Z2-wie" id="KWX-eK-QoK"/>
                         <outlet property="titleLabel" destination="n18-Xj-H6t" id="s0x-9F-tCU"/>
                         <segue destination="Ni6-BF-eY8" kind="unwind" identifier="unwindSegue" unwindAction="unwindSegue:" id="yf1-j6-olN"/>
+                        <segue destination="jjh-qY-9dh" kind="show" identifier="Segue To Manage" id="ULE-Ni-Lfa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KO8-QJ-YGV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1051,6 +1054,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="PeP-kj-td3"/>
-        <segue reference="Cij-Km-Pju"/>
+        <segue reference="ULE-Ni-Lfa"/>
     </inferredMetricsTieBreakers>
 </document>

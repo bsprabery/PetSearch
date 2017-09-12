@@ -20,6 +20,8 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     var warningHasBeenShown: Bool = false
     var didFindLocation: Bool = false
     var imageDict = [String: UIImage]()
+    
+    
        
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -204,8 +206,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func optionsButtonTapped(_ sender: AnyObject) {
-        
-        //TODO: After signing out, there is no option to sign back into the app. The options menu still reads "Sign Out"
         DispatchQueue.main.async {
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -213,16 +213,23 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
                 if Service.sharedSingleton.IsUserLoggedInReturnBool() {
                     Service.sharedSingleton.fetchPetsForUser(segue: self.segueToManageScreen)
-                    //self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
                 } else {
+                    Service.sharedSingleton.manageButtonPressed = true
                     self.segueToLoginScreen()
                 }
-                print("Manage my pets clicked.")
             }))
-            alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
-                Service.sharedSingleton.handleLogout()
-                self.presentWarningToUser(title: "Success!", message: "You have logged out.")
-            }))
+            if Service.sharedSingleton.signedOut {
+                alert.addAction(UIAlertAction(title: "Sign In", style: .default, handler: { (action) in
+                    Service.sharedSingleton.signInButtonTapped = true
+                    self.segueToLoginScreen()
+                }))
+            } else {
+                alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
+                    Service.sharedSingleton.handleLogout()
+                    self.presentWarningToUser(title: "Success!", message: "You have logged out.")
+                    Service.sharedSingleton.signedOut = true
+                }))
+            }
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 self.dismiss(animated: true, completion: nil)
             }))

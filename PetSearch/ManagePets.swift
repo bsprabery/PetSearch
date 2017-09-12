@@ -85,6 +85,7 @@ class ManagePets: UITableViewController {
         return status!
     }
     
+    //TODO: Deletes only one at a time, does not delete multiple?
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath)! as! PetCell
@@ -101,17 +102,13 @@ class ManagePets: UITableViewController {
             
             //Delete row from table:
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-            //TODO: Remove Pet From TableView after Deletion:
-//            Service.sharedSingleton.imageDict.removeValue(forKey: petID!)
-//            Service.sharedSingleton.petDict.removeValue(forKey: petID!)
-
         }
     }
 
     @IBAction func backButtonTapped(_ sender: AnyObject) {
         NotificationCenter.default.post(name: Notification.Name("refreshAfterDeletion"), object: nil)
-        dismiss(animated: true, completion: nil)
+        self.performSegue(withIdentifier: "unwindSegue", sender: self)
+       // dismiss(animated: true, completion: nil)
     }
     
     

@@ -29,9 +29,18 @@ extension UIViewController {
         self.present(destination, animated: true, completion: nil)
     }
     
+    func unwindSegue() {
+        self.performSegue(withIdentifier: "unwindSegue", sender: self)
+        
+        //Reset signInButtonTapped to false:
+        Service.sharedSingleton.signInButtonTapped = false
+    }
+    
     func segueToManageScreen() {
         self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
         
+        //Reset manageButtonPressed to false:
+        Service.sharedSingleton.manageButtonPressed = false
     }
     
     func hasConnectivity() -> Bool {
