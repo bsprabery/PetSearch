@@ -120,6 +120,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func segueToUnwind() {
+        //This .performSegue wires to the unwindSegue on line 244 of PSBaseViewController
         self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()

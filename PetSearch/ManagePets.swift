@@ -92,7 +92,6 @@ class ManagePets: UITableViewController {
             
             //Get PetID to delete from database:
             let petID = cell.petInfoLabel.text
-//            let status = cell.petStatusLabel.text
             
             //Delete pet from database:
             Service.sharedSingleton.deletePets(status: getStatusFor(petID: petID!), petID: petID!)
@@ -106,9 +105,9 @@ class ManagePets: UITableViewController {
     }
 
     @IBAction func backButtonTapped(_ sender: AnyObject) {
-        NotificationCenter.default.post(name: Notification.Name("refreshAfterDeletion"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notificationKey), object: self)
+        //This segue calls the unwindSegue in the PSBaseViewController on line 242
         self.performSegue(withIdentifier: "unwindSegue", sender: self)
-       // dismiss(animated: true, completion: nil)
     }
     
     

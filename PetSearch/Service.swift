@@ -304,6 +304,8 @@ class Service : NSObject {
 
     func fetchPetsForUser(segue: @escaping () -> ()) {
         
+        //TODO: If you log out and log back in, it seems to return all pets, not just pets for the user
+        
         self.setPets(pets: [])
         let userID = FIRAuth.auth()?.currentUser?.uid
         print("User ID: \(userID)")
@@ -388,11 +390,12 @@ class Service : NSObject {
             }
         })
         
+       // refreshView()
+        
         listeners.append(handle!)
         
         let when = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: when) {
-            // Your code with delay
             for handle in self.listeners {
                 circleQuery?.removeObserver(withFirebaseHandle: handle)
             }
@@ -427,14 +430,12 @@ class Service : NSObject {
                         }
                         
                         self.petDict[locatedPet.petID] = locatedPet
-                     //   refreshView()
                         self.downloadImage(petID: locatedPet.petID, refreshView: refreshView)
                     }
                 } else {
                     print("Snapshot does not exist.")
                 }
             })
-           
         }
     }
     
@@ -451,10 +452,10 @@ class Service : NSObject {
                 
                 self.imageDict["\(petID)"] = UIImage.init(data: data!, scale: 50)
                 
-                refreshView();
+                refreshView()
             }
         } else {
-            refreshView();
+            refreshView()
         }
     }
 
@@ -521,14 +522,7 @@ class Service : NSObject {
     func getImages() -> [String: UIImage] {
         return self.imageDict
     }
-    
-    func getAdoptPets() -> [Pet] {
-        return self.adoptPets
-    }
-    
-    func getLostPets() -> [Pet] {
-        return self.lostPets
-    }
+
     
     func emptyLocatedPetIDArray() {
         self.locatedPetIDs.removeAll()

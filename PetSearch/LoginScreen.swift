@@ -108,6 +108,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToManageScreen)
                 } else if Service.sharedSingleton.signInButtonTapped {
                     Service.sharedSingleton.signedOut = false
+                    //This unwindSegue wires to the unwindSegue on line 244 of PSBaseViewController class
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: unwindSegue)
                 } else {
                     Service.sharedSingleton.signedOut = false

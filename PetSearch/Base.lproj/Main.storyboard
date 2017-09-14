@@ -661,10 +661,12 @@
                         <barButtonItem key="leftBarButtonItem" title="Back" id="8BC-uk-iXx">
                             <connections>
                                 <action selector="backButtonTapped:" destination="EKd-uM-16S" id="chV-eq-Qh8"/>
-                                <segue destination="U5b-5v-A9E" kind="unwind" identifier="unwindSegue" unwindAction="unwindSegue:" id="Wak-Uf-jg2"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="U5b-5v-A9E" kind="unwind" identifier="unwindSegue" unwindAction="unwindSegue:" id="xE1-38-LbH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9iV-FU-C52" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="U5b-5v-A9E" userLabel="Exit" sceneMemberID="exit"/>
@@ -1053,7 +1055,7 @@
         <image name="Placeholder" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PeP-kj-td3"/>
-        <segue reference="ULE-Ni-Lfa"/>
+        <segue reference="aKx-cG-Xw2"/>
+        <segue reference="iQX-Wg-ZQM"/>
     </inferredMetricsTieBreakers>
 </document>

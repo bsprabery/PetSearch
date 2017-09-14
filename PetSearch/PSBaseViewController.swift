@@ -11,6 +11,8 @@ import UIKit
 import Firebase
 import FirebaseStorageUI
 
+let notificationKey = "refreshAfterDeletion"
+
 class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     
     var petsArray: [Pet] = []
@@ -41,7 +43,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControlEvents.valueChanged)
-        NotificationCenter.default.addObserver(self, selector: #selector(PSBaseViewController.reloadTable), name: Notification.Name("refreshAfterDeletion"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PSBaseViewController.reloadTable), name: Notification.Name(rawValue: notificationKey), object: nil)
         
     }
     
@@ -83,7 +85,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             let location = locations[0]
             Service.sharedSingleton.setUserLocation(location: location)
             Service.sharedSingleton.addListener(viewController: self.getStatusForViewController(), refreshView: reloadTable)
-           // Service.sharedSingleton.fetchPetsForLocation(viewController: self.getStatusForViewController(), refreshView: reloadTable)
             didFindLocation = true
         } else {
             print("Location has already been found.")
@@ -212,7 +213,8 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
                 if Service.sharedSingleton.IsUserLoggedInReturnBool() {
-                    Service.sharedSingleton.fetchPetsForUser(segue: self.segueToManageScreen)
+                    self.segueToManageScreen()
+                  //  Service.sharedSingleton.fetchPetsForUser(segue: self.segueToManageScreen)
                 } else {
                     Service.sharedSingleton.manageButtonPressed = true
                     self.segueToLoginScreen()
@@ -238,7 +240,8 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
+    //The unwindSegues receiver:
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
-        print("Performing unwind segue to Found VC.")
+        print("Performing unwind segue to initial view controller.")
     }
 }

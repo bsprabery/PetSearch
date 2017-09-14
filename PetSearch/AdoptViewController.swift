@@ -29,6 +29,7 @@ extension UIViewController {
         self.present(destination, animated: true, completion: nil)
     }
     
+    //This segue is called after the sign in button is clicked from the options menu and then after the user signs in
     func unwindSegue() {
         self.performSegue(withIdentifier: "unwindSegue", sender: self)
         
@@ -37,7 +38,11 @@ extension UIViewController {
     }
     
     func segueToManageScreen() {
-        self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
+        func segue() {
+            self.performSegue(withIdentifier: "Segue To Manage", sender: nil)
+        }
+        
+        Service.sharedSingleton.fetchPetsForUser(segue: segue)
         
         //Reset manageButtonPressed to false:
         Service.sharedSingleton.manageButtonPressed = false
