@@ -9,24 +9,8 @@
 import UIKit
 
 class LaunchScreenView: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addBackground()
-    }
-}
-
-extension UIView {
-    func addBackground() {
-        let width = UIScreen.main.bounds.size.width
-        let height = UIScreen.main.bounds.size.height
-        
-        let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        imageViewBackground.image = UIImage(named: "Torrey_Wiley_Cookie_Med")
-        
-        imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
-
-        self.addSubview(imageViewBackground)
-        self.sendSubview(toBack: imageViewBackground)
     }
 }

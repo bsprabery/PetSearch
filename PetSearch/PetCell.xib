@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="107"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="106"/>
+                <frame key="frameInset" width="320" height="106.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mxm-3k-qdA">
@@ -42,13 +42,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrQ-vA-SLi">
-                        <frame key="frameInset" minX="111" minY="50" width="18" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Jg0-Xm-cS9" firstAttribute="leading" secondItem="Mxm-3k-qdA" secondAttribute="leading" id="HZ9-sA-sHf"/>
@@ -67,7 +60,6 @@
                 <outlet property="nameLabel" destination="Mxm-3k-qdA" id="UhJ-rg-hoc"/>
                 <outlet property="petImageView" destination="AIB-qn-SLA" id="cPx-YU-cmk"/>
                 <outlet property="petInfoLabel" destination="vrC-Zc-8cM" id="3oq-Jt-thC"/>
-                <outlet property="petStatusLabel" destination="HrQ-vA-SLi" id="i0S-9o-UhS"/>
             </connections>
             <point key="canvasLocation" x="40" y="1.5"/>
         </tableViewCell>

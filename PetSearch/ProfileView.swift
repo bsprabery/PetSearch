@@ -12,6 +12,10 @@ import UIKit
 extension PetProfileView {
         
     func layoutView() {
+        petImageView.layer.cornerRadius = 5.0
+        petImageView.clipsToBounds = true
+        contactButton.layer.cornerRadius = 5.0
+
         let resolution = self.view.detectResolution()
         
         self.statusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -251,8 +255,5 @@ extension PetProfileView {
         default:
             print("Unknown Device")
         }
-        
-        
     }
-    
 }

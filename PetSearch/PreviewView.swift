@@ -17,17 +17,14 @@ extension PreviewViewController {
         let screenHeight = screenSize.height
         let screenScale = UIScreen.main.scale
         let resolution = ((screenWidth * screenScale), (screenHeight * screenScale))
-        print("Resolution: \(resolution)")
         return resolution
-    }
-    
-    func roundCorners() {
-        petImage.layer.cornerRadius = 5.0
-        petImage.clipsToBounds = true
-        contactButton.layer.cornerRadius = 5.0
     }
 
     func layoutView() {
+        petImage.layer.cornerRadius = 5.0
+        petImage.clipsToBounds = true
+        contactButton.layer.cornerRadius = 5.0
+        
         let resolution = detectResolution()
         
         self.statusLabel.translatesAutoresizingMaskIntoConstraints = false

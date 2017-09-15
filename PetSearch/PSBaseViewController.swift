@@ -23,28 +23,35 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     var didFindLocation: Bool = false
     var imageDict = [String: UIImage]()
     
-    
-       
     @IBOutlet var activityView: UIView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.view.addSubview(activityView)
-        activityView.center = (self.navigationController?.view.center)!
-        activityIndicator.isHidden = false
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
         
-        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
+        self.tabBarController?.tabBarItem.title = "Title"
+        
+        self.navigationController?.view.addSubview(activityView)
+        setInitialActivityIndicatorAttributes()
         
         didFindLocation = false
         configureLocationServices()
         locationManager.startUpdatingLocation()
         
+        tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControlEvents.valueChanged)
-        NotificationCenter.default.addObserver(self, selector: #selector(PSBaseViewController.reloadTable), name: Notification.Name(rawValue: notificationKey), object: nil)
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(PSBaseViewController.reloadTable),
+                                               name: Notification.Name(rawValue: notificationKey),
+                                               object: nil)
+    }
+    
+    func setInitialActivityIndicatorAttributes() {
+        activityView.center = (self.navigationController?.view.center)!
+        activityIndicator.isHidden = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
     }
     
     func handleRefresh( _ refreshControl: UIRefreshControl) {
@@ -59,8 +66,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         return "found"
     }
     
-    //MARK: Location Manager Methods:
-    
+//MARK: Location Manager Methods:
     func configureLocationServices() {
         self.locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -77,7 +83,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             Service.sharedSingleton.fetchPets(viewControllerName: self.getStatusForViewController(), completion: tableView.reloadData)
         default: break
         }
-        
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -86,8 +91,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             Service.sharedSingleton.setUserLocation(location: location)
             Service.sharedSingleton.addListener(viewController: self.getStatusForViewController(), refreshView: reloadTable)
             didFindLocation = true
-        } else {
-            print("Location has already been found.")
         }
     }
     
@@ -109,7 +112,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        //TODO: Notify the user of an error?
         print("Error: \(error)")
     }
     
@@ -120,15 +122,11 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
-    //MARK: Methods related to TableView:
-    
+//MARK: Methods related to TableView:
     func reloadTable() {
         self.petsArray = Service.sharedSingleton.getPetsForStatus(status: self.getStatusForViewController())
         self.tableView.reloadData()
     }
-    
-    
-    //MARK: TableView Datasource Methods:
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numberOfSections: Int = 0
@@ -145,7 +143,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
             noDataLabel.textAlignment = NSTextAlignment.center
             self.tableView.backgroundView = noDataLabel
-            
         }
         
         return numberOfSections
@@ -173,8 +170,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         return cell
     }
     
-    //MARK: TableView Delegate Methods:
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow!
         petDetails = petsArray[indexPath.row]
@@ -185,8 +180,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         performSegue(withIdentifier: "SegueToProfileView", sender: self)
     }
     
-    //MARK: Segue Methods:
-    
+//MARK: Segue Methods:
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SegueToProfileView" {
             let destinationNavController = segue.destination as! UINavigationController
@@ -196,8 +190,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
-    //MARK: Methods related to UI Buttons:
-    
+//MARK: Methods related to UI Buttons:
     @IBAction func addButtonTapped(_ sender: AnyObject) {
         if hasConnectivity() == false {
             self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to add a pet.")
@@ -214,7 +207,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
                 if Service.sharedSingleton.IsUserLoggedInReturnBool() {
                     self.segueToManageScreen()
-                  //  Service.sharedSingleton.fetchPetsForUser(segue: self.segueToManageScreen)
                 } else {
                     Service.sharedSingleton.manageButtonPressed = true
                     self.segueToLoginScreen()
@@ -240,7 +232,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
-    //The unwindSegues receiver:
+    //The unwindSegues' receiver:
     @IBAction func unwindSegue(_ segue: UIStoryboardSegue) {
         print("Performing unwind segue to initial view controller.")
     }

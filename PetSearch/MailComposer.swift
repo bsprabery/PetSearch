@@ -27,5 +27,4 @@ class MailComposer: NSObject, MFMailComposeViewControllerDelegate {
         mailComposerVC.setMessageBody(messageBody, isHTML: false)
         return mailComposerVC
     }
-    
 }

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class LostViewController: PSBaseViewController {
-    
     override func getStatusForViewController() -> String {
         return "lost"
     }

@@ -40,6 +40,29 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     private var latitude: Double!
     private var longitude: Double!
     
+    //Ticks is used as a timeStamp for sorting the pets so they are displayed in most-recently-added order:
+    var ticks: NSNumber {
+        let value = Int64((Date().timeIntervalSince1970 + 62_135_596_800) * 10_000_000)
+        let ticks = NSNumber(value: value)
+        return ticks
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        hidePickers()
+        datePickerChanged()
+        hideDatePicker()
+        
+        mapLocationManager.delegate = self
+        
+        mapLocationManager.distanceFilter = 300.0
+        mapAuthorization()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        mapPins.removeAll()
+    }
     
     func formatDate() -> String {
         let dateFormatter = DateFormatter()
@@ -52,11 +75,10 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         return dateFormatterPrint.string(from: datePicker.date)
     }
     
+    //This function passes the information from this view controller to the next view controller (PreviewVC):
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "PreviewViewController" {
             let destinationVC = segue.destination as! PreviewViewController
-        
-            //TODO:  Successfully checks to ensure fields are not empty, but if you hit cancel on the next view and return to this view, you can delete information and then hit the next button and it will transition to the next view with that field as empty. Does this mean that editing these fields after segue-ing to the next view will not reflect changes made upon returning to the view?
             
             if self.petNameField.text?.isEmpty ?? true || self.speciesLabel.text == "Select" || self.statusLabel.text == "Select" || self.sexLabel.text == "Select" {
                     let alertController = UIAlertController(title: "Missing Information!", message: "Please check to make sure all required fields are answered. Required fields include: Pet Name, Sex, Type, Status", preferredStyle: .alert)
@@ -81,8 +103,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                 let userEmail = userInfoDict["email"] as! String!
                 let phoneNumber = userInfoDict["phoneNumber"] as! String!
                 let uid = userInfoDict["uid"] as! String!
-                                
-                //TODO: After registering and attempting to post a pet for the first time, this always fails at user/latitude (nil value). Why? Does not happen second time.
+
                 destinationVC.pet = Pet(name: petNameField.text!,
                                         species: speciesLabel.text!,
                                         sex: sexLabel.text!,
@@ -101,44 +122,14 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                 )
             }
         }
- 
     }
     
-    //Is this segue ever used?
-    @IBAction func unwindToInputSegue(_ segue: UIStoryboardSegue) {
-        print("Performing unwind segue to Lost VC.")
-    }
+//    //Is this segue ever used?
+//    @IBAction func unwindToInputSegue(_ segue: UIStoryboardSegue) {
+//        print("Performing unwind segue to Lost VC.")
+//    }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-            
-        hidePickers()
-        datePickerChanged()
-        hideDatePicker()
-        
-        mapLocationManager.delegate = self
-        
-        mapLocationManager.distanceFilter = 300.0
-        mapAuthorization()
-        
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        mapPins.removeAll()
-    }
-    
-    //MARK: Table View
-    
+//MARK: Table View
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch (true, indexPath.section, indexPath.row) {
         case (petPickerHidden, 0, 2), (speciesPickerHidden, 0, 4), (datePickerHidden, 2, 1), (statusPickerHidden, 2, 3) :
@@ -171,9 +162,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         }
     }
     
-    
-    //MARK: Map View
-    
+//MARK: Map View
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.first!
         
@@ -191,7 +180,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         } else {
             print("There is already a pin on the map.")
         }
-        
     }
     
     func mapAuthorization() {
@@ -238,7 +226,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         }
     }
     
-    //Use this function to update coordinates of user's location if pin is dragged.
+    //This function updates coordinates of user's location if pin is dragged.
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
 
         switch (newState) {
@@ -258,14 +246,12 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         mapView.addGestureRecognizer(longPress)
     }
     
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error: \(error)")
     }
     
     
-    //MARK: Picker and DatePicker Views
-    
+//MARK: Picker and DatePicker Views
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch pickerView.tag {
         case 0:
@@ -373,8 +359,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         tableView.endUpdates()
     }
 
-    //MARK: Text Fields and Views
-    
+//MARK: Text Fields and Views    
     func textViewDidBeginEditing(_ textView: UITextView) {
         let defaultString = "Additional details regarding the listing that may be necessary such as the pet's personality, distinctive physical markings, or the best time to contact you."
         if textView.text == defaultString {
@@ -387,16 +372,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         let nsString = NSString(string: textField.text!)
         let newText = nsString.replacingCharacters(in: range, with: string)
         return  newText.characters.count <= limitCount
-    }
-    
-
-    
-    @NSManaged var id: NSNumber
-    
-    var ticks: NSNumber {
-        let value = Int64((Date().timeIntervalSince1970 + 62_135_596_800) * 10_000_000)
-        let ticks = NSNumber(value: value)
-        return ticks
     }
 }
 

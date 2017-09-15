@@ -23,27 +23,22 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var petPhoto: UIImage?
-    
     let imagePicker = UIImagePickerController()
-    
     var pet: Pet?
     
-       
     override func viewDidLoad() {
         super.viewDidLoad()
-        imagePicker.delegate = self
         setText()
-        addTap()
+        addTapGesture()
+        layoutView()
+        imagePicker.delegate = self
         contactButton.isEnabled = false
         activityIndicator.isHidden = true
-        layoutView()
-        roundCorners()
         activityIndicator.layer.zPosition = 1
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
     func setText() {
-        
         if let pet = pet {
             self.petNameLabel.text = pet.name
             self.breedLabel.text = pet.breed
@@ -52,11 +47,12 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.statusLabel.text = "\(pet.status) since \(pet.date)"
             self.userNameLabel.text = "Point of contact: \(pet.user)"
         } else {
-            //TODO: Present an error message to the user.
+            self.presentWarningToUser(title: "Error", message: "Something seems to have gone wrong. Please try adding your pet information again.")
         }
     }
     
-    func addTap() {
+//MARK: Methods relating to picking an image:
+    func addTapGesture() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         petImage.isUserInteractionEnabled = true
         petImage.addGestureRecognizer(tapGestureRecognizer)
@@ -64,9 +60,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         imagePicker.allowsEditing = false
-        
         DispatchQueue.main.async {
-            
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
@@ -90,7 +84,6 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
             petImage.image = image
             petPhoto = image
         }
-        
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -98,20 +91,16 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         dismiss(animated: true, completion: nil)
     }
     
-    
+//MARK: Action methods
     //MARK: Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
     @IBAction func savePreview(_ sender: AnyObject) {
         if let photo = petPhoto {
             if var pet = pet {
-                Service.sharedSingleton.uploadInfoToFirebaseDatabase(status: pet.status,
-                                                                     photo: photo,
-                                                                     pet: &pet,
-                                                                     completion: segueToUnwind)
+                Service.sharedSingleton.uploadInfoToFirebaseDatabase(status: pet.status, photo: photo, pet: &pet, completion: segueToUnwind)
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
                 activityIndicator.isHidden = false
                 activityIndicator.startAnimating()
             } else {
-                print("pet was nil.")
                 self.presentWarningToUser(title: "Error", message: "There was an error while saving your pet. Please try again.")
             }
         } else {
@@ -120,7 +109,6 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func segueToUnwind() {
-        //This .performSegue wires to the unwindSegue on line 244 of PSBaseViewController
         self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
@@ -129,6 +117,4 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func backToInputTableView(_ sender: AnyObject) {
         _ = navigationController?.popViewController(animated: true)
     }
-    
-    
 }

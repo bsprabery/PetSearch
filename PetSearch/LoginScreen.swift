@@ -33,13 +33,12 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     @IBOutlet var cancelButtonTop: NSLayoutConstraint!
     @IBOutlet var loginButtonTop: NSLayoutConstraint!
     
-    
+//TODO: Use userDefaults to hold other similiar Bools throughout the project
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     var registerButtonTapped = false
     
     override func loadView() {
         super.loadView()
-        
         if launchedBefore {
             print("Not first launch")
         } else {
@@ -60,65 +59,46 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginScreen.dismissKeyboard))
         view.addGestureRecognizer(tap)
     }
-  
-    @IBAction func loginButtonClicked(_ sender: AnyObject) {
-        
-        registerButtonTapped = false
-        loginButtonStackView.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
-        dismissKeyboard()
-        repeatUserLayout()
-    }
-    
-    
-    @IBAction func registerButtonClicked(_ sender: AnyObject) {
-        registerButtonTapped = true
-        registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
-        dismissKeyboard()
-        newUserLayout()
-    }
-    
-    @IBAction func cancelButtonClicked(_ sender: AnyObject) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Cancel Login", message: "Are you sure you want to cancel?", preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                self.performSegue(withIdentifier: "unwindSegue", sender: self)
-            }))
-            
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action) in
-                print("Canceled")
-            }))
-        
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
     
     func handleLoginRegister() {
-        
         if hasConnectivity() == false {
             self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
             if registerButtonTapped == true {
-                Service.sharedSingleton.handleRegister(email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
+                Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
                 Service.sharedSingleton.signedOut = false
             } else {
-            //MARK: Handles segues to appropriate destinations after logging the user into the app:
+                //MARK: Handles segues to appropriate destinations (based on the path taken to reach this view):
                 if Service.sharedSingleton.manageButtonPressed {
                     Service.sharedSingleton.signedOut = false
-                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToManageScreen)
+                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToManageScreen)
                 } else if Service.sharedSingleton.signInButtonTapped {
                     Service.sharedSingleton.signedOut = false
-                    //This unwindSegue wires to the unwindSegue on line 244 of PSBaseViewController class
-                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: unwindSegue)
+                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: unwindToOriginalView)
                 } else {
                     Service.sharedSingleton.signedOut = false
-                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, completion: segueToInputView)
+                    Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToInputView)
                 }
             }
         }
     }
+    
+    func unwindToOriginalView() {
+        self.performSegue(withIdentifier: "unwindSegue", sender: self)
+        Service.sharedSingleton.signInButtonTapped = false
+    }
+    
+    func setTextFieldDelegates() {
+        phoneNumberTextField.delegate = self
+        lastNameTextField.delegate = self
+        firstNameTextField.delegate = self
+        confirmPasswordTextField.delegate = self
+        passwordTextField.delegate = self
+        emailTextField.delegate = self
         
-    //Shift view when keyboard obscures text fields:
+    }
+
+//MARK: Keyboard Notifications - adjusts view when keyboard obscures parts of the view:
     func keyboardWillShow(notification: NSNotification) {
         if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = -getKeyboardHeight(notification: notification)
@@ -151,28 +131,34 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
-    func setTextFieldDelegates() {
-        phoneNumberTextField.delegate = self
-        lastNameTextField.delegate = self
-        firstNameTextField.delegate = self
-        confirmPasswordTextField.delegate = self
-        passwordTextField.delegate = self
-        emailTextField.delegate = self
+//MARK: Action methods:
+    @IBAction func loginButtonClicked(_ sender: AnyObject) {
+        registerButtonTapped = false
+        loginButtonStackView.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
+        dismissKeyboard()
+        repeatUserLayout()
+    }
+    
+    @IBAction func registerButtonClicked(_ sender: AnyObject) {
+        registerButtonTapped = true
+        registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
+        dismissKeyboard()
+        newUserLayout()
+    }
+    
+    @IBAction func cancelButtonClicked(_ sender: AnyObject) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Cancel Login", message: "Are you sure you want to cancel?", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                self.performSegue(withIdentifier: "unwindSegue", sender: self)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action) in
+                
+            }))
         
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
-
-extension UIView {
-
-    func detectResolution() -> (CGFloat, CGFloat) {
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        let screenScale = UIScreen.main.scale
-        let resolution = ((screenWidth * screenScale), (screenHeight * screenScale))
-        print("Resolution: \(resolution)")
-        return resolution
-    }
-
-}
-

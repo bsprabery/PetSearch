@@ -28,19 +28,16 @@ class PetProfileView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpProfile(petDetails: petProfile)
-        roundCorners()
         layoutView()
     }
     
-    
+//MARK: Methods for populating the view controller's information fields:
     func setUpProfile(petDetails: Pet?) {
-        
-        guard let petDetails = petProfile else {
+        guard let petDetails = petDetails else {
+            self.presentWarningToUser(title: "We're sorry!", message: "Something seems to have gone wrong. Please try viewing this pet again.")
             return
         }
-     //   petImageView.backgroundColor = UIColor.black
         
         statusLabel.text! = "\(petDetails.status) since \(petDetails.date)"
         petNameLabel.text! = petDetails.name
@@ -50,18 +47,12 @@ class PetProfileView: UIViewController {
         petOwnerNameLabel.text! = "Point of contact: \(petDetails.user)"
         petDetailsLabel.text! = petDetails.petDetails
         setNavTitle(status: petDetails.status)
+    }
 
-    }
-    
-    func roundCorners() {
-        petImageView.layer.cornerRadius = 5.0
-        petImageView.clipsToBounds = true
-        contactButton.layer.cornerRadius = 5.0
-    }
-    
     func setNavTitle(status: String) {
         
         guard let petDetails = petProfile else {
+            self.presentWarningToUser(title: "We're sorry!", message: "Something seems to have gone wrong. Please try viewing this pet again.")
             return
         }
         
@@ -77,18 +68,18 @@ class PetProfileView: UIViewController {
         }
     }
     
+//MARK: Action methods:
     @IBAction func backButtonTapped(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func contactButtonTapped(_ sender: AnyObject) {
-        
         guard let petDetails = petProfile else {
+            self.presentWarningToUser(title: "We're sorry!", message: "Something seems to have gone wrong while retrieving this pet owner's contact information.")
             return
         }
         
         let application = UIApplication.shared
-        
         DispatchQueue.main.async {
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -102,6 +93,7 @@ class PetProfileView: UIViewController {
                     self.presentWarningToUser(title: "Error", message: "The phone number provided is invalid. Please try another contact method.")
                 }
             }))
+            
             alert.addAction(UIAlertAction(title: "Send Email", style: .default, handler: { (action) in
                  print("Send Email clicked.")
                 let mailComposeViewController = self.mailComposer.configuredMailComposeViewController(recipient: ["\(petDetails.email)"], subject: "Your PetSearch post regarding: \(petDetails.name)", messageBody: "Text Body")
@@ -110,15 +102,13 @@ class PetProfileView: UIViewController {
                 } else {
                     self.presentWarningToUser(title: "Error", message: "We are unable to contact this user through email at this time. Please try another contact method.")
                 }
-            }))           
+            }))
+            
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 self.dismiss(animated: true, completion: nil)
             }))
             
             self.present(alert, animated: true, completion: nil)
         }
-        
     }
-
-    
 }

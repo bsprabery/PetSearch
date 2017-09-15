@@ -35,6 +35,7 @@
 		389854DA1E9FFDF7003F2115 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 389854D81E9FFDF7003F2115 /* Main.storyboard */; };
 		38C6FB071EF31110002289D3 /* PetProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB061EF31110002289D3 /* PetProfileView.swift */; };
 		38C6FB091EF322D8002289D3 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6FB081EF322D8002289D3 /* LoginScreen.swift */; };
+		38DAFD9A1F6B0D6000E2FEA4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAFD991F6B0D6000E2FEA4 /* Extensions.swift */; };
 		38F3524F1F055314005460FA /* FoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F3524E1F055314005460FA /* FoundViewController.swift */; };
 		38F352511F05539A005460FA /* LostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F352501F05539A005460FA /* LostViewController.swift */; };
 		38F352531F055511005460FA /* AdoptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F352521F055511005460FA /* AdoptViewController.swift */; };
@@ -109,6 +110,7 @@
 		389854D91E9FFDF7003F2115 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		38C6FB061EF31110002289D3 /* PetProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PetProfileView.swift; sourceTree = "<group>"; };
 		38C6FB081EF322D8002289D3 /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		38DAFD991F6B0D6000E2FEA4 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		38F3524E1F055314005460FA /* FoundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundViewController.swift; sourceTree = "<group>"; };
 		38F352501F05539A005460FA /* LostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LostViewController.swift; sourceTree = "<group>"; };
 		38F352521F055511005460FA /* AdoptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdoptViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				3860CE641F2665B30028ADB2 /* ManagePets.swift */,
 				38FCFD9F1F57472A005E72B7 /* MailComposer.swift */,
 				38FCFDA11F604BAC005E72B7 /* PSBaseViewController.swift */,
+				38DAFD991F6B0D6000E2FEA4 /* Extensions.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -623,6 +626,7 @@
 				3815A7CA1E9D2A420048275C /* LaunchScreenView.swift in Sources */,
 				381418431EA1564800B51DAC /* InputPetTableViewController.swift in Sources */,
 				3815A7C81E9D2A420048275C /* AppDelegate.swift in Sources */,
+				38DAFD9A1F6B0D6000E2FEA4 /* Extensions.swift in Sources */,
 				3860CE631F1FF3D80028ADB2 /* ProfileView.swift in Sources */,
 				3860CE7F1F30EDE80028ADB2 /* GeoFire.m in Sources */,
 				38FCFDA01F57472A005E72B7 /* MailComposer.swift in Sources */,

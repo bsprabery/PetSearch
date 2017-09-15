@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class FoundViewController: PSBaseViewController {
-    
     override func getStatusForViewController() -> String {
         return "found"
     }
