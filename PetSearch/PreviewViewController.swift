@@ -44,7 +44,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.breedLabel.text = pet.breed
             self.sexLabel.text = "\(pet.sex) \(pet.species)"
             self.descriptionView.text = pet.petDetails
-            self.statusLabel.text = "\(pet.status) since \(pet.date)"
+            self.statusLabel.text = "\(pet.status.capitalized) since \(pet.date)"
             self.userNameLabel.text = "Point of contact: \(pet.user)"
         } else {
             self.presentWarningToUser(title: "Error", message: "Something seems to have gone wrong. Please try adding your pet information again.")

@@ -39,7 +39,7 @@ class PetProfileView: UIViewController {
             return
         }
         
-        statusLabel.text! = "\(petDetails.status) since \(petDetails.date)"
+        statusLabel.text! = "\(petDetails.status.capitalized) since \(petDetails.date)"
         petNameLabel.text! = petDetails.name
         petImageView.image = petImage!
         animalTypeLabel.text! = "\(petDetails.species), \(petDetails.sex)"
@@ -57,11 +57,11 @@ class PetProfileView: UIViewController {
         }
         
         switch status {
-        case "Lost":
+        case "lost":
             self.navigationItem.title = "MISSING"
-        case "Found":
+        case "found":
             self.navigationItem.title = "FOUND"
-        case "Adopt":
+        case "available to adopt":
             self.navigationItem.title = "Adopt me!"
         default:
             self.navigationItem.title = petDetails.name

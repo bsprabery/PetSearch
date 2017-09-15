@@ -101,8 +101,6 @@ class Service : NSObject {
         print("Handle Login: Login button clicked.")
         
         guard let email = email, let password = password else {
-            print("Form is not valid.")
-            //TODO: Present an alert to the user
             return
         }
         
@@ -115,11 +113,8 @@ class Service : NSObject {
             }
             
             self.getUserDetails()
-            
             completion()
         })
-        
-        
     }
     
     func handleLogout() {
