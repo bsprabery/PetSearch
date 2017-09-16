@@ -22,6 +22,14 @@
          contextName = "Service.(getPetsForStatus(status : String) -&gt; [Pet]).(closure #1):Service.swift">
       </ContextState>
       <ContextState
+         contextName = "PetProfileView.setUpProfile(petDetails : Pet?) -&gt; ():PetProfileView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "petImageView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Service.(fetchLocatedPets(viewControllerName : String, petID : String, downloadImage : () -&gt; ()) -&gt; ()).(closure #1):Service.swift">
          <PersistentStrings>
             <PersistentString
@@ -44,6 +52,30 @@
          contextName = "Service.getPetsForStatus(status : String) -&gt; [Pet]:Service.swift">
       </ContextState>
       <ContextState
+         contextName = "Service.signedOut.getter:Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "signedOut">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PSBaseViewController.(optionsButtonTapped(AnyObject) -&gt; ()).(closure #1):PSBaseViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.signedOut">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PSBaseViewController.(optionsButtonTapped(AnyObject) -&gt; ()).(closure #1).(closure #3):PSBaseViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.signedOut">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Service.getUserLocation() -&gt; CLLocation?:Service.swift">
          <PersistentStrings>
             <PersistentString
@@ -56,6 +88,14 @@
          <PersistentStrings>
             <PersistentString
                value = "listeners">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.signedOut.setter:Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "signedOut">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

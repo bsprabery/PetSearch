@@ -46,7 +46,7 @@ class PetProfileView: UIViewController {
         breedLabel.text! = petDetails.breed
         petOwnerNameLabel.text! = "Point of contact: \(petDetails.user)"
         petDetailsLabel.text! = petDetails.petDetails
-        setNavTitle(status: petDetails.status)
+        setNavTitle(status: petDetails.status)        
     }
 
     func setNavTitle(status: String) {
@@ -95,7 +95,6 @@ class PetProfileView: UIViewController {
             }))
             
             alert.addAction(UIAlertAction(title: "Send Email", style: .default, handler: { (action) in
-                 print("Send Email clicked.")
                 let mailComposeViewController = self.mailComposer.configuredMailComposeViewController(recipient: ["\(petDetails.email)"], subject: "Your PetSearch post regarding: \(petDetails.name)", messageBody: "Text Body")
                 if self.mailComposer.canSendEmail() {
                     self.present(mailComposeViewController, animated: true, completion: nil)

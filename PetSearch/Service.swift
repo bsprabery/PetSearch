@@ -47,7 +47,7 @@ class Service : NSObject {
         }
     }
     
-    func handleRegister(callingViewController: LoginScreen, email: String?, password: String?, firstName: String?, lastName: String?, phoneNumber: String?, completion: @escaping () -> Void) {
+    func handleRegister(callingViewController: LoginScreen, email: String?, password: String?, confirmPassword: String?, firstName: String?, lastName: String?, phoneNumber: String?, completion: @escaping () -> Void) {
         
         func checkIfStringIsEmpty(string: String) -> Bool {
             if string.isEmpty {
@@ -57,49 +57,70 @@ class Service : NSObject {
             }
         }
         
-        if checkIfStringIsEmpty(string: email!) || checkIfStringIsEmpty(string: password!) || checkIfStringIsEmpty(string: firstName!) || checkIfStringIsEmpty(string: lastName!) || checkIfStringIsEmpty(string: phoneNumber!) {
+        if checkIfStringIsEmpty(string: email!) || checkIfStringIsEmpty(string: password!) || checkIfStringIsEmpty(string: confirmPassword!) || checkIfStringIsEmpty(string: firstName!) || checkIfStringIsEmpty(string: lastName!) || checkIfStringIsEmpty(string: phoneNumber!) {
             self.appDelegate.alertView(errorMessage: "Please provide information for each field. All fields are required to register.", viewController: callingViewController)
             return
         }
         
-        guard let email = email, let password = password, let firstName = firstName, let lastName = lastName, let phoneNumber = phoneNumber else {
+        guard let email = email, let password = password, let confirmPassword = confirmPassword, let firstName = firstName, let lastName = lastName, let phoneNumber = phoneNumber else {
             return
         }
         
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
-            if error != nil {
-                if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
-                    self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
-                }
-                return
-            }
-            
-            guard let uid = user?.uid else {
-                return
-            }
-            
-            let ref = FIRDatabase.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
-            let usersRef = ref.child("users").child(uid).child("userInfo")
-            let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber, "uid": uid]
-            
-            self.writeToDisk(email: email, firstName: firstName, phoneNumber: phoneNumber, uid: uid)
-            
-            usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                if err != nil {
-                    print(err)
+        if checkPasswordAndConfirmPassword(password: password, confirm: confirmPassword, callingViewController: callingViewController) {
+            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+                if error != nil {
+                    if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
+                        self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
+                    }
                     return
                 }
                 
-                print("Successfully saved user into Firebase Database.")
+                guard let uid = user?.uid else {
+                    return
+                }
                 
-                completion()
-            })
-       })
+                let ref = FIRDatabase.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
+                let usersRef = ref.child("users").child(uid).child("userInfo")
+                let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber, "uid": uid]
+                
+                self.writeToDisk(email: email, firstName: firstName, phoneNumber: phoneNumber, uid: uid)
+                
+                usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                    if err != nil {
+                        print(err)
+                        return
+                    }
+                     self.signedOut = false
+                    completion()
+                })
+           })
+        }
+    }
+    
+    //Check to see if password text and confirm password text are the same:
+    func checkPasswordAndConfirmPassword(password: String, confirm: String, callingViewController: UIViewController) -> Bool {
+        var a = false
+        var b = false
+        
+        if password == confirm {
+            a = true
+        } else {
+            self.appDelegate.alertViewTwo(errorMessage: "The passwords you have entered do not match.", viewController: callingViewController)
+            return false
+        }
+        
+        if password == "" || confirm == "" {
+            self.appDelegate.alertViewTwo(errorMessage: "Please create and confirm a password for your account.", viewController: callingViewController)
+            return false
+        } else {
+            b = true
+        }
+        
+        if a == true && b == true {return true} else {return false}
+        
     }
     
     func handleLogin(email: String?, password: String?, callingViewController: LoginScreen, completion: @escaping () -> Void) {
-        print("Handle Login: Login button clicked.")
-        
         guard let email = email, let password = password else {
             return
         }
@@ -183,7 +204,6 @@ class Service : NSObject {
         
         let dictionary = ["email" : email, "name" : firstName, "phoneNumber" : phoneNumber, "uid" : uid] as NSDictionary
         dictionary.write(toFile: path, atomically: true)
-        print(dictionary)
     }
     
     func readFromDisk() -> NSMutableDictionary {
@@ -247,11 +267,7 @@ class Service : NSObject {
         storageRef.put(data as Data, metadata: uploadMetadata) { (metadata, error) in
             if (error != nil) {
                 print("There was an error! \(error?.localizedDescription)")
-            } else {
-                print("Upload complete! Here's some metadata: \(metadata)")
-                print("Download URL: \(metadata?.downloadURL())")
-                print("downloadUrl: \(metadata?.downloadURL())")
-            }
+            } 
             
             DispatchQueue.main.async {
                 completion()
@@ -265,20 +281,15 @@ class Service : NSObject {
     func fetchPetsForUser(segue: @escaping () -> ()) {
         self.setPets(pets: [])
         let userID = FIRAuth.auth()?.currentUser?.uid
-        print("User ID: \(userID)")
         let ref = FIRDatabase.database().reference().child("users").child(userID!).child("pets")
         
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             var userPets: [Pet] = []
             
             for pet in snapshot.children {
-                
                 let userPet = Pet(snapshot: pet as! FIRDataSnapshot)
                 userPets.append(userPet)
-                print("User Pet: \(userPet)")
-                
                 self.setPets(pets: userPets)
-                print("User Pets: \(userPets)")
             }
             segue()
         })
@@ -479,8 +490,6 @@ class Service : NSObject {
         locationDataRef.removeValue{ (error, ref) in
             if error != nil {
                 print("There was an error deleting the pet's location data. Error: \(error)")
-            } else {
-                print("Pet location data was successfully deleted.")
             }
         }
 
@@ -491,17 +500,15 @@ class Service : NSObject {
         storageRef.delete { error in
             if let error = error {
                 print("Error: \(error)")
-            } else {
-                print("Image was successfully deleted from Storage.")
             }
         }
     }
 
 //MARK: Class properties and other methods:
-    private var petArray: [Pet]
-    private var userInfoPath: String
-    private var userLocation: CLLocation?
-    private var locatedPetIDs: Set<String>
+    private var petArray: [Pet] = [Pet]()
+    private var userInfoPath: String = String()
+    private var userLocation: CLLocation? = CLLocation()
+    private var locatedPetIDs: Set<String> = Set<String>()
     lazy var lostPets = [Pet]()
     lazy var foundPets = [Pet]()
     lazy var adoptPets = [Pet]()
@@ -509,14 +516,21 @@ class Service : NSObject {
     var petDict = [String: Pet]()
     var imageDict = [String: UIImage]()
     var manageButtonPressed: Bool = false
-    var signedOut: Bool = false
     var signInButtonTapped: Bool = false
     
+    lazy var signedOut: Bool = {
+        if FIRAuth.auth()?.currentUser != nil {
+            return false
+        } else {
+            return true
+        }
+    }()
+    
     override init() {
-        petArray = [Pet]()
-        userInfoPath = String()
-        userLocation = CLLocation()
-        locatedPetIDs = Set<String>()
+     //   petArray = [Pet]()
+     //   userInfoPath = String()
+     //   userLocation = CLLocation()
+     //   locatedPetIDs = Set<String>()
     }
     
     func setPets(pets: [Pet]) {
@@ -529,7 +543,6 @@ class Service : NSObject {
     
     func setUrl(path: String) {
         self.userInfoPath = path
-        print(path)
     }
     
     func getUrl() -> String {

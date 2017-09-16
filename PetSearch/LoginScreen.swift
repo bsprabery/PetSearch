@@ -33,7 +33,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     @IBOutlet var cancelButtonTop: NSLayoutConstraint!
     @IBOutlet var loginButtonTop: NSLayoutConstraint!
     
-//TODO: Use userDefaults to hold other similiar Bools throughout the project
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     var registerButtonTapped = false
     
@@ -65,8 +64,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
             if registerButtonTapped == true {
-                Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
-                Service.sharedSingleton.signedOut = false
+                Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
             } else {
                 //MARK: Handles segues to appropriate destinations (based on the path taken to reach this view):
                 if Service.sharedSingleton.manageButtonPressed {

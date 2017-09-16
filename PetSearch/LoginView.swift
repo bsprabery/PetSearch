@@ -91,8 +91,6 @@ extension LoginScreen {
         
         let resolution = self.view.detectResolution()
         
-        
-        
         switch resolution {
         case (640, 1136):
             print("iPhone 5, iPhone SE, iPhone 5s")

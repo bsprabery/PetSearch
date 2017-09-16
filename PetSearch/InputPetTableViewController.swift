@@ -233,7 +233,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         case .ending:
             view.dragState = .none
         default:
-            print("break")
+            print("default")
         }
         
         self.latitude = view.annotation?.coordinate.latitude
@@ -274,7 +274,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         case 3:
             return statusValues[row]
         default:
-            print("ERROR: DEFAULT CASE HIT - pickerView: TitleForRow")
+            print("ERROR: Default - pickerView: TitleForRow")
             return "Select"
         }
     }
