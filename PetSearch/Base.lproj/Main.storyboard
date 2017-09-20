@@ -40,7 +40,7 @@
                             <outlet property="delegate" destination="WDo-qw-RPj" id="Rlj-L9-vSz"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="PBh-tD-FXP"/>
+                    <tabBarItem key="tabBarItem" title="Lost" image="Paw Print" selectedImage="Paw Print" id="PBh-tD-FXP"/>
                     <navigationItem key="navigationItem" title="Lost" id="xuy-Fu-FUZ">
                         <barButtonItem key="leftBarButtonItem" title="Options" id="nYi-pf-AsM">
                             <connections>
@@ -94,7 +94,7 @@
                             <outlet property="delegate" destination="cnw-lL-eTf" id="Uwd-3g-Wa2"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="YeT-qb-JzE"/>
+                    <tabBarItem key="tabBarItem" title="Adopt" image="Adopt Image" selectedImage="Adopt Image" id="YeT-qb-JzE"/>
                     <navigationItem key="navigationItem" title="Adopt" id="VR2-Vy-MfI">
                         <barButtonItem key="leftBarButtonItem" title="Options" id="vTg-MP-HVl">
                             <connections>
@@ -148,7 +148,7 @@
                             <outlet property="delegate" destination="goU-Z5-mM1" id="B21-tl-4kQ"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="E9y-rc-L0b"/>
+                    <tabBarItem key="tabBarItem" title="Found" image="Head Silihouette" selectedImage="Head Silihouette" id="E9y-rc-L0b"/>
                     <navigationItem key="navigationItem" title="Found" id="0wW-Tv-W3c">
                         <barButtonItem key="leftBarButtonItem" title="Options" id="fG6-pW-C3a">
                             <connections>
@@ -1052,10 +1052,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Adopt Image" width="30" height="30"/>
+        <image name="Head Silihouette" width="30" height="30"/>
+        <image name="Paw Print" width="30" height="30"/>
         <image name="Placeholder" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iQX-Wg-ZQM"/>
-        <segue reference="aKx-cG-Xw2"/>
+        <segue reference="Cij-Km-Pju"/>
+        <segue reference="PeP-kj-td3"/>
     </inferredMetricsTieBreakers>
 </document>
