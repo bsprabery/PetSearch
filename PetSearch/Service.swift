@@ -405,6 +405,7 @@ class Service : NSObject {
                         self.downloadImage(petID: locatedPet.petID, refreshView: refreshView)
                     }
                 } else {
+                    refreshView()
                     print("Snapshot does not exist.")
                 }
             })

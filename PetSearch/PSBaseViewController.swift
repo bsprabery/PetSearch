@@ -48,10 +48,17 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func setInitialActivityIndicatorAttributes() {
+        activityView.backgroundColor = UIColor.white.withAlphaComponent(0.01)
         activityView.center = (self.navigationController?.view.center)!
         activityIndicator.isHidden = false
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.hidesWhenStopped = true
+        activityView.isHidden = true
     }
     
     func handleRefresh( _ refreshControl: UIRefreshControl) {
@@ -59,7 +66,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             refreshControl.endRefreshing()
         }
-        
     }
     
     func getStatusForViewController() -> String {
@@ -126,6 +132,17 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     func reloadTable() {
         self.petsArray = Service.sharedSingleton.getPetsForStatus(status: self.getStatusForViewController())
         self.tableView.reloadData()
+        
+        if self.petsArray.isEmpty {
+            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
+            noDataLabel.text = "There are no pets currently listed in your area."
+            noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+            noDataLabel.textAlignment = NSTextAlignment.center
+            noDataLabel.numberOfLines = 2
+            self.tableView.backgroundView = noDataLabel
+        }
+        
+        hideActivityIndicator()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -134,16 +151,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         if self.petsArray.count > 0 {
             self.tableView.backgroundView = nil
             numberOfSections = self.petsArray.count
-        } else {
-            activityIndicator.stopAnimating()
-            activityIndicator.hidesWhenStopped = true
-            activityView.isHidden = true
-            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
-            noDataLabel.text = "There are no pets currently listed in your area."
-            noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
-            noDataLabel.textAlignment = NSTextAlignment.center
-            noDataLabel.numberOfLines = 2
-            self.tableView.backgroundView = noDataLabel
         }
         
         return numberOfSections
@@ -165,9 +172,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             cell.petImageView?.image = placeholderImage!
         }
         
-        self.activityIndicator.stopAnimating()
-        self.activityView.isHidden = true
-                
         return cell
     }
     

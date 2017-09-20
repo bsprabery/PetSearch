@@ -66,7 +66,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r9E-SE-mAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="1ff-2Z-r7V">
+                <view opaque="NO" contentMode="scaleToFill" id="1ff-2Z-r7V">
                     <rect key="frame" x="0.0" y="0.0" width="115" height="74"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -120,7 +120,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F5M-up-ujO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="LvA-Rj-haz">
+                <view opaque="NO" contentMode="scaleToFill" id="LvA-Rj-haz">
                     <rect key="frame" x="0.0" y="0.0" width="95" height="61"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -174,7 +174,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xG9-Zr-2Yr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="5pp-pa-aT7">
+                <view opaque="NO" contentMode="scaleToFill" id="5pp-pa-aT7">
                     <rect key="frame" x="0.0" y="0.0" width="101" height="73"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <subviews>
