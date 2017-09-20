@@ -1,4 +1,4 @@
-#PetSearch
+# PetSearch
 #
 PetSearch is an iOS app designed to help reunite pet owners with their pets
 and facilitate pet adoptions for people trying to find good homes for pets.
