@@ -34,9 +34,9 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
     var speciesPickerHidden = true
     var datePickerHidden = true
     var statusPickerHidden = true
-    var genderValues = ["Male", "Female"]
-    var speciesValues = ["Cat", "Dog", "Other"]
-    var statusValues = ["Lost", "Found", "Available to Adopt"]
+    var genderValues = ["", "Male", "Female"]
+    var speciesValues = ["", "Cat", "Dog", "Other"]
+    var statusValues = ["", "Lost", "Found", "Available to Adopt"]
     private var latitude: Double!
     private var longitude: Double!
     

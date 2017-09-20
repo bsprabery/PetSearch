@@ -28,9 +28,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tabBarController?.tabBarItem.title = "Title"
-        
         self.navigationController?.view.addSubview(activityView)
         setInitialActivityIndicatorAttributes()
         
@@ -45,6 +43,8 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
                                                selector: #selector(PSBaseViewController.reloadTable),
                                                name: Notification.Name(rawValue: notificationKey),
                                                object: nil)
+        
+        Service.sharedSingleton.addAuthListener()
     }
     
     func setInitialActivityIndicatorAttributes() {
@@ -142,6 +142,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             noDataLabel.text = "There are no pets currently listed in your area."
             noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
             noDataLabel.textAlignment = NSTextAlignment.center
+            noDataLabel.numberOfLines = 2
             self.tableView.backgroundView = noDataLabel
         }
         
@@ -209,11 +210,13 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
                     self.segueToManageScreen()
                 } else {
                     Service.sharedSingleton.manageButtonPressed = true
+                    Service.sharedSingleton.signInButtonTapped = false
                     self.segueToLoginScreen()
                 }
             }))
             if Service.sharedSingleton.signedOut {
                 alert.addAction(UIAlertAction(title: "Sign In", style: .default, handler: { (action) in
+                    Service.sharedSingleton.manageButtonPressed = false
                     Service.sharedSingleton.signInButtonTapped = true
                     self.segueToLoginScreen()
                 }))
@@ -221,7 +224,6 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
                 alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
                     Service.sharedSingleton.handleLogout()
                     self.presentWarningToUser(title: "Success!", message: "You have logged out.")
-                    Service.sharedSingleton.signedOut = true
                 }))
             }
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in

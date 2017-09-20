@@ -85,8 +85,7 @@ class PetProfileView: UIViewController {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Call Telephone Number", style: .default, handler: { (action) in
-                let phoneNumber = URL(string: petDetails.phoneNumber)
-                
+                let phoneNumber = URL(string: "tel://\(petDetails.phoneNumber)")
                 if application.canOpenURL(phoneNumber!) {
                     application.open(phoneNumber!, options: [:], completionHandler: nil)
                 } else {

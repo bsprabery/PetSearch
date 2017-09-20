@@ -68,13 +68,10 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             } else {
                 //MARK: Handles segues to appropriate destinations (based on the path taken to reach this view):
                 if Service.sharedSingleton.manageButtonPressed {
-                    Service.sharedSingleton.signedOut = false
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToManageScreen)
                 } else if Service.sharedSingleton.signInButtonTapped {
-                    Service.sharedSingleton.signedOut = false
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: unwindToOriginalView)
                 } else {
-                    Service.sharedSingleton.signedOut = false
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToInputView)
                 }
             }

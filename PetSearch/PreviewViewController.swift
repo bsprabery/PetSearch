@@ -64,7 +64,15 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
-                self.imagePicker.sourceType = .camera
+                if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.sourceType = .camera
+                    self.imagePicker.cameraCaptureMode = .photo
+                    self.imagePicker.modalPresentationStyle = .fullScreen
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                } else {
+                    self.presentWarningToUser(title: "Error", message: "The camera is not available on this device.")
+                }
             }))
             alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
                 self.imagePicker.sourceType = .photoLibrary

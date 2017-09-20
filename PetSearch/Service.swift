@@ -90,7 +90,7 @@ class Service : NSObject {
                         print(err)
                         return
                     }
-                     self.signedOut = false
+                    // self.signedOut = false
                     completion()
                 })
            })
@@ -144,6 +144,16 @@ class Service : NSObject {
         } catch let logoutError {
             print("Error: \(logoutError)")
         }
+    }
+    
+    func addAuthListener() {
+        FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if user != nil {
+                self.signedOut = false
+            } else {
+                self.signedOut = true
+            }
+        })
     }
     
 //MARK: Authentication Error Handling:
@@ -503,6 +513,8 @@ class Service : NSObject {
             }
         }
     }
+    
+
 
 //MARK: Class properties and other methods:
     private var petArray: [Pet] = [Pet]()
@@ -517,21 +529,7 @@ class Service : NSObject {
     var imageDict = [String: UIImage]()
     var manageButtonPressed: Bool = false
     var signInButtonTapped: Bool = false
-    
-    lazy var signedOut: Bool = {
-        if FIRAuth.auth()?.currentUser != nil {
-            return false
-        } else {
-            return true
-        }
-    }()
-    
-    override init() {
-     //   petArray = [Pet]()
-     //   userInfoPath = String()
-     //   userLocation = CLLocation()
-     //   locatedPetIDs = Set<String>()
-    }
+    var signedOut: Bool = true
     
     func setPets(pets: [Pet]) {
         self.petArray = pets

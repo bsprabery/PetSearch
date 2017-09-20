@@ -63,7 +63,7 @@
          contextName = "PSBaseViewController.(optionsButtonTapped(AnyObject) -&gt; ()).(closure #1):PSBaseViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.signedOut">
+               value = "Service.sharedSingleton.signedOut">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
