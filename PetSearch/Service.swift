@@ -365,7 +365,7 @@ class Service : NSObject {
         let handle = circleQuery?.observe(.keyEntered, with: { (key, location) in
             if let key = key {
                 self.fetchLocatedPets(viewControllerName: viewController, petID: key, refreshView: refreshView)
-            }
+            } 
         })
         
         listeners.append(handle!)
@@ -374,6 +374,7 @@ class Service : NSObject {
         DispatchQueue.main.asyncAfter(deadline: when) {
             for handle in self.listeners {
                 circleQuery?.removeObserver(withFirebaseHandle: handle)
+                refreshView()
             }
             self.listeners = []
         }
@@ -405,7 +406,6 @@ class Service : NSObject {
                         self.downloadImage(petID: locatedPet.petID, refreshView: refreshView)
                     }
                 } else {
-                    refreshView()
                     print("Snapshot does not exist.")
                 }
             })

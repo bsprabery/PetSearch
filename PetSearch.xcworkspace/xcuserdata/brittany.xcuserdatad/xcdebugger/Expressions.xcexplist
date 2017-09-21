@@ -95,6 +95,9 @@
          contextName = "Service.addListener(viewController : String, refreshView : () -&gt; ()) -&gt; ():Service.swift">
          <PersistentStrings>
             <PersistentString
+               value = "key">
+            </PersistentString>
+            <PersistentString
                value = "listeners">
             </PersistentString>
          </PersistentStrings>

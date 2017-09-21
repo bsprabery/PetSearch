@@ -128,18 +128,22 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         }
     }
     
+    func setNoPetsLabel() {
+        let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
+        noDataLabel.text = "There are no pets currently listed in your area."
+        noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
+        noDataLabel.textAlignment = NSTextAlignment.center
+        noDataLabel.numberOfLines = 2
+        self.tableView.backgroundView = noDataLabel
+    }
+    
 //MARK: Methods related to TableView:
     func reloadTable() {
         self.petsArray = Service.sharedSingleton.getPetsForStatus(status: self.getStatusForViewController())
         self.tableView.reloadData()
         
         if self.petsArray.isEmpty {
-            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
-            noDataLabel.text = "There are no pets currently listed in your area."
-            noDataLabel.textColor = UIColor(red: 22.0/255.0, green: 106.0/255.0, blue: 176.0/255.0, alpha: 1.0)
-            noDataLabel.textAlignment = NSTextAlignment.center
-            noDataLabel.numberOfLines = 2
-            self.tableView.backgroundView = noDataLabel
+            setNoPetsLabel()
         }
         
         hideActivityIndicator()
