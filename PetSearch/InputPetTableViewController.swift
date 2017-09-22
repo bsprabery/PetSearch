@@ -91,11 +91,18 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
             } else {
                 
                 var breedText: String
+                var detailText: String
                 
                 if breedTextField.text == "" {
                     breedText = "Unknown Breed"
                 } else {
                     breedText = breedTextField.text!
+                }
+                
+                if detailsTextView.text! == "Additional details regarding the listing that may be necessary such as the pet's personality, distinctive physical markings, or the best time to contact you." {
+                    detailText = "No additional details have been provided."
+                } else {
+                    detailText = detailsTextView.text!
                 }
                 
                 let userInfoDict = Service.sharedSingleton.readFromDisk()
@@ -108,7 +115,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
                                         species: speciesLabel.text!,
                                         sex: sexLabel.text!,
                                         breed: breedText,
-                                        petDetails: detailsTextView.text!,
+                                        petDetails: detailText,
                                         date: "\(formatDate())",
                                         status: statusLabel.text!.lowercased(),
                                         user: userName!,
@@ -123,11 +130,6 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
             }
         }
     }
-    
-//    //Is this segue ever used?
-//    @IBAction func unwindToInputSegue(_ segue: UIStoryboardSegue) {
-//        print("Performing unwind segue to Lost VC.")
-//    }
     
 //MARK: Table View
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

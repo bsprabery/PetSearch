@@ -19,7 +19,7 @@ class PetProfileView: UIViewController {
     @IBOutlet var animalTypeLabel: UILabel!
     @IBOutlet var breedLabel: UILabel!
     @IBOutlet var petOwnerNameLabel: UILabel!
-    @IBOutlet var petDetailsLabel: UILabel!
+    @IBOutlet var petDetailsTextView: UITextView!
     @IBOutlet var contactButton: UIButton!
         
     var petProfile: Pet?
@@ -45,7 +45,7 @@ class PetProfileView: UIViewController {
         animalTypeLabel.text! = "\(petDetails.species), \(petDetails.sex)"
         breedLabel.text! = petDetails.breed
         petOwnerNameLabel.text! = "Point of contact: \(petDetails.user)"
-        petDetailsLabel.text! = petDetails.petDetails
+        petDetailsTextView.text! = petDetails.petDetails
         setNavTitle(status: petDetails.status)        
     }
 

@@ -385,8 +385,8 @@ class Service : NSObject {
         if !self.petDict.keys.contains(petID) {
             
             let ref = FIRDatabase.database().reference().child("pets").child(viewControllerName).queryOrdered(byChild: "petID")
-            ref.queryEqual(toValue: petID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
+            ref.queryEqual(toValue: petID).observe(.value, with: { (snapshot) in
+                          
                 if (snapshot.exists()) {
                     for pet in snapshot.children {
                         let locatedPet = Pet(snapshot: pet as! FIRDataSnapshot)

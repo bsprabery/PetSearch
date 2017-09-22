@@ -18,8 +18,7 @@ extension LoginScreen {
         lastNameTextField.isHidden = false
         confirmPasswordTextField.isHidden = false
         phoneNumberTextField.isHidden = false
-        forgotPasswordButton.isHidden = true
-        
+                
         loginButton.setTitle("Register", for: .normal)
         registerButtonTapped = true
         
@@ -84,8 +83,7 @@ extension LoginScreen {
         lastNameTextField.isHidden = true
         confirmPasswordTextField.isHidden = true
         phoneNumberTextField.isHidden = true
-        forgotPasswordButton.isHidden = false
-        
+    
         loginButton.setTitle("Login", for: .normal)
         registerButtonTapped = false
         
@@ -102,8 +100,6 @@ extension LoginScreen {
                 self.loginButtonTop.constant = 31
             }
             
-            forgotPasswordTop.constant = 1
-            forgotPasswordLeading.constant = 180
         case (750, 1334):
             print("iPhone 6, iPhone 6s, and iPhone 7")
             UIView.animate(withDuration: 0.5) {
@@ -112,9 +108,6 @@ extension LoginScreen {
                 self.stackContainerBottom.constant = 105.0
                 self.cancelButtonTop.constant = 31
                 self.loginButtonTop.constant = 31
-                
-                self.forgotPasswordTop.constant = 1
-                self.forgotPasswordLeading.constant = 230
             }
             
         case (1242, 2208):
@@ -125,9 +118,6 @@ extension LoginScreen {
                 self.stackContainerBottom.constant = 125.0
                 self.cancelButtonTop.constant = 31
                 self.loginButtonTop.constant = 31
-                
-                self.forgotPasswordTop.constant = 1
-                self.forgotPasswordLeading.constant = 260
             }
             
         case (1536, 2048):
@@ -137,9 +127,7 @@ extension LoginScreen {
                 self.stackContainerBottom.constant = 300.0
                 self.cancelButtonTop.constant = 53
                 self.loginButtonTop.constant = 53
-                
-                self.forgotPasswordTop.constant = 2
-                self.forgotPasswordLeading.constant = 545
+
             }
         case (2048, 2732):
             print("iPad Pro 12.9")
@@ -186,7 +174,6 @@ extension LoginScreen {
         self.loginButton.translatesAutoresizingMaskIntoConstraints = false
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.stackContainer.translatesAutoresizingMaskIntoConstraints = false
-        self.forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
         
         switch resolution {
         case (640, 1136):
@@ -251,11 +238,6 @@ extension LoginScreen {
             //Title Label Constraints
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 100)
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 55)
-            
-            //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
-            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             
             //Activate Constraints
             NSLayoutConstraint.activate([stackViewLeading, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonLeading, cancelButtonWidth, cancelButtonHeight, loginButtonLeading, loginButtonWidth, loginButtonHeight, titleLabelLeading, titleLabelTop])
@@ -323,11 +305,6 @@ extension LoginScreen {
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 120)
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 75)
             
-            //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
-            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
-            
             //Activate Constraints
             NSLayoutConstraint.activate([stackViewLeading, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonLeading, cancelButtonWidth, cancelButtonHeight, loginButtonLeading, loginButtonWidth, loginButtonHeight, titleLabelLeading, titleLabelTop])
             
@@ -392,11 +369,6 @@ extension LoginScreen {
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 120)
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 75)
             
-            //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
-            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
-            
             //Activate Constraints
             NSLayoutConstraint.activate([stackViewLeading, stackContainerWidth, stackViewLoginButtonWidth, stackViewRegisterButtonWidth, stackViewTrailing, stackContainerLeading, stackViewTop, stackViewBottom, cancelButtonLeading, cancelButtonWidth, loginButtonLeading, loginButtonWidth, titleLabelLeading, titleLabelTop])
             
@@ -445,10 +417,6 @@ extension LoginScreen {
             loginButton.layer.cornerRadius = 7
             loginButton.layer.borderWidth = 1.3
             
-            //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 18), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
-            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             
             //Title Label Constraints
             let titleLabelLeading = NSLayoutConstraint(item: titleLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 295)
@@ -478,12 +446,6 @@ extension LoginScreen {
             firstNameTextField.layer.borderWidth = 1.0
             lastNameTextField.layer.borderWidth = 1.0
             phoneNumberTextField.layer.borderWidth = 1.0
-            
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 20), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
-            let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
-            forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
-            forgotPasswordTop.constant = 2
-            forgotPasswordLeading.constant = 735
             
             let stackContainerLeading = NSLayoutConstraint(item: stackContainer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 280)
             let stackContainerWidth = NSLayoutConstraint(item: stackContainer, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 640)

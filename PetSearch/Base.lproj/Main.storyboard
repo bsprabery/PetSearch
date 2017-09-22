@@ -692,13 +692,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2w-o1-Gth">
-                                <frame key="frameInset" minX="9" minY="386" width="302" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Breed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jX1-jB-cXw">
                                 <frame key="frameInset" minX="9" minY="344" width="160" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -743,6 +736,14 @@
                                     <action selector="contactButtonTapped:" destination="UOW-WB-Efy" eventType="touchUpInside" id="5cb-iz-aQJ"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eYe-hu-sYi">
+                                <frame key="frameInset" minX="9" minY="383" width="295" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -759,7 +760,7 @@
                         <outlet property="animalTypeLabel" destination="L3I-KK-2K0" id="TdY-gE-UbL"/>
                         <outlet property="breedLabel" destination="jX1-jB-cXw" id="Eor-tI-a72"/>
                         <outlet property="contactButton" destination="3Mf-da-sC8" id="TS6-XZ-5O0"/>
-                        <outlet property="petDetailsLabel" destination="P2w-o1-Gth" id="cK3-lB-Qo8"/>
+                        <outlet property="petDetailsTextView" destination="eYe-hu-sYi" id="Hxs-Om-l5U"/>
                         <outlet property="petImageView" destination="7Ch-t9-mSs" id="b2a-zi-V8L"/>
                         <outlet property="petNameLabel" destination="pdi-TZ-LVR" id="HHR-Da-Lre"/>
                         <outlet property="petOwnerNameLabel" destination="pSO-Wr-GVq" id="sCE-TN-ryf"/>
@@ -963,10 +964,6 @@
                                     <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bLI-GA-fzv">
-                                <frame key="frameInset" minX="196" minY="495" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PetSearch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n18-Xj-H6t">
                                 <frame key="frameInset" minX="69" minY="44" width="363" height="116"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -978,8 +975,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="YYJ-pv-14f" secondAttribute="bottom" constant="-148" id="Ea1-a3-T5U"/>
-                            <constraint firstItem="bLI-GA-fzv" firstAttribute="leading" secondItem="shk-nn-pWI" secondAttribute="leadingMargin" constant="180" id="HqZ-1v-OMY"/>
-                            <constraint firstItem="bLI-GA-fzv" firstAttribute="top" secondItem="YYJ-pv-14f" secondAttribute="bottom" id="ReW-8J-WDa"/>
                             <constraint firstItem="FqP-Gl-CXU" firstAttribute="top" secondItem="YYJ-pv-14f" secondAttribute="bottom" id="dBH-zk-YHa"/>
                             <constraint firstItem="9rZ-UU-zkT" firstAttribute="top" secondItem="YYJ-pv-14f" secondAttribute="bottom" id="hVi-8E-2aS"/>
                         </constraints>
@@ -990,9 +985,6 @@
                         <outlet property="confirmPasswordTextField" destination="pLc-Fx-YPc" id="dPD-4Q-08x"/>
                         <outlet property="emailTextField" destination="rJh-jy-qvK" id="Ywp-py-xMp"/>
                         <outlet property="firstNameTextField" destination="W4O-B5-2XF" id="d6v-RS-a1P"/>
-                        <outlet property="forgotPasswordButton" destination="bLI-GA-fzv" id="90N-fK-LpS"/>
-                        <outlet property="forgotPasswordLeading" destination="HqZ-1v-OMY" id="hZF-Eb-48d"/>
-                        <outlet property="forgotPasswordTop" destination="ReW-8J-WDa" id="tjx-eR-eNK"/>
                         <outlet property="lastNameTextField" destination="Kel-Ig-tip" id="Ocq-Qc-1O4"/>
                         <outlet property="loginButton" destination="9rZ-UU-zkT" id="ZSF-3c-6NS"/>
                         <outlet property="loginButtonStackView" destination="9zQ-Fl-pnq" id="Mpa-DR-HGH"/>
@@ -1058,7 +1050,7 @@
         <image name="Placeholder" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cij-Km-Pju"/>
         <segue reference="PeP-kj-td3"/>
+        <segue reference="ULE-Ni-Lfa"/>
     </inferredMetricsTieBreakers>
 </document>

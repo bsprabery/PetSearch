@@ -23,13 +23,10 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     @IBOutlet var phoneNumberTextField: UITextField!
     @IBOutlet var cancelButton: UIButton!
     @IBOutlet var stackView: UIStackView!
-    @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var stackContainer: UIView!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var stackContainerHeight: NSLayoutConstraint!
     @IBOutlet var stackContainerBottom: NSLayoutConstraint!
-    @IBOutlet var forgotPasswordTop: NSLayoutConstraint!
-    @IBOutlet var forgotPasswordLeading: NSLayoutConstraint!
     @IBOutlet var cancelButtonTop: NSLayoutConstraint!
     @IBOutlet var loginButtonTop: NSLayoutConstraint!
     
