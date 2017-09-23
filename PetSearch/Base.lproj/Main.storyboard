@@ -954,6 +954,10 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="FP5-MN-luz">
+                                <frame key="frameInset" minX="35" minY="307" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -963,6 +967,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="FP5-MN-luz" id="ysR-BU-tFN"/>
                         <outlet property="cancelButton" destination="FqP-Gl-CXU" id="er4-pF-EXi"/>
                         <outlet property="cancelButtonTop" destination="dBH-zk-YHa" id="JZ0-xq-p77"/>
                         <outlet property="confirmPasswordTextField" destination="pLc-Fx-YPc" id="dPD-4Q-08x"/>

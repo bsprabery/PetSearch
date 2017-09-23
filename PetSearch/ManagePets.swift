@@ -50,13 +50,15 @@ class ManagePets: UITableViewController {
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.contents = 5.0
         cell.petInfoLabel.text = "\(pet.petID)"
+        cell.activityIndicator.isHidden = false
+        cell.activityIndicator.startAnimating()
         
         //Download pet image from Firebase Storage:
         let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
         storRef.data(withMaxSize: INT64_MAX) { (data, error) in
             
             guard error == nil else {
-                print("Error downloading: \(error)")
+                self.presentWarningToUser(title: "Error", message: "Photo not found.")
                 return
             }
             
@@ -66,6 +68,8 @@ class ManagePets: UITableViewController {
                 DispatchQueue.main.async {
                     cell.petImageView.image = petImage
                     cell.petImageView.layer.cornerRadius = 5.0
+                    cell.activityIndicator.stopAnimating()
+                    cell.activityIndicator.isHidden = true
                     cell.setNeedsLayout()
                 }
             }

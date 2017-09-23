@@ -35,16 +35,18 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         didFindLocation = false
         configureLocationServices()
         locationManager.startUpdatingLocation()
+        Service.sharedSingleton.addAuthListener()
         
         tableView.register(UINib(nibName: "PetCell", bundle: nil), forCellReuseIdentifier: "PetCell")
         self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(PSBaseViewController.reloadTable),
-                                               name: Notification.Name(rawValue: notificationKey),
-                                               object: nil)
+        //Adds an observer to reload the tableView when a pet is deleted:
+        NotificationCenter.default.addObserver(self, selector: #selector(PSBaseViewController.reloadTable), name: Notification.Name(rawValue: notificationKey), object: nil)
         
-        Service.sharedSingleton.addAuthListener()
+        //Checks to see if the user is connected to the internet:
+        if !hasConnectivity()  {
+            presentWarningToUser(title: "Warning", message: "You are not connected to the internet.")
+        }
     }
     
     func setInitialActivityIndicatorAttributes() {
@@ -62,9 +64,16 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func handleRefresh( _ refreshControl: UIRefreshControl) {
-        Service.sharedSingleton.addListener(viewController: self.getStatusForViewController(), refreshView: reloadTable)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            refreshControl.endRefreshing()
+        if !hasConnectivity() {
+            presentWarningToUser(title: "Warning", message: "You are not connected to the internet.")
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                refreshControl.endRefreshing()
+            }
+        } else {
+            Service.sharedSingleton.addListener(viewController: self.getStatusForViewController(), refreshView: reloadTable)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                refreshControl.endRefreshing()
+            }
         }
     }
     
@@ -142,6 +151,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         self.petsArray = Service.sharedSingleton.getPetsForStatus(status: self.getStatusForViewController())
         self.tableView.reloadData()
         
+        //In the event that there is no information to update, this label will appear:
         if self.petsArray.isEmpty {
             setNoPetsLabel()
         }
@@ -167,13 +177,17 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         cell.nameLabel.text = pet.name
         cell.detailsLabel.text = pet.petDetails
         cell.petImageView.layer.cornerRadius = 5.0
-        
+        cell.activityIndicator.isHidden = false
+        cell.activityIndicator.startAnimating()
+
         self.imageDict = Service.sharedSingleton.getImages()
         if let image = imageDict["\(pet.petID)"] {
             cell.petImageView?.image = image
+            cell.activityIndicator.isHidden = true
         } else {
             let placeholderImage = UIImage(named: "Placeholder")
             cell.petImageView?.image = placeholderImage!
+            cell.activityIndicator.isHidden = true
         }
         
         return cell
@@ -214,22 +228,31 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
             alert.addAction(UIAlertAction(title: "Manage My Pets", style: .default, handler: { (action) in
-                if Service.sharedSingleton.IsUserLoggedInReturnBool() {
-                    self.segueToManageScreen()
+                if self.hasConnectivity() == false {
+                    self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to manage your pets.")
                 } else {
-                    Service.sharedSingleton.manageButtonPressed = true
-                    Service.sharedSingleton.signInButtonTapped = false
-                    self.segueToLoginScreen()
+                    if Service.sharedSingleton.IsUserLoggedInReturnBool() {
+                        self.segueToManageScreen()
+                    } else {
+                        Service.sharedSingleton.manageButtonPressed = true
+                        Service.sharedSingleton.signInButtonTapped = false
+                        self.segueToLoginScreen()
+                    }
                 }
             }))
             if Service.sharedSingleton.signedOut {
                 alert.addAction(UIAlertAction(title: "Sign In", style: .default, handler: { (action) in
-                    Service.sharedSingleton.manageButtonPressed = false
-                    Service.sharedSingleton.signInButtonTapped = true
-                    self.segueToLoginScreen()
+                    if self.hasConnectivity() == false {
+                        self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to sign in.")
+                    } else {
+                        Service.sharedSingleton.manageButtonPressed = false
+                        Service.sharedSingleton.signInButtonTapped = true
+                        self.segueToLoginScreen()
+                    }
                 }))
             } else {
                 alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
+                    //If the user's network connection fails, Firebase will send the logout request when user's network connection comes back online:
                     Service.sharedSingleton.handleLogout()
                     self.presentWarningToUser(title: "Success!", message: "You have logged out.")
                 }))

@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="107"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="320" height="106.5"/>
+                <frame key="frameInset" width="320" height="106"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mxm-3k-qdA">
@@ -42,20 +42,24 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="oVh-Nn-ogc"/>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Jg0-Xm-cS9" firstAttribute="leading" secondItem="Mxm-3k-qdA" secondAttribute="leading" id="HZ9-sA-sHf"/>
                     <constraint firstAttribute="topMargin" secondItem="Mxm-3k-qdA" secondAttribute="top" id="Ijk-dV-8wK"/>
+                    <constraint firstItem="oVh-Nn-ogc" firstAttribute="centerY" secondItem="AIB-qn-SLA" secondAttribute="centerY" id="Lem-SQ-n0L"/>
                     <constraint firstItem="AIB-qn-SLA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RWh-yH-0fF"/>
                     <constraint firstAttribute="leadingMargin" secondItem="AIB-qn-SLA" secondAttribute="leading" id="b53-Tn-6h6"/>
                     <constraint firstItem="Jg0-Xm-cS9" firstAttribute="trailing" secondItem="Mxm-3k-qdA" secondAttribute="trailing" id="ejN-q9-RZi"/>
                     <constraint firstItem="Jg0-Xm-cS9" firstAttribute="bottom" secondItem="AIB-qn-SLA" secondAttribute="bottom" id="iZr-u1-9j5"/>
+                    <constraint firstItem="oVh-Nn-ogc" firstAttribute="centerX" secondItem="AIB-qn-SLA" secondAttribute="centerX" id="jYZ-bQ-RTQ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Mxm-3k-qdA" secondAttribute="trailing" id="joI-3a-dDt"/>
                     <constraint firstItem="Jg0-Xm-cS9" firstAttribute="leading" secondItem="AIB-qn-SLA" secondAttribute="trailing" constant="8" symbolic="YES" id="kRo-Vw-Nr5" userLabel="Details Label.leading = Pet Image View.trailing + 8"/>
                     <constraint firstItem="Jg0-Xm-cS9" firstAttribute="top" secondItem="Mxm-3k-qdA" secondAttribute="bottom" constant="8" symbolic="YES" id="qau-ak-QUM"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicator" destination="oVh-Nn-ogc" id="NS7-ad-L0u"/>
                 <outlet property="detailsLabel" destination="Jg0-Xm-cS9" id="fBQ-e4-haU"/>
                 <outlet property="nameLabel" destination="Mxm-3k-qdA" id="UhJ-rg-hoc"/>
                 <outlet property="petImageView" destination="AIB-qn-SLA" id="cPx-YU-cmk"/>

@@ -164,6 +164,10 @@ extension LoginScreen {
         let resolution = self.view.detectResolution()
         layoutBackgroundImage()
         
+        //Activity Indicator Constraints
+        activityIndicator.center = self.view.center
+        activityIndicator.layer.zPosition = 1
+        
         //Stack Container Constraints
         stackContainer.layer.cornerRadius = 7
         stackContainer.layer.borderWidth = 1.3

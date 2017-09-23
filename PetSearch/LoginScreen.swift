@@ -29,6 +29,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     @IBOutlet var stackContainerBottom: NSLayoutConstraint!
     @IBOutlet var cancelButtonTop: NSLayoutConstraint!
     @IBOutlet var loginButtonTop: NSLayoutConstraint!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     var registerButtonTapped = false
@@ -49,6 +50,8 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         layoutView()
         addObservers()
         setTextFieldDelegates()
+        activityIndicator.isHidden = true
+        activityIndicator.hidesWhenStopped = true
         
         loginButton.addTarget(self, action: #selector(handleLoginRegister), for: .touchUpInside)
         
@@ -61,14 +64,22 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
             if registerButtonTapped == true {
+                activityIndicator.isHidden = false
+                activityIndicator.startAnimating()
                 Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
             } else {
-                //MARK: Handles segues to appropriate destinations (based on the path taken to reach this view):
+                //Handles segues to appropriate destinations (based on the path taken to reach this view):
                 if Service.sharedSingleton.manageButtonPressed {
+                    activityIndicator.isHidden = false
+                    activityIndicator.startAnimating()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToManageScreen)
                 } else if Service.sharedSingleton.signInButtonTapped {
+                    activityIndicator.isHidden = false
+                    activityIndicator.startAnimating()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: unwindToOriginalView)
                 } else {
+                    activityIndicator.isHidden = false
+                    activityIndicator.startAnimating()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToInputView)
                 }
             }
