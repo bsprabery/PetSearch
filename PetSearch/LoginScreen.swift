@@ -58,7 +58,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     
     func handleLoginRegister() {
         if hasConnectivity() == false {
-            self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
+            presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
             if registerButtonTapped == true {
                 Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
@@ -94,13 +94,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     func keyboardWillShow(notification: NSNotification) {
         if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = -getKeyboardHeight(notification: notification)
-        } else {}
+        }
     }
     
     func keyboardWillHide(notification: NSNotification) {
         if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = 0
-        } else {}
+        }
     }
     
     func getKeyboardHeight(notification: NSNotification)  -> CGFloat {

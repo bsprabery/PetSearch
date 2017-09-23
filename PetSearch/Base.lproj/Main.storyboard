@@ -557,22 +557,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBy-Ie-AA4">
-                                <frame key="frameInset" minX="88" minY="617" height="30" maxX="88"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" button="YES" notEnabled="YES"/>
-                                </accessibility>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Contact">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="contactButtonClicked:" destination="sdn-2y-M8A" eventType="touchUpInside" id="UTd-N1-pwo"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMW-4f-eid">
                                 <frame key="frameInset" minX="34" minY="445" width="160" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -629,7 +613,6 @@
                     <connections>
                         <outlet property="activityIndicator" destination="ccv-77-7oy" id="i7u-Fn-gOR"/>
                         <outlet property="breedLabel" destination="rIT-Ye-Mnf" id="HLs-1Y-BYp"/>
-                        <outlet property="contactButton" destination="bBy-Ie-AA4" id="CZL-7z-hz1"/>
                         <outlet property="descriptionView" destination="A0T-6B-rld" id="8L1-xt-HOo"/>
                         <outlet property="petImage" destination="5VP-kG-Le4" id="28c-Ex-VBT"/>
                         <outlet property="petNameLabel" destination="dWI-sA-SAm" id="3X7-yh-vLu"/>

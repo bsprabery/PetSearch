@@ -23,7 +23,6 @@ extension PreviewViewController {
     func layoutView() {
         petImage.layer.cornerRadius = 5.0
         petImage.clipsToBounds = true
-        contactButton.layer.cornerRadius = 5.0
         
         let resolution = detectResolution()
         
@@ -34,7 +33,6 @@ extension PreviewViewController {
         self.breedLabel.translatesAutoresizingMaskIntoConstraints = false
         self.userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         self.descriptionView.translatesAutoresizingMaskIntoConstraints = false
-        self.contactButton.translatesAutoresizingMaskIntoConstraints = false
         self.activityIndicator.translatesAutoresizingMaskIntoConstraints  = false
         self.sexLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,7 +45,6 @@ extension PreviewViewController {
             breedLabel.font = UIFont.systemFont(ofSize: 13)
             userNameLabel.font = UIFont.systemFont(ofSize: 13)
             descriptionView.font = UIFont.systemFont(ofSize: 12)
-            contactButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
             
             let activityIndicatorX = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
             let activityIndicatorY = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
@@ -78,12 +75,7 @@ extension PreviewViewController {
             let petDetailWidth = NSLayoutConstraint(item: descriptionView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250)
             let petDetailHeight = NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 85)
             
-            let contactButtonTop = NSLayoutConstraint(item: contactButton, attribute: .top, relatedBy: .equal, toItem: descriptionView, attribute: .bottom, multiplier: 1, constant: 15)
-            let contactButtonLeading = NSLayoutConstraint(item: contactButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
-            let contactButtonWidth = NSLayoutConstraint(item: contactButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150)
-            let contactButtonHeight = NSLayoutConstraint(item: contactButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 22)
-            
-            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailWidth, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
+            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailWidth, petDetailHeight])
             
         case (750, 1334):
             print("iPhone 6, iPhone 6s, and iPhone 7")
@@ -95,7 +87,6 @@ extension PreviewViewController {
             breedLabel.font = UIFont.systemFont(ofSize: 14)
             userNameLabel.font = UIFont.systemFont(ofSize: 14)
             descriptionView.font = UIFont.systemFont(ofSize: 13)
-            contactButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
             let activityIndicatorX = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
             let activityIndicatorY = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
@@ -126,12 +117,7 @@ extension PreviewViewController {
             let petDetailTrailing = NSLayoutConstraint(item: descriptionView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -25)
             let petDetailHeight = NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 90)
             
-            let contactButtonTop = NSLayoutConstraint(item: contactButton, attribute: .top, relatedBy: .equal, toItem: descriptionView, attribute: .bottom, multiplier: 1, constant: 10)
-            let contactButtonLeading = NSLayoutConstraint(item: contactButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
-            let contactButtonWidth = NSLayoutConstraint(item: contactButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150)
-            let contactButtonHeight = NSLayoutConstraint(item: contactButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 28)
-            
-            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
+            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
             
         case (1242, 2208):
             print("iPhone 7 Plus, iPhone 6s Plus")
@@ -142,7 +128,6 @@ extension PreviewViewController {
             breedLabel.font = UIFont.systemFont(ofSize: 14)
             userNameLabel.font = UIFont.systemFont(ofSize: 14)
             descriptionView.font = UIFont.systemFont(ofSize: 13)
-            contactButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             
             let activityIndicatorX = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
             let activityIndicatorY = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
@@ -173,12 +158,7 @@ extension PreviewViewController {
             let petDetailTrailing = NSLayoutConstraint(item: descriptionView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -25)
             let petDetailHeight = NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100)
             
-            let contactButtonTop = NSLayoutConstraint(item: contactButton, attribute: .top, relatedBy: .equal, toItem: descriptionView, attribute: .bottom, multiplier: 1, constant: 10)
-            let contactButtonLeading = NSLayoutConstraint(item: contactButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
-            let contactButtonWidth = NSLayoutConstraint(item: contactButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 175)
-            let contactButtonHeight = NSLayoutConstraint(item: contactButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30)
-            
-            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
+            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
             
             
         case (1536, 2048):
@@ -190,7 +170,6 @@ extension PreviewViewController {
             breedLabel.font = UIFont.systemFont(ofSize: 18)
             userNameLabel.font = UIFont.systemFont(ofSize: 18)
             descriptionView.font = UIFont.systemFont(ofSize: 17)
-            contactButton.titleLabel?.font = UIFont.systemFont(ofSize: 19)
             
             let activityIndicatorX = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
             let activityIndicatorY = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
@@ -221,13 +200,8 @@ extension PreviewViewController {
             let petDetailTrailing = NSLayoutConstraint(item: descriptionView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -50)
             let petDetailHeight = NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150)
             
-            let contactButtonTop = NSLayoutConstraint(item: contactButton, attribute: .top, relatedBy: .equal, toItem: descriptionView, attribute: .bottom, multiplier: 1, constant: 10)
-            let contactButtonLeading = NSLayoutConstraint(item: contactButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
-            let contactButtonWidth = NSLayoutConstraint(item: contactButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 225)
-            let contactButtonHeight = NSLayoutConstraint(item: contactButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35)
+            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
             
-            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
-            NSLayoutConstraint.activate([contactButtonHeight, contactButtonWidth])
             
         case (2048, 2732):
             print("iPad Pro 12.9")
@@ -238,7 +212,6 @@ extension PreviewViewController {
             breedLabel.font = UIFont.systemFont(ofSize: 26)
             userNameLabel.font = UIFont.systemFont(ofSize: 26)
             descriptionView.font = UIFont.systemFont(ofSize: 25)
-            contactButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
             
             let activityIndicatorX = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
             let activityIndicatorY = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
@@ -269,15 +242,8 @@ extension PreviewViewController {
             let petDetailTrailing = NSLayoutConstraint(item: descriptionView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -100)
             let petDetailHeight = NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150)
             
-            let contactButtonTop = NSLayoutConstraint(item: contactButton, attribute: .top, relatedBy: .equal, toItem: descriptionView, attribute: .bottom, multiplier: 1, constant: 20)
-            let contactButtonLeading = NSLayoutConstraint(item: contactButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
-            let contactButtonWidth = NSLayoutConstraint(item: contactButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 300)
-            let contactButtonHeight = NSLayoutConstraint(item: contactButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 45)
-            
-            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
-            NSLayoutConstraint.activate([contactButtonHeight, contactButtonWidth])
-            
-            
+            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
+                    
         default:
             print("Unknown Device")
         }

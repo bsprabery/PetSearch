@@ -122,7 +122,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
     func showWarningOnce() {
-        if self.warningHasBeenShown == false {
+        if !warningHasBeenShown {
             self.presentWarningToUser(title: "Location Services Restricted", message: "In order to see pets in your area, please open this app's settings and enable location access.")
             self.warningHasBeenShown = true
         }

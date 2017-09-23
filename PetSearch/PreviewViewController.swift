@@ -19,7 +19,6 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet var descriptionView: UITextView!
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var userNameLabel: UILabel!
-    @IBOutlet var contactButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     var petPhoto: UIImage?
@@ -32,7 +31,6 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         addTapGesture()
         layoutView()
         imagePicker.delegate = self
-        contactButton.isEnabled = false
         activityIndicator.isHidden = true
         activityIndicator.layer.zPosition = 1
         self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -100,7 +98,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
 //MARK: Action methods
-    //MARK: Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
+    //Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
     @IBAction func savePreview(_ sender: AnyObject) {
         if let photo = petPhoto {
             if var pet = pet {
