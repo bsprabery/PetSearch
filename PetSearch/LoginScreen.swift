@@ -70,8 +70,9 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
     
     func handleLoginRegister() {
-        if hasConnectivity() == false {
+        if !hasConnectivity() {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
+            hideActivityIndicator()
         } else {
             if registerButtonTapped == true {
                 showActivityIndicator()

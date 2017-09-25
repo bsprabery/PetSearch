@@ -59,6 +59,8 @@ class ManagePets: UITableViewController {
             
             guard error == nil else {
                 self.presentWarningToUser(title: "Error", message: "Photo not found.")
+                cell.activityIndicator.stopAnimating()
+                cell.activityIndicator.isHidden = true
                 return
             }
             
