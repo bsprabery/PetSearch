@@ -49,6 +49,11 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
+    func hideActivityIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+    
 //MARK: Methods relating to picking an image:
     func addTapGesture() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -101,13 +106,18 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     //Upon clicking the "Save" button, this function saves the information and photo to Firebase before unwinding back to the initial view controller.
     @IBAction func savePreview(_ sender: AnyObject) {
         if let photo = petPhoto {
-            if var pet = pet {
-                Service.sharedSingleton.uploadInfoToFirebaseDatabase(status: pet.status, photo: photo, pet: &pet, completion: segueToUnwind)
-                self.navigationItem.rightBarButtonItem?.isEnabled = false
-                activityIndicator.isHidden = false
-                activityIndicator.startAnimating()
+            if !hasConnectivity() {
+                presentWarningToUser(title: "Warning", message: "You are not currently connected to the internet.")
             } else {
-                self.presentWarningToUser(title: "Error", message: "There was an error while saving your pet. Please try again.")
+                if var pet = pet {
+                    Service.sharedSingleton.uploadInfoToFirebaseDatabase(status: pet.status, photo: photo, pet: &pet, completion: segueToUnwind)
+                    self.navigationItem.rightBarButtonItem?.isEnabled = false
+                    activityIndicator.isHidden = false
+                    activityIndicator.startAnimating()
+                } else {
+                    self.presentWarningToUser(title: "Error", message: "There was an error while saving your pet. Please try again.")
+                    hideActivityIndicator()
+                }
             }
         } else {
             self.presentWarningToUser(title: "Photo Required", message: "Please choose a photo of your pet to display.")
@@ -116,8 +126,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func segueToUnwind() {
         self.performSegue(withIdentifier: "unwindAfterSaving", sender: nil)
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
+        hideActivityIndicator()
     }
     
     @IBAction func backToInputTableView(_ sender: AnyObject) {

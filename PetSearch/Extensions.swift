@@ -36,6 +36,7 @@ extension UIView {
 
 
 extension UIViewController {
+    
     func segueToLoginScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let destination = storyboard.instantiateViewController(withIdentifier: "Login Screen")

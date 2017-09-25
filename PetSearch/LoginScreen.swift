@@ -59,27 +59,33 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tap)
     }
     
+    func showActivityIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+    
     func handleLoginRegister() {
         if hasConnectivity() == false {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
         } else {
             if registerButtonTapped == true {
-                activityIndicator.isHidden = false
-                activityIndicator.startAnimating()
+                showActivityIndicator()
                 Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
             } else {
                 //Handles segues to appropriate destinations (based on the path taken to reach this view):
                 if Service.sharedSingleton.manageButtonPressed {
-                    activityIndicator.isHidden = false
-                    activityIndicator.startAnimating()
+                    showActivityIndicator()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToManageScreen)
                 } else if Service.sharedSingleton.signInButtonTapped {
-                    activityIndicator.isHidden = false
-                    activityIndicator.startAnimating()
+                    showActivityIndicator()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: unwindToOriginalView)
                 } else {
-                    activityIndicator.isHidden = false
-                    activityIndicator.startAnimating()
+                    showActivityIndicator()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToInputView)
                 }
             }

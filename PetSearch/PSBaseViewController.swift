@@ -70,7 +70,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
                 refreshControl.endRefreshing()
             }
         } else {
-            Service.sharedSingleton.addListener(viewController: self.getStatusForViewController(), refreshView: reloadTable)
+            Service.sharedSingleton.addListener(viewController: getStatusForViewController(), refreshView: reloadTable)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                 refreshControl.endRefreshing()
             }
