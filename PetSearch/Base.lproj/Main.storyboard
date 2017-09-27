@@ -847,7 +847,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YYJ-pv-14f">
-                                <frame key="frameInset" minX="350" minY="508" width="240" height="128"/>
+                                <frame key="frameInset" minX="130" minY="359" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="bAc-uS-LGp"/>
@@ -929,7 +929,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FqP-Gl-CXU">
-                                <frame key="frameInset" minX="71" minY="586" width="200" height="50"/>
+                                <frame key="frameInset" minX="71" minY="600" width="99" height="36"/>
                                 <color key="backgroundColor" red="1" green="0.04295081722" blue="0.053178981969999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="Cancel">
@@ -939,16 +939,8 @@
                                     <action selector="cancelButtonClicked:" destination="IWw-g8-ZDk" eventType="touchUpInside" id="MqX-kh-KPW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rZ-UU-zkT">
-                                <frame key="frameInset" minX="196" minY="659" width="215" height="50"/>
-                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PetSearch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n18-Xj-H6t">
-                                <frame key="frameInset" minX="69" minY="44" width="363" height="116"/>
+                                <frame key="frameInset" minX="69" minY="46" width="267" height="114"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="65"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -958,11 +950,28 @@
                                 <frame key="frameInset" minX="35" minY="307" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0DO-3r-IOo">
+                                <frame key="frameInset" minX="148" minY="514" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="forgotPassword:" destination="IWw-g8-ZDk" eventType="touchUpInside" id="5Lb-Ed-gQd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9rZ-UU-zkT">
+                                <frame key="frameInset" minX="193" minY="600" width="127" height="36"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="YYJ-pv-14f" secondAttribute="bottom" constant="-148" id="Ea1-a3-T5U"/>
+                            <constraint firstItem="0DO-3r-IOo" firstAttribute="leading" secondItem="shk-nn-pWI" secondAttribute="leadingMargin" constant="132" id="chd-0l-J9S"/>
                             <constraint firstItem="FqP-Gl-CXU" firstAttribute="top" secondItem="YYJ-pv-14f" secondAttribute="bottom" id="dBH-zk-YHa"/>
+                            <constraint firstItem="0DO-3r-IOo" firstAttribute="top" secondItem="myF-Wa-OWd" secondAttribute="top" id="fmx-Vg-NEM"/>
                             <constraint firstItem="9rZ-UU-zkT" firstAttribute="top" secondItem="YYJ-pv-14f" secondAttribute="bottom" id="hVi-8E-2aS"/>
                         </constraints>
                     </view>
@@ -973,6 +982,9 @@
                         <outlet property="confirmPasswordTextField" destination="pLc-Fx-YPc" id="dPD-4Q-08x"/>
                         <outlet property="emailTextField" destination="rJh-jy-qvK" id="Ywp-py-xMp"/>
                         <outlet property="firstNameTextField" destination="W4O-B5-2XF" id="d6v-RS-a1P"/>
+                        <outlet property="forgotPasswordButton" destination="0DO-3r-IOo" id="o9i-ZO-boA"/>
+                        <outlet property="forgotPasswordLeading" destination="chd-0l-J9S" id="Roo-JS-OAv"/>
+                        <outlet property="forgotPasswordTop" destination="fmx-Vg-NEM" id="04c-2a-oq8"/>
                         <outlet property="lastNameTextField" destination="Kel-Ig-tip" id="Ocq-Qc-1O4"/>
                         <outlet property="loginButton" destination="9rZ-UU-zkT" id="ZSF-3c-6NS"/>
                         <outlet property="loginButtonStackView" destination="9zQ-Fl-pnq" id="Mpa-DR-HGH"/>
@@ -992,7 +1004,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KO8-QJ-YGV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ni6-BF-eY8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2389" y="621"/>
+            <point key="canvasLocation" x="2388" y="620.23988005997012"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="leq-Eh-wGS">

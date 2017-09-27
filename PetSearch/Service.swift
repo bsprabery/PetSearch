@@ -156,6 +156,18 @@ class Service : NSObject {
         })
     }
     
+    func sendPasswordReset(email: String, callingViewController: UIViewController) {
+        FIRAuth.auth()?.sendPasswordReset(withEmail: email, completion: { (error) in
+            if error != nil {
+                if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
+                    self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
+                }
+            }
+            
+            //Segue to change password view
+        })
+    }
+    
 //MARK: Authentication Error Handling:
     func handleAuthError(errCode: FIRAuthErrorCode, callingViewController: UIViewController) {
         switch errCode {

@@ -30,6 +30,9 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     @IBOutlet var cancelButtonTop: NSLayoutConstraint!
     @IBOutlet var loginButtonTop: NSLayoutConstraint!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var forgotPasswordButton: UIButton!
+    @IBOutlet var forgotPasswordTop: NSLayoutConstraint!
+    @IBOutlet var forgotPasswordLeading: NSLayoutConstraint!
     
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     var registerButtonTapped = false
@@ -154,6 +157,34 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()
         newUserLayout()
+    }
+    
+    @IBAction func forgotPassword(_ sender: AnyObject) {
+        if !self.hasConnectivity() {
+            self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to reset your password.")
+        } else {
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                alert.addAction(UIAlertAction(title: "Reset Password", style: .default, handler: { (action) in
+                    if let email = self.emailTextField.text {
+                        if email == "" {
+                            self.presentWarningToUser(title: "Email Address Required", message: "Please enter the email address associated with your PetSearch account.")
+                        } else {
+                            Service.sharedSingleton.sendPasswordReset(email: email, callingViewController: self)
+                        }
+                    } else {
+                        self.presentWarningToUser(title: "Email Address Required", message: "Please enter the email address associated with your PetSearch account.")
+                    }
+                }))
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                    self.dismiss(animated: true, completion: nil)
+                }))
+                
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func cancelButtonClicked(_ sender: AnyObject) {
