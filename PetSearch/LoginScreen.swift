@@ -10,6 +10,21 @@ import Foundation
 import UIKit
 import Firebase
 
+enum Button : Int {
+    case manageButton = 0
+    case signInButton = 1
+    case registerButton = 2
+    case addButton = 3
+}
+
+enum AuthStatus : Int {
+    case signedIn = 0
+    case signedOut = 1
+}
+
+var status: AuthStatus = AuthStatus(rawValue: 1)!
+var button: Button = Button(rawValue: 2)!
+
 class LoginScreen: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var firstNameTextField: UITextField!
@@ -37,11 +52,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
     var registerButtonTapped = false
     
+    
     override func loadView() {
         super.loadView()
         if launchedBefore {
             print("Not first launch")
         } else {
+            button = .registerButton
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
     }
@@ -76,15 +93,15 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
             hideActivityIndicator()
         } else {
-            if registerButtonTapped == true {
+            if button == .registerButton {
                 Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
             } else {
                 //Handles segues to appropriate destinations (based on the path taken to reach this view):
-                if Service.sharedSingleton.manageButtonPressed {
+                if button == .manageButton {
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToManageScreen)
-                } else if Service.sharedSingleton.signInButtonTapped {
+                } else if button == .signInButton {
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: unwindToOriginalView)
-                } else {
+                } else if button == .addButton {
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToInputView)
                 }
             }
@@ -93,7 +110,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     
     func unwindToOriginalView() {
         self.performSegue(withIdentifier: "unwindSegue", sender: self)
-        Service.sharedSingleton.signInButtonTapped = false
     }
     
     func setTextFieldDelegates() {
@@ -141,6 +157,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     
 //MARK: Action methods:
     @IBAction func loginButtonClicked(_ sender: AnyObject) {
+        button = .signInButton
         registerButtonTapped = false
         loginButtonStackView.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()
@@ -148,6 +165,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func registerButtonClicked(_ sender: AnyObject) {
+        button = .registerButton
         registerButtonTapped = true
         registerButton.backgroundColor = UIColor(red: 0/255, green: 128/255, blue: 255/255, alpha: 1.0)
         dismissKeyboard()

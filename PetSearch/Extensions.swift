@@ -55,7 +55,7 @@ extension UIViewController {
         }
         
         Service.sharedSingleton.fetchPetsForUser(segue: segue)
-        Service.sharedSingleton.manageButtonPressed = false
+//        Service.sharedSingleton.manageButtonPressed = false
     }
     
     func hasConnectivity() -> Bool {

@@ -218,6 +218,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         if hasConnectivity() == false {
             self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to add a pet.")
         } else {
+            button = .addButton
             Service.sharedSingleton.checkIfUserIsLoggedIn(segueOne: segueToLoginScreen, segueTwo: segueToInputView)
         }
     }
@@ -231,32 +232,32 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
                 if self.hasConnectivity() == false {
                     self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to manage your pets.")
                 } else {
-                    if Service.sharedSingleton.IsUserLoggedInReturnBool() {
+                    if status == .signedIn {
                         self.segueToManageScreen()
                     } else {
-                        Service.sharedSingleton.manageButtonPressed = true
-                        Service.sharedSingleton.signInButtonTapped = false
+                        button = .manageButton
                         self.segueToLoginScreen()
                     }
                 }
             }))
-            if Service.sharedSingleton.signedOut {
+            
+            if status == .signedOut {
                 alert.addAction(UIAlertAction(title: "Sign In", style: .default, handler: { (action) in
                     if self.hasConnectivity() == false {
                         self.presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please connect to a network to sign in.")
                     } else {
-                        Service.sharedSingleton.manageButtonPressed = false
-                        Service.sharedSingleton.signInButtonTapped = true
+                        button = .signInButton
                         self.segueToLoginScreen()
                     }
                 }))
-            } else {
+            } else if status == .signedIn {
                 alert.addAction(UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in
                     //If the user's network connection fails, Firebase will send the logout request when user's network connection comes back online:
                     Service.sharedSingleton.handleLogout()
-                    self.presentWarningToUser(title: "Success!", message: "You have logged out.")
+                    self.presentWarningToUser(title: "Success", message: "You have logged out.")
                 }))
             }
+            
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 self.dismiss(animated: true, completion: nil)
             }))

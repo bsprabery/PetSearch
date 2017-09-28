@@ -136,6 +136,7 @@ class Service : NSObject {
             if error != nil {
                 if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
                     self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
+                    status = .signedOut
                     callingViewController.hideActivityIndicator()
                 }
                 return
@@ -143,6 +144,7 @@ class Service : NSObject {
             
             self.getUserDetails()
             callingViewController.hideActivityIndicator()
+            status = .signedIn
             completion()
         })
     }
@@ -150,6 +152,7 @@ class Service : NSObject {
     func handleLogout() {
         do {
             try FIRAuth.auth()?.signOut()
+            status = .signedOut
         } catch let logoutError {
             print("Error: \(logoutError)")
         }
@@ -158,9 +161,9 @@ class Service : NSObject {
     func addAuthListener() {
         FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if user != nil {
-                self.signedOut = false
+                status = .signedIn
             } else {
-                self.signedOut = true
+                status = .signedOut
             }
         })
     }
@@ -172,8 +175,7 @@ class Service : NSObject {
                     self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
                 }
             }
-            
-            //Segue to change password view
+            callingViewController.presentWarningToUser(title: "Reset Link Sent", message: "A link has been sent to your email to reset your account password.")
         })
     }
     
@@ -549,9 +551,6 @@ class Service : NSObject {
     var listeners = [UInt]()
     var petDict = [String: Pet]()
     var imageDict = [String: UIImage]()
-    var manageButtonPressed: Bool = false
-    var signInButtonTapped: Bool = false
-    var signedOut: Bool = true
     
     func setPets(pets: [Pet]) {
         self.petArray = pets

@@ -41,6 +41,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "FoundViewController.(tableView(UITableView, cellForRowAt : IndexPath) -&gt; UITableViewCell).(closure #1).(closure #1):FoundViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell.tag">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.getPetsForStatus(status : String) -&gt; [Pet]:Service.swift">
+      </ContextState>
+      <ContextState
          contextName = "Service.signedOut.getter:Service.swift">
          <PersistentStrings>
             <PersistentString
@@ -49,13 +60,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Service.getPetsForStatus(status : String) -&gt; [Pet]:Service.swift">
-      </ContextState>
-      <ContextState
-         contextName = "FoundViewController.(tableView(UITableView, cellForRowAt : IndexPath) -&gt; UITableViewCell).(closure #1).(closure #1):FoundViewController.swift">
+         contextName = "Service.handleLogout() -&gt; ():Service.swift">
          <PersistentStrings>
             <PersistentString
-               value = "cell.tag">
+               value = "status">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -65,6 +73,9 @@
             <PersistentString
                value = "Service.sharedSingleton.signedOut">
             </PersistentString>
+            <PersistentString
+               value = "status">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -72,6 +83,17 @@
          <PersistentStrings>
             <PersistentString
                value = "signedOut">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Service.addListener(viewController : String, refreshView : () -&gt; ()) -&gt; ():Service.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "key">
+            </PersistentString>
+            <PersistentString
+               value = "listeners">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -92,13 +114,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Service.addListener(viewController : String, refreshView : () -&gt; ()) -&gt; ():Service.swift">
+         contextName = "LoginScreen.handleLoginRegister() -&gt; ():LoginScreen.swift">
          <PersistentStrings>
             <PersistentString
-               value = "key">
-            </PersistentString>
-            <PersistentString
-               value = "listeners">
+               value = "button">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -111,15 +130,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "AdoptViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():AdoptViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "ManagePets.tableView(UITableView, commit : UITableViewCellEditingStyle, forRowAt : IndexPath) -&gt; ():ManagePets.swift">
+         contextName = "PSBaseViewController.reloadTable() -&gt; ():PSBaseViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "print(status)">
+               value = "self.petsArray.count">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AdoptViewController.locationManager(CLLocationManager, didUpdateLocations : [CLLocation]) -&gt; ():AdoptViewController.swift">
       </ContextState>
       <ContextState
          contextName = "Service.uploadInfoToFirebaseDatabase(status : String, photo : UIImage, pet : inout Pet, completion : () -&gt; ()) -&gt; ():Service.swift">
@@ -130,10 +149,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "PSBaseViewController.reloadTable() -&gt; ():PSBaseViewController.swift">
+         contextName = "ManagePets.tableView(UITableView, commit : UITableViewCellEditingStyle, forRowAt : IndexPath) -&gt; ():ManagePets.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.petsArray.count">
+               value = "print(status)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
