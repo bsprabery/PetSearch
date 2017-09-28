@@ -42,7 +42,6 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         if launchedBefore {
             print("Not first launch")
         } else {
-            print("First time launch, setting NSUserDefaults.")
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
     }
@@ -68,28 +67,24 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
     
     func hideActivityIndicator() {
-        activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
     }
-    
+        
     func handleLoginRegister() {
+        showActivityIndicator()
         if !hasConnectivity() {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
             hideActivityIndicator()
         } else {
             if registerButtonTapped == true {
-                showActivityIndicator()
                 Service.sharedSingleton.handleRegister(callingViewController: self, email: emailTextField.text, password: passwordTextField.text, confirmPassword: confirmPasswordTextField.text, firstName: firstNameTextField.text, lastName: lastNameTextField.text, phoneNumber: phoneNumberTextField.text, completion: segueToInputView)
             } else {
                 //Handles segues to appropriate destinations (based on the path taken to reach this view):
                 if Service.sharedSingleton.manageButtonPressed {
-                    showActivityIndicator()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToManageScreen)
                 } else if Service.sharedSingleton.signInButtonTapped {
-                    showActivityIndicator()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: unwindToOriginalView)
                 } else {
-                    showActivityIndicator()
                     Service.sharedSingleton.handleLogin(email: emailTextField.text, password: passwordTextField.text, callingViewController: self, completion: segueToInputView)
                 }
             }

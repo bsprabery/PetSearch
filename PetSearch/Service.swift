@@ -49,6 +49,8 @@ class Service : NSObject {
     
     func handleRegister(callingViewController: LoginScreen, email: String?, password: String?, confirmPassword: String?, firstName: String?, lastName: String?, phoneNumber: String?, completion: @escaping () -> Void) {
         
+        callingViewController.showActivityIndicator()
+        
         func checkIfStringIsEmpty(string: String) -> Bool {
             if string.isEmpty {
                 return true
@@ -59,6 +61,7 @@ class Service : NSObject {
         
         if checkIfStringIsEmpty(string: email!) || checkIfStringIsEmpty(string: password!) || checkIfStringIsEmpty(string: confirmPassword!) || checkIfStringIsEmpty(string: firstName!) || checkIfStringIsEmpty(string: lastName!) || checkIfStringIsEmpty(string: phoneNumber!) {
             self.appDelegate.alertView(errorMessage: "Please provide information for each field. All fields are required to register.", viewController: callingViewController)
+            callingViewController.hideActivityIndicator()
             return
         }
         
@@ -71,6 +74,7 @@ class Service : NSObject {
                 if error != nil {
                     if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
                         self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
+                        callingViewController.hideActivityIndicator()
                     }
                     return
                 }
@@ -88,9 +92,11 @@ class Service : NSObject {
                 usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                     if err != nil {
                         print(err)
+                        callingViewController.hideActivityIndicator()
                         return
                     }
-                    // self.signedOut = false
+                    
+                    callingViewController.hideActivityIndicator()
                     completion()
                 })
            })
@@ -122,6 +128,7 @@ class Service : NSObject {
     
     func handleLogin(email: String?, password: String?, callingViewController: LoginScreen, completion: @escaping () -> Void) {
         guard let email = email, let password = password else {
+            callingViewController.hideActivityIndicator()
             return
         }
         
@@ -129,11 +136,13 @@ class Service : NSObject {
             if error != nil {
                 if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
                     self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
+                    callingViewController.hideActivityIndicator()
                 }
                 return
             }
             
             self.getUserDetails()
+            callingViewController.hideActivityIndicator()
             completion()
         })
     }
