@@ -35,7 +35,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         activityIndicator.layer.zPosition = 1
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
-    
+        
     func setText() {
         if let pet = pet {
             self.petNameLabel.text = pet.name
