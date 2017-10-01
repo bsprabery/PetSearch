@@ -95,3 +95,42 @@ extension UIViewController {
         }
     }
 }
+
+extension UIImage {
+    
+    func compressImage(image: UIImage) -> Data? {
+        var actualHeight = image.size.height
+        var actualWidth = image.size.width
+        let maxHeight: CGFloat = 600.0
+        let maxWidth: CGFloat = 800.0
+        var imageRatio = actualWidth/actualHeight
+        let maxRatio = maxWidth/maxHeight
+        let compressionQuality: CGFloat = 0.7
+        
+        if actualHeight > maxHeight || actualWidth > maxWidth {
+            if imageRatio < maxRatio {
+                imageRatio = maxHeight/actualHeight
+                actualWidth = imageRatio * actualWidth
+                actualHeight = maxHeight
+            } else if imageRatio > maxRatio {
+                imageRatio = maxWidth / actualWidth
+                actualHeight = imageRatio * actualHeight
+                actualWidth = maxWidth
+            } else {
+                actualHeight = maxHeight
+                actualWidth = maxWidth
+            }
+        }
+        
+        let rect = CGRect(x: 0, y: 0, width: actualWidth, height: actualHeight)
+        UIGraphicsBeginImageContext(rect.size)
+        image.draw(in: rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        let imageData = UIImageJPEGRepresentation(img!, compressionQuality)
+        UIGraphicsEndImageContext()
+        return imageData
+        
+    }
+}
+
+

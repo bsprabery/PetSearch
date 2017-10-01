@@ -288,9 +288,13 @@ class Service : NSObject {
     
     func uploadImageToFirebaseStorage(photo: UIImage, pet: Pet, completion: @escaping () -> ()) {
         
-        guard let imageData = UIImageJPEGRepresentation(photo, 0.8) else {
+        guard let imageData = photo.compressImage(image: photo) else {
             return
         }
+        
+//        guard let largerImageData = UIImageJPEGRepresentation(photo, 0.8) else {
+//            return
+//        }
         
         let data = imageData
         let storageRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
@@ -543,14 +547,14 @@ class Service : NSObject {
     func observeDeletions(status: String) {
         let ref = FIRDatabase.database().reference().child("pets").child(status)
     
-        if !deletionObserverAdded {
+        if !deletionObserverAdded.contains(status) {
             ref.observe(.childRemoved, with: { (snapshot) in
                 let deleteDict = snapshot.value as? [String: AnyObject] ?? [:]
                 let petID = deleteDict["petID"] as! String
                 self.petDict.removeValue(forKey: petID)
                 self.imageDict.removeValue(forKey: petID)
             })
-            deletionObserverAdded = true
+            deletionObserverAdded.insert(status)
         }
     }
     
@@ -565,7 +569,7 @@ class Service : NSObject {
     var listeners = [UInt]()
     var petDict = [String: Pet]()
     var imageDict = [String: UIImage]()
-    var deletionObserverAdded: Bool = false
+    var deletionObserverAdded = Set<String>()
     
     func setPets(pets: [Pet]) {
         self.petArray = pets
