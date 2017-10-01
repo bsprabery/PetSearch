@@ -401,6 +401,8 @@ class Service : NSObject {
             }
             self.listeners = []
         }
+        
+        
     }
     
     //This returns pets that have been located with GeoFire location data:
@@ -538,8 +540,20 @@ class Service : NSObject {
         }
     }
     
-
-
+    func observeDeletions(status: String) {
+        let ref = FIRDatabase.database().reference().child("pets").child(status)
+    
+        if !deletionObserverAdded {
+            ref.observe(.childRemoved, with: { (snapshot) in
+                let deleteDict = snapshot.value as? [String: AnyObject] ?? [:]
+                let petID = deleteDict["petID"] as! String
+                self.petDict.removeValue(forKey: petID)
+                self.imageDict.removeValue(forKey: petID)
+            })
+            deletionObserverAdded = true
+        }
+    }
+    
 //MARK: Class properties and other methods:
     private var petArray: [Pet] = [Pet]()
     private var userInfoPath: String = String()
@@ -551,6 +565,7 @@ class Service : NSObject {
     var listeners = [UInt]()
     var petDict = [String: Pet]()
     var imageDict = [String: UIImage]()
+    var deletionObserverAdded: Bool = false
     
     func setPets(pets: [Pet]) {
         self.petArray = pets
