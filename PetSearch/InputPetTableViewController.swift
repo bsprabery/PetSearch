@@ -209,7 +209,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         return nil
     }
     
-    func addAnnotation(gestureRecognizer: UIGestureRecognizer) {
+    @objc func addAnnotation(gestureRecognizer: UIGestureRecognizer) {
         if gestureRecognizer.state == UIGestureRecognizerState.began {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinate = mapView.convert(touchPoint, toCoordinateFrom: self.mapView)
@@ -336,7 +336,7 @@ class InputPetTableViewController: UITableViewController, UIPickerViewDataSource
         view.addGestureRecognizer(tap)
     }
     
-    func minimizeDatePicker(sender: AnyObject) {
+    @objc func minimizeDatePicker(sender: AnyObject) {
         let subview = view?.hitTest(sender.location(in: view), with: nil)
         if (!(subview?.isDescendant(of: datePicker) ?? false)) {
             toggleDatePickerOff()

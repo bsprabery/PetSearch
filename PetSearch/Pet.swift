@@ -47,7 +47,7 @@ struct Pet {
         self.timeStamp = timeStamp
     }
     
-    init(snapshot: FIRDataSnapshot) {
+    init(snapshot: DataSnapshot) {
         key = snapshot.key
         let snapshotValue = snapshot.value! as! [String: AnyObject]
         name = snapshotValue["name"] as! String

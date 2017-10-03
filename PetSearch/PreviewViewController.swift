@@ -61,7 +61,7 @@ class PreviewViewController: UIViewController, UIImagePickerControllerDelegate, 
         petImage.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer){
         imagePicker.allowsEditing = false
         DispatchQueue.main.async {
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

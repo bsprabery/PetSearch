@@ -63,7 +63,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
         activityView.isHidden = true
     }
     
-    func handleRefresh( _ refreshControl: UIRefreshControl) {
+    @objc func handleRefresh( _ refreshControl: UIRefreshControl) {
         if !hasConnectivity() {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet.")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
@@ -148,7 +148,7 @@ class PSBaseViewController: UITableViewController, CLLocationManagerDelegate {
     }
     
 //MARK: Methods related to TableView:
-    func reloadTable() {
+    @objc func reloadTable() {
         self.petsArray = Service.sharedSingleton.getPetsForStatus(status: self.getStatusForViewController())
         self.tableView.reloadData()
         

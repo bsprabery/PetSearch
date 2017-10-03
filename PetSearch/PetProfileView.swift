@@ -36,7 +36,7 @@ class PetProfileView: UIViewController {
         petImageView.isUserInteractionEnabled = true
     }
     
-    func imageTapped(_ sender: UITapGestureRecognizer) {
+    @objc func imageTapped(_ sender: UITapGestureRecognizer) {
         let imageView = sender.view as! UIImageView
         let newImageView = UIImageView(image: imageView.image)
         newImageView.frame = UIScreen.main.bounds
@@ -50,7 +50,7 @@ class PetProfileView: UIViewController {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    func dismissFullScreenImage(_ sender: UITapGestureRecognizer) {
+    @objc func dismissFullScreenImage(_ sender: UITapGestureRecognizer) {
         self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = false
         sender.view?.removeFromSuperview()

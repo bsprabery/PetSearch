@@ -257,7 +257,7 @@ extension LoginScreen {
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 55)
             
             //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.systemFont(ofSize: 11), NSAttributedStringKey(rawValue: NSAttributedStringKey.underlineStyle.rawValue): NSUnderlineStyle.styleSingle.rawValue]
             let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
             forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             
@@ -328,7 +328,7 @@ extension LoginScreen {
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 75)
             
             //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 11), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.systemFont(ofSize: 11), NSAttributedStringKey(rawValue: NSAttributedStringKey.underlineStyle.rawValue): NSUnderlineStyle.styleSingle.rawValue]
             let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
             forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             
@@ -397,7 +397,7 @@ extension LoginScreen {
             let titleLabelTop = NSLayoutConstraint(item: titleLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 75)
             
             //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 12), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.systemFont(ofSize: 12), NSAttributedStringKey(rawValue: NSAttributedStringKey.underlineStyle.rawValue): NSUnderlineStyle.styleSingle.rawValue]
             let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
             forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             
@@ -450,7 +450,7 @@ extension LoginScreen {
             loginButton.layer.borderWidth = 1.3
             
             //Forgot Password Button Constraints
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 18), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.systemFont(ofSize: 18), NSAttributedStringKey(rawValue: NSAttributedStringKey.underlineStyle.rawValue): NSUnderlineStyle.styleSingle.rawValue]
             let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
             forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             
@@ -483,7 +483,7 @@ extension LoginScreen {
             lastNameTextField.layer.borderWidth = 1.0
             phoneNumberTextField.layer.borderWidth = 1.0
             
-            let attributes: [String: Any] = [NSFontAttributeName: UIFont.systemFont(ofSize: 20), NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let attributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue): UIFont.systemFont(ofSize: 20), NSAttributedStringKey(rawValue: NSAttributedStringKey.underlineStyle.rawValue): NSUnderlineStyle.styleSingle.rawValue]
             let attributedString = NSMutableAttributedString(string: "Forgot Password?", attributes: attributes)
             forgotPasswordButton.setAttributedTitle(attributedString, for: .normal)
             forgotPasswordTop.constant = 2

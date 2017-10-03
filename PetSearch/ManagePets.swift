@@ -54,8 +54,8 @@ class ManagePets: UITableViewController {
         cell.activityIndicator.startAnimating()
         
         //Download pet image from Firebase Storage:
-        let storRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
-        storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+        let storRef = Storage.storage().reference(withPath: "\(pet.petID).jpg")
+        storRef.getData(maxSize: INT64_MAX) { (data, error) in
             
             guard error == nil else {
                 self.presentWarningToUser(title: "Error", message: "Photo not found.")

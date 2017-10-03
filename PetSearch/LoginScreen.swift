@@ -87,7 +87,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         activityIndicator.stopAnimating()
     }
         
-    func handleLoginRegister() {
+    @objc func handleLoginRegister() {
         showActivityIndicator()
         if !hasConnectivity() {
             presentWarningToUser(title: "Warning", message: "You are not connected to the internet. Please try again later.")
@@ -123,13 +123,13 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
     }
 
 //MARK: Keyboard Notifications - adjusts view when keyboard obscures parts of the view:
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = -getKeyboardHeight(notification: notification)
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         if phoneNumberTextField.isFirstResponder || lastNameTextField.isFirstResponder || firstNameTextField.isFirstResponder || confirmPasswordTextField.isFirstResponder || passwordTextField.isFirstResponder == true || emailTextField.isFirstResponder == true {
             view.frame.origin.y = 0
         }
@@ -151,7 +151,7 @@ class LoginScreen: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
     }
     

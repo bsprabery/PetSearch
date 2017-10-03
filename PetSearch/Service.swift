@@ -17,13 +17,13 @@ class Service : NSObject {
     
 //MARK: Authentication Methods:
     func checkIfUserIsLoggedIn(segueOne: () -> Void, segueTwo: @escaping () -> Void) {
-        if FIRAuth.auth()?.currentUser?.uid == nil {
+        if Auth.auth().currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
             //Present Login Screen
             segueOne()
         } else {
-            let uid = FIRAuth.auth()?.currentUser?.uid
-            FIRDatabase.database().reference().child("users").child(uid!).child("userInfo").observeSingleEvent(of: .value, with: { (snapshot) in
+            let uid = Auth.auth().currentUser?.uid
+            Database.database().reference().child("users").child(uid!).child("userInfo").observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let dictionary = snapshot.value as? [String: AnyObject] {
                     let uid = dictionary["uid"] as? String
@@ -39,7 +39,7 @@ class Service : NSObject {
     }
     
     func IsUserLoggedInReturnBool() -> Bool {
-        if FIRAuth.auth()?.currentUser?.uid == nil {
+        if Auth.auth().currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
             return false
         } else {
@@ -70,9 +70,10 @@ class Service : NSObject {
         }
         
         if checkPasswordAndConfirmPassword(password: password, confirm: confirmPassword, callingViewController: callingViewController) {
-            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error) in
+            Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
+//            Auth.auth().createUser(withEmail: email, password: password, completion: { (user: User?, error) in
                 if error != nil {
-                    if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
+                    if let errCode = AuthErrorCode(rawValue: error!._code) {
                         self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
                         callingViewController.hideActivityIndicator()
                     }
@@ -83,7 +84,7 @@ class Service : NSObject {
                     return
                 }
                 
-                let ref = FIRDatabase.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
+                let ref = Database.database().reference(fromURL: "https://petsearch-8b839.firebaseio.com/")
                 let usersRef = ref.child("users").child(uid).child("userInfo")
                 let values = ["firstName": firstName, "lastName": lastName, "email": email, "password": password, "phoneNumber": phoneNumber, "uid": uid]
                 
@@ -91,7 +92,7 @@ class Service : NSObject {
                 
                 usersRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                     if err != nil {
-                        print(err)
+                        print(err! as Any)
                         callingViewController.hideActivityIndicator()
                         return
                     }
@@ -132,9 +133,10 @@ class Service : NSObject {
             return
         }
         
-        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+//        signIn(withEmail: email, password: password, completion: { (user: User?, error: Error?) in
             if error != nil {
-                if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
+                if let errCode = AuthErrorCode(rawValue: error!._code) {
                     self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
                     status = .signedOut
                     callingViewController.hideActivityIndicator()
@@ -146,12 +148,12 @@ class Service : NSObject {
             callingViewController.hideActivityIndicator()
             status = .signedIn
             completion()
-        })
+        }
     }
     
-    func handleLogout() {
+    @objc func handleLogout() {
         do {
-            try FIRAuth.auth()?.signOut()
+            try Auth.auth().signOut()
             status = .signedOut
         } catch let logoutError {
             print("Error: \(logoutError)")
@@ -159,7 +161,7 @@ class Service : NSObject {
     }
     
     func addAuthListener() {
-        FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+        Auth.auth().addStateDidChangeListener({ (auth, user) in
             if user != nil {
                 status = .signedIn
             } else {
@@ -169,9 +171,9 @@ class Service : NSObject {
     }
     
     func sendPasswordReset(email: String, callingViewController: UIViewController) {
-        FIRAuth.auth()?.sendPasswordReset(withEmail: email, completion: { (error) in
+        Auth.auth().sendPasswordReset(withEmail: email, completion: { (error) in
             if error != nil {
-                if let errCode = FIRAuthErrorCode(rawValue: error!._code) {
+                if let errCode = AuthErrorCode(rawValue: error!._code) {
                     self.handleAuthError(errCode: errCode, callingViewController: callingViewController)
                 }
             }
@@ -180,25 +182,25 @@ class Service : NSObject {
     }
     
 //MARK: Authentication Error Handling:
-    func handleAuthError(errCode: FIRAuthErrorCode, callingViewController: UIViewController) {
+    func handleAuthError(errCode: AuthErrorCode, callingViewController: UIViewController) {
         switch errCode {
-        case .errorCodeInvalidEmail:
+        case .invalidEmail:
             self.appDelegate.alertViewTwo(errorMessage: "Please enter a valid email address.", viewController: callingViewController)
-        case .errorCodeNetworkError:
+        case .networkError:
             self.appDelegate.alertViewTwo(errorMessage: "We were unable to add you as a new user due to a poor network connection. Please try again.", viewController: callingViewController)
-        case .errorCodeUserNotFound:
+        case .userNotFound:
             self.appDelegate.alertViewTwo(errorMessage: "We were unable to locate your account information.", viewController: callingViewController)
-        case .errorCodeUserTokenExpired:
+        case .userTokenExpired:
             self.appDelegate.alertViewTwo(errorMessage: "Your login has expired. Please sign in again.", viewController: callingViewController)
-        case .errorCodeInternalError:
+        case .internalError:
             self.appDelegate.alertViewTwo(errorMessage: "An unknown error has occurred. Please try again later.", viewController: callingViewController)
-        case .errorCodeUserDisabled:
+        case .userDisabled:
             self.appDelegate.alertViewTwo(errorMessage: "Your account has been disabled.", viewController: callingViewController)
-        case .errorCodeWrongPassword:
+        case .wrongPassword:
             self.appDelegate.alertViewTwo(errorMessage: "You have entered an incorrect password.", viewController: callingViewController)
-        case .errorCodeEmailAlreadyInUse:
+        case .emailAlreadyInUse:
             self.appDelegate.alertViewTwo(errorMessage: "That email is already in use.", viewController: callingViewController)
-        case .errorCodeWeakPassword:
+        case .weakPassword:
             self.appDelegate.alertViewTwo(errorMessage: "Weak Password: Passwords must contain at least six characters.", viewController: callingViewController)
         default:
             print(errCode)
@@ -208,8 +210,8 @@ class Service : NSObject {
 
 //MARK: Methods related to User details:
     func getUserDetails() {
-        let uid = FIRAuth.auth()?.currentUser?.uid
-        FIRDatabase.database().reference().child("users").child(uid!).child("userInfo").observeSingleEvent(of: .value, with: { (snapshot) in
+        let uid = Auth.auth().currentUser?.uid
+        Database.database().reference().child("users").child(uid!).child("userInfo").observeSingleEvent(of: .value, with: { (snapshot) in
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 
@@ -246,8 +248,8 @@ class Service : NSObject {
     
 //MARK: Uploading to Database and Storage:
     func uploadInfoToFirebaseDatabase(status: String, photo: UIImage, pet: inout Pet, completion: @escaping () -> ()) {
-        let ref = FIRDatabase.database().reference()
-        var petRef: FIRDatabaseReference = FIRDatabaseReference()
+        let ref = Database.database().reference()
+        var petRef: DatabaseReference = DatabaseReference()
         var petStatus: String = ""
         
         switch status {
@@ -282,7 +284,7 @@ class Service : NSObject {
     }
     
     func uploadInfoToFirebaseUsersBranch(petID: String, userID: String, pet: Pet) {
-        let ref = FIRDatabase.database().reference().child("users").child(userID).child("pets").child(petID)
+        let ref = Database.database().reference().child("users").child(userID).child("pets").child(petID)
         ref.setValue(pet.toAnyObject())
     }
     
@@ -297,19 +299,19 @@ class Service : NSObject {
 //        }
         
         let data = imageData
-        let storageRef = FIRStorage.storage().reference(withPath: "\(pet.petID).jpg")
-        let uploadMetadata = FIRStorageMetadata()
+        let storageRef = Storage.storage().reference(withPath: "\(pet.petID).jpg")
+        let uploadMetadata = StorageMetadata()
         uploadMetadata.contentType = "image/jpeg"
         
-        storageRef.put(data as Data, metadata: uploadMetadata) { (metadata, error) in
+        storageRef.putData(data, metadata: uploadMetadata, completion: { (metadata, error) in
             if (error != nil) {
-                print("There was an error! \(error?.localizedDescription)")
+                print("There was an error! \(String(describing: error?.localizedDescription))")
             } 
             
             DispatchQueue.main.async {
                 completion()
             }
-        }
+        })
     }
     
 //MARK: Downloading Pet from Firebase:
@@ -317,14 +319,14 @@ class Service : NSObject {
     //This returns pets for a specific user when "Manage My Pets" is tapped from the Options menu:
     func fetchPetsForUser(segue: @escaping () -> ()) {
         self.setPets(pets: [])
-        let userID = FIRAuth.auth()?.currentUser?.uid
-        let ref = FIRDatabase.database().reference().child("users").child(userID!).child("pets")
+        let userID = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("users").child(userID!).child("pets")
         
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             var userPets: [Pet] = []
             
             for pet in snapshot.children {
-                let userPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                let userPet = Pet(snapshot: pet as! DataSnapshot)
                 userPets.append(userPet)
                 self.setPets(pets: userPets)
             }
@@ -335,7 +337,7 @@ class Service : NSObject {
     //This returns pets if the user has not enabled location services:
     func fetchPets(viewControllerName: String, completion: @escaping () -> Void) {
         self.setPets(pets: [])
-        let ref = FIRDatabase.database().reference().child("pets").queryOrdered(byChild: "status")
+        let ref = Database.database().reference().child("pets").queryOrdered(byChild: "status")
         
         switch viewControllerName {
         case "adopt":
@@ -343,7 +345,7 @@ class Service : NSObject {
                 var adoptPets: [Pet] = []
                 
                 for pet in snapshot.children {
-                    let adoptPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                    let adoptPet = Pet(snapshot: pet as! DataSnapshot)
                     adoptPets.append(adoptPet)
                     
                     self.setPets(pets: adoptPets)
@@ -356,7 +358,7 @@ class Service : NSObject {
                 var foundPets: [Pet] = []
                 
                 for pet in snapshot.children {
-                    let foundPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                    let foundPet = Pet(snapshot: pet as! DataSnapshot)
                     foundPets.append(foundPet)
                     
                     self.setPets(pets: foundPets)
@@ -369,7 +371,7 @@ class Service : NSObject {
                 var lostPets: [Pet] = []
                 
                 for pet in snapshot.children {
-                    let lostPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                    let lostPet = Pet(snapshot: pet as! DataSnapshot)
                     lostPets.append(lostPet)
                     
                     self.setPets(pets: lostPets)
@@ -385,7 +387,7 @@ class Service : NSObject {
     //This returns pets based on user's location:
     func addListener(viewController: String, refreshView: @escaping() -> ()) {
         let userLocation = getUserLocation()
-        let geoFireRef = FIRDatabase.database().reference().child("pets_location")
+        let geoFireRef = Database.database().reference().child("pets_location")
         let geoFire = GeoFire(firebaseRef: geoFireRef)
         let center = CLLocation(latitude: (userLocation?.coordinate.latitude)!, longitude: (userLocation?.coordinate.longitude)!)
         let circleQuery = geoFire!.query(at: center, withRadius: 100)
@@ -413,12 +415,12 @@ class Service : NSObject {
     func fetchLocatedPets(viewControllerName: String, petID: String, refreshView: @escaping () -> ()) {
         if !self.petDict.keys.contains(petID) {
             
-            let ref = FIRDatabase.database().reference().child("pets").child(viewControllerName).queryOrdered(byChild: "petID")
+            let ref = Database.database().reference().child("pets").child(viewControllerName).queryOrdered(byChild: "petID")
             ref.queryEqual(toValue: petID).observe(.value, with: { (snapshot) in
                           
                 if (snapshot.exists()) {
                     for pet in snapshot.children {
-                        let locatedPet = Pet(snapshot: pet as! FIRDataSnapshot)
+                        let locatedPet = Pet(snapshot: pet as! DataSnapshot)
                         
                         switch locatedPet.status{
                         case "found":
@@ -444,11 +446,11 @@ class Service : NSObject {
     //Downloads image from Firebase storage:
     func downloadImage(petID: String, refreshView: @escaping () -> ()) {
         if (!self.imageDict.keys.contains(petID)) {
-            let storRef = FIRStorage.storage().reference(withPath: "\(petID).jpg")
-            storRef.data(withMaxSize: INT64_MAX) { (data, error) in
+            let storRef = Storage.storage().reference(withPath: "\(petID).jpg")
+            storRef.getData(maxSize: INT64_MAX) { (data, error) in
                 
                 guard error == nil else {
-                    print("Error downloading: \(error)")
+                    print("Error downloading: \(String(describing: error))")
                     return
                 }
                 
@@ -501,11 +503,11 @@ class Service : NSObject {
     }
     
     func deletePetFromDatabase(status: String, petID: String) {
-        let ref = FIRDatabase.database().reference().child("pets").child(status).child(petID)
+        let ref = Database.database().reference().child("pets").child(status).child(petID)
         
         ref.removeValue { (error, ref) in
             if error != nil {
-                print("There was an error deleting the pet from the database. Error: \(error)")
+                print("There was an error deleting the pet from the database. Error: \(error.debugDescription)")
             } else {
                 print("Pet data was successfully deleted from the database.")
             }
@@ -513,30 +515,30 @@ class Service : NSObject {
     }
     
     func deletePetFromUserChild(petID: String) {
-        let userID = FIRAuth.auth()?.currentUser?.uid
-        let ref = FIRDatabase.database().reference().child("users").child(userID!).child("pets").child(petID)
+        let userID = Auth.auth().currentUser?.uid
+        let ref = Database.database().reference().child("users").child(userID!).child("pets").child(petID)
         
         ref.removeValue { (error, ref) in
             
             if error != nil {
-                print("There was an error deleting the pet from the database. Error: \(error)")
+                print("There was an error deleting the pet from the database. Error: \(error.debugDescription)")
             }
         }
     }
     
     func deletePetLocationData(petID: String) {
-        let locationDataRef = FIRDatabase.database().reference().child("pets_location").child(petID)
+        let locationDataRef = Database.database().reference().child("pets_location").child(petID)
         
         locationDataRef.removeValue{ (error, ref) in
             if error != nil {
-                print("There was an error deleting the pet's location data. Error: \(error)")
+                print("There was an error deleting the pet's location data. Error: \(error.debugDescription)")
             }
         }
 
     }
 
     func deleteImageFromStorage(petID: String) {
-        let storageRef = FIRStorage.storage().reference(withPath: "\(petID).jpg")
+        let storageRef = Storage.storage().reference(withPath: "\(petID).jpg")
         storageRef.delete { error in
             if let error = error {
                 print("Error: \(error)")
@@ -545,7 +547,7 @@ class Service : NSObject {
     }
     
     func observeDeletions(status: String) {
-        let ref = FIRDatabase.database().reference().child("pets").child(status)
+        let ref = Database.database().reference().child("pets").child(status)
     
         if !deletionObserverAdded.contains(status) {
             ref.observe(.childRemoved, with: { (snapshot) in

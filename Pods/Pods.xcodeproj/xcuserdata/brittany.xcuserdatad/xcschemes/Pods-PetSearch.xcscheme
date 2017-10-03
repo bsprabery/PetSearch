@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "41DD54390D9BEE001C869B8A5994398B"
+               BlueprintIdentifier = "0AAC9B04E1233C4684259FC7BAE575B1"
                BuildableName = "Pods_PetSearch.framework"
                BlueprintName = "Pods-PetSearch"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -36,6 +37,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "41DD54390D9BEE001C869B8A5994398B"
+            BlueprintIdentifier = "0AAC9B04E1233C4684259FC7BAE575B1"
             BuildableName = "Pods_PetSearch.framework"
             BlueprintName = "Pods-PetSearch"
             ReferencedContainer = "container:Pods.xcodeproj">
