@@ -72,7 +72,7 @@ extension PetProfileView {
             NSLayoutConstraint.activate([nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailWidth, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
             
         case (750, 1334):
-            print("iPhone 6, iPhone 6s, and iPhone 7")
+            print("iPhone 6, iPhone 6s, iPhone 7, and iPhone 8")
             
             
             petNameLabel.font = UIFont.systemFont(ofSize: 16)
@@ -117,7 +117,7 @@ extension PetProfileView {
             NSLayoutConstraint.activate([nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
 
                 case (1242, 2208):
-            print("iPhone 7 Plus, iPhone 6s Plus")
+            print("iPhone 7 Plus, iPhone 6s Plus, iPhone 8 Plus")
             
             petNameLabel.font = UIFont.systemFont(ofSize: 16)
             statusLabel.font = UIFont.systemFont(ofSize: 14)
@@ -160,6 +160,49 @@ extension PetProfileView {
             
             NSLayoutConstraint.activate([nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
            
+        case (1125, 2436):
+            print("iPhone X")
+            
+            petNameLabel.font = UIFont.systemFont(ofSize: 20)
+            statusLabel.font = UIFont.systemFont(ofSize: 16)
+            animalTypeLabel.font = UIFont.systemFont(ofSize: 16)
+            breedLabel.font = UIFont.systemFont(ofSize: 16)
+            petOwnerNameLabel.font = UIFont.systemFont(ofSize: 16)
+            petDetailsTextView.font = UIFont.systemFont(ofSize: 15)
+            contactButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+            
+            let nameX = NSLayoutConstraint(item: petNameLabel, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            let nameTop = NSLayoutConstraint(item: petNameLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 100)
+            let nameWidth = NSLayoutConstraint(item: petNameLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200)
+            
+            let statusTop = NSLayoutConstraint(item: statusLabel, attribute: .top, relatedBy: .equal, toItem: petNameLabel, attribute: .top, multiplier: 1, constant: 25)
+            let statusX = NSLayoutConstraint(item: statusLabel, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            
+            let imageTop = NSLayoutConstraint(item: petImageView, attribute: .top, relatedBy: .equal, toItem: statusLabel, attribute: .bottom, multiplier: 1, constant: 12)
+            let imageHeight = NSLayoutConstraint(item: petImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 360)
+            let imageWidth = NSLayoutConstraint(item: petImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 360)
+            let imageX = NSLayoutConstraint(item: petImageView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            
+            let breedTop = NSLayoutConstraint(item: breedLabel, attribute: .top, relatedBy: .equal, toItem: animalTypeLabel, attribute: .bottom, multiplier: 1, constant: 8)
+            let breedX = NSLayoutConstraint(item: breedLabel, attribute: .leading, relatedBy: .equal, toItem: animalTypeLabel, attribute: .leading, multiplier: 1, constant: 0)
+            
+            let petOwnerNameTop = NSLayoutConstraint(item: petOwnerNameLabel, attribute: .top, relatedBy: .equal, toItem: breedLabel, attribute: .bottom, multiplier: 1, constant: 8)
+            let petOwnerNameLeading = NSLayoutConstraint(item: petOwnerNameLabel, attribute: .leading, relatedBy: .equal, toItem: breedLabel, attribute: .leading, multiplier: 1, constant: 0)
+            
+            let petDetailTop = NSLayoutConstraint(item: petDetailsTextView, attribute: .top, relatedBy: .equal, toItem: petOwnerNameLabel, attribute: .bottom, multiplier: 1, constant: 8)
+            let petDetailLeading = NSLayoutConstraint(item: petDetailsTextView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 15)
+            let petDetailTrailing = NSLayoutConstraint(item: petDetailsTextView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -15)
+            let petDetailHeight = NSLayoutConstraint(item: petDetailsTextView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100)
+            
+            let animalTypeTop = NSLayoutConstraint(item: animalTypeLabel, attribute: .top, relatedBy: .equal, toItem: petImageView, attribute: .bottom, multiplier: 1, constant: 12)
+            let animalTypeX = NSLayoutConstraint(item: animalTypeLabel, attribute: .leading, relatedBy: .equal, toItem: petDetailsTextView, attribute: .leading, multiplier: 1, constant: 0)
+            
+            let contactButtonTop = NSLayoutConstraint(item: contactButton, attribute: .top, relatedBy: .equal, toItem: petDetailsTextView, attribute: .bottom, multiplier: 1, constant: 15)
+            let contactButtonLeading = NSLayoutConstraint(item: contactButton, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            let contactButtonWidth = NSLayoutConstraint(item: contactButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 175)
+            let contactButtonHeight = NSLayoutConstraint(item: contactButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30)
+            
+            NSLayoutConstraint.activate([nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight, contactButtonTop, contactButtonLeading, contactButtonWidth, contactButtonHeight])
             
         case (1536, 2048):
             print("iPad Mini, iPad Air, iPad Retina, iPad Pro 9.7")

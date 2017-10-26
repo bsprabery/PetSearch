@@ -78,8 +78,7 @@ extension PreviewViewController {
             NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailWidth, petDetailHeight])
             
         case (750, 1334):
-            print("iPhone 6, iPhone 6s, and iPhone 7")
-            
+            print("iPhone 6, iPhone 6s, iPhone 7, iPhone 8")
             
             petNameLabel.font = UIFont.systemFont(ofSize: 16)
             statusLabel.font = UIFont.systemFont(ofSize: 14)
@@ -120,7 +119,7 @@ extension PreviewViewController {
             NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
             
         case (1242, 2208):
-            print("iPhone 7 Plus, iPhone 6s Plus")
+            print("iPhone 8 Plus, iPhone 7 Plus, iPhone 6s Plus")
             
             petNameLabel.font = UIFont.systemFont(ofSize: 16)
             statusLabel.font = UIFont.systemFont(ofSize: 14)
@@ -160,6 +159,47 @@ extension PreviewViewController {
             
             NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
             
+        case (1125, 2436):
+            print("iPhone X")
+            
+            petNameLabel.font = UIFont.systemFont(ofSize: 20)
+            statusLabel.font = UIFont.systemFont(ofSize: 16)
+            sexLabel.font = UIFont.systemFont(ofSize: 16)
+            breedLabel.font = UIFont.systemFont(ofSize: 16)
+            userNameLabel.font = UIFont.systemFont(ofSize: 16)
+            descriptionView.font = UIFont.systemFont(ofSize: 15)
+            
+            let activityIndicatorX = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: 0)
+            let activityIndicatorY = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: 0)
+            
+            let nameX = NSLayoutConstraint(item: petNameLabel, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            let nameTop = NSLayoutConstraint(item: petNameLabel, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 100)
+            let nameWidth = NSLayoutConstraint(item: petNameLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200)
+            
+            let statusTop = NSLayoutConstraint(item: statusLabel, attribute: .top, relatedBy: .equal, toItem: petNameLabel, attribute: .top, multiplier: 1, constant: 25)
+            let statusX = NSLayoutConstraint(item: statusLabel, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            
+            let imageTop = NSLayoutConstraint(item: petImage, attribute: .top, relatedBy: .equal, toItem: statusLabel, attribute: .bottom, multiplier: 1, constant: 15)
+            let imageHeight = NSLayoutConstraint(item: petImage, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 350)
+            let imageWidth = NSLayoutConstraint(item: petImage, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 350)
+            let imageX = NSLayoutConstraint(item: petImage, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerXWithinMargins, multiplier: 1, constant: 0)
+            
+            let animalTypeTop = NSLayoutConstraint(item: sexLabel, attribute: .top, relatedBy: .equal, toItem: petImage, attribute: .bottom, multiplier: 1, constant: 12)
+            let animalTypeX = NSLayoutConstraint(item: sexLabel, attribute: .leading, relatedBy: .equal, toItem: petImage, attribute: .leading, multiplier: 1, constant: 0)
+            
+            let breedTop = NSLayoutConstraint(item: breedLabel, attribute: .top, relatedBy: .equal, toItem: sexLabel, attribute: .bottom, multiplier: 1, constant: 8)
+            let breedX = NSLayoutConstraint(item: breedLabel, attribute: .leading, relatedBy: .equal, toItem: sexLabel, attribute: .leading, multiplier: 1, constant: 0)
+            
+            let petOwnerNameTop = NSLayoutConstraint(item: userNameLabel, attribute: .top, relatedBy: .equal, toItem: breedLabel, attribute: .bottom, multiplier: 1, constant: 8)
+            let petOwnerNameLeading = NSLayoutConstraint(item: userNameLabel, attribute: .leading, relatedBy: .equal, toItem: breedLabel, attribute: .leading, multiplier: 1, constant: 0)
+            
+            let petDetailTop = NSLayoutConstraint(item: descriptionView, attribute: .top, relatedBy: .equal, toItem: userNameLabel, attribute: .bottom, multiplier: 1, constant: 8)
+            let petDetailLeading = NSLayoutConstraint(item: descriptionView, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 15)
+            let petDetailTrailing = NSLayoutConstraint(item: descriptionView, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -15)
+            let petDetailHeight = NSLayoutConstraint(item: descriptionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100)
+            
+            NSLayoutConstraint.activate([activityIndicatorX, activityIndicatorY, nameX, nameTop, nameWidth, statusTop, statusX, imageTop, imageX, imageHeight, imageWidth, animalTypeTop, animalTypeX, breedTop, breedX, petOwnerNameTop, petOwnerNameLeading, petDetailTop, petDetailLeading, petDetailTrailing, petDetailHeight])
+
             
         case (1536, 2048):
             print("iPad Mini, iPad Air, iPad Retina, iPad Pro 9.7")

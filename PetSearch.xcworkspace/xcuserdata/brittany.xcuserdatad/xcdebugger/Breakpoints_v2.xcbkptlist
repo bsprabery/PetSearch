@@ -9,13 +9,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PetSearch/PetProfileView.swift"
-            timestampString = "528516002.580561"
+            filePath = "PetSearch/ProfileView.swift"
+            timestampString = "530741176.939622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "imageTapped(_:)"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "layoutView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PetSearch/ProfileView.swift"
+            timestampString = "530741176.940447"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "layoutView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
